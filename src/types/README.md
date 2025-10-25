@@ -1,0 +1,1 @@
+Type stubs and shared shapes (e.g., JSDoc typedefs) can live here if needed. Using plain JS for now.
