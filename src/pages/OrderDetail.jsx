@@ -68,31 +68,31 @@ export default function OrderDetail() {
     )
   }
 
+  // Generar número de pedido formateado
+  const orderNumber = `SS-${String(order.id).padStart(5, '0')}`
+
   return (
     <div className="container-responsive py-8">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3">
-          <h1 className="text-xl font-semibold flex items-center gap-3">
-            Compra #{order.id}
-            <StatusChip status={order.pagado_en ? 'paid' : 'pending'} />
-          </h1>
-          <button
-            onClick={() => {
-              const txt = String(order.id)
-              if (navigator.clipboard?.writeText) navigator.clipboard.writeText(txt)
-              toast.success('ID copiado')
-            }}
-            title="Copiar ID"
-            className="inline-flex items-center gap-1 rounded-md border border-black/10 px-2 py-1 text-xs hover:bg-black/5"
-          >
-            <ClipboardCopy size={14} /> Copiar ID
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
+              <Package className="h-5 w-5" />
+            </div>
+            <div>
+              <h1 className="text-xl font-semibold flex items-center gap-2">
+                Pedido {orderNumber}
+                <StatusChip status={order.pagado_en ? 'paid' : 'pending'} />
+              </h1>
+              <p className="text-xs text-gray-500">{items.length} {items.length === 1 ? 'producto' : 'productos'}</p>
+            </div>
+          </div>
         </div>
         <div className="flex items-center gap-2">
-          <button onClick={() => window.print()} className="inline-flex items-center gap-1 rounded-md border border-black/10 px-2 py-1 text-xs hover:bg-black/5">
+          <button onClick={() => window.print()} className="inline-flex items-center gap-1 rounded-md border border-black/10 px-2 py-1.5 text-xs hover:bg-black/5">
             <Printer size={14} /> Imprimir
           </button>
-          <Link to="/orders" className="text-sm text-[hsl(var(--primary))] hover:underline">Volver a mis compras</Link>
+          <Link to="/orders" className="text-sm text-[hsl(var(--primary))] hover:underline font-medium">← Volver</Link>
         </div>
       </div>
       <div className="grid gap-6 lg:grid-cols-3">

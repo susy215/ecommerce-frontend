@@ -1,3 +1,4 @@
-// Obsoleto: el carrito vive en el frontend. No hay endpoints de carrito en el backend.
-// Este archivo se mantiene vacío intencionalmente para evitar usos accidentales.
-export {}
+// Este archivo no se usa. El carrito se maneja completamente en el frontend
+// con el hook useCart (localStorage). El backend NO tiene endpoints de carrito.
+// Según documentación del backend, el carrito solo existe en frontend.
+

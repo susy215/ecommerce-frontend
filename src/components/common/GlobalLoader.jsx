@@ -13,10 +13,9 @@ export default function GlobalLoader() {
           style={{ animation: 'loader 1.2s ease-in-out infinite' }}
         />
       </div>
-      <div className="pointer-events-none fixed right-4 top-4 h-4 w-4 rounded-full border-2 border-[hsl(var(--primary))] border-t-transparent" style={{ animation: 'spin 0.9s linear infinite' }} />
+      <div className="pointer-events-none fixed right-4 top-4 h-4 w-4 rounded-full border-2 border-[hsl(var(--primary))] border-t-transparent spinner" />
       <style>{`
         @keyframes loader{0%{transform:scaleX(0)}50%{transform:scaleX(0.65)}100%{transform:scaleX(1)}}
-        @keyframes spin{to{transform:rotate(360deg)}}
       `}</style>
     </div>
   )

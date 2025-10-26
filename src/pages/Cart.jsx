@@ -38,7 +38,7 @@ export default function Cart() {
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-3">
             {items.map((item) => (
-              <div key={item.id} className="card-surface p-4 hover:shadow-md transition-shadow">
+              <div key={item.id} className="card-surface card-hover p-4">
                 <div className="flex items-center gap-4">
                   <img 
                     src={item.image || 'https://via.placeholder.com/80'} 

@@ -7,9 +7,12 @@ export default function ProductCard({ product, onAdd }) {
   const to = ROUTES.product.replace(':id', String(id || '1'))
   const nombre = product?.nombre || product?.name || 'Producto'
   const precio = product?.precio ?? product?.price ?? 0
+  const stock = product?.stock
+  // Imagen por defecto si no existe (backend no tiene campo imagen según doc)
   const image = product?.image || product?.imagen || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop'
+  
   return (
-    <div className="group overflow-hidden rounded-xl card-surface transition-shadow hover:shadow-md">
+    <div className="group overflow-hidden rounded-xl card-surface card-hover">
       <Link to={to} className="block aspect-square overflow-hidden bg-surface-hover">
         <img
           src={image}

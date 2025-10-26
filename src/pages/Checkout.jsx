@@ -55,10 +55,14 @@ export default function Checkout() {
               <Check className="h-8 w-8 text-green-600 dark:text-green-400" />
             </div>
           </div>
-          <h2 className="mb-3 text-center text-xl font-semibold">¡Compra creada exitosamente!</h2>
-          <div className="mb-6 space-y-1 text-center text-sm">
-            <p className="text-gray-600">Número de compra: <span className="font-medium text-[rgb(var(--fg))]">#{order.id}</span></p>
-            <p className="text-lg font-semibold text-[hsl(var(--primary))]">{formatPrice(Number(order.total ?? 0))}</p>
+          <h2 className="mb-3 text-center text-xl font-semibold">¡Pedido creado exitosamente!</h2>
+          <div className="mb-6 space-y-2 text-center">
+            <div className="inline-flex items-center gap-2 rounded-lg bg-[hsl(var(--primary))]/10 px-4 py-2">
+              <ShoppingBag className="h-5 w-5 text-[hsl(var(--primary))]" />
+              <span className="text-lg font-bold text-[hsl(var(--primary))]">SS-{String(order.id).padStart(5, '0')}</span>
+            </div>
+            <p className="text-2xl font-bold text-[hsl(var(--primary))]">{formatPrice(Number(order.total ?? 0))}</p>
+            <p className="text-sm text-gray-600">{order.items?.length || 0} {order.items?.length === 1 ? 'producto' : 'productos'}</p>
           </div>
           
           {order.pagado_en ? (

@@ -32,9 +32,8 @@ export default function GlobalOverlay({ delay = 300 }) {
   return (
     <div className="pointer-events-none fixed inset-0 z-[90] grid place-items-center">
       <div className="rounded-lg bg-[rgb(var(--bg))]/70 px-4 py-3 shadow-sm ring-1 ring-black/10 dark:ring-white/10">
-        <div className="mx-auto h-5 w-5 rounded-full border-2 border-[hsl(var(--primary))] border-t-transparent" style={{ animation: 'spin 0.9s linear infinite' }} />
+        <div className="mx-auto h-5 w-5 rounded-full border-2 border-[hsl(var(--primary))] border-t-transparent spinner" />
       </div>
-      <style>{`@keyframes spin{to{transform:rotate(360deg)}}`}</style>
     </div>
   )
 }

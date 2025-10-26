@@ -1,7 +1,7 @@
 import api from './apiClient'
 
 export async function getCategories(params = {}) {
-  const { data } = await api.get('/productos/categorias/', { params })
+  const { data } = await api.get('productos/categorias/', { params })
   return data
 }
 

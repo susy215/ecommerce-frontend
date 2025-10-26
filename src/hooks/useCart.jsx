@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import toast from '../utils/toastBus'
 
 const CartContext = createContext(null)
 
@@ -21,24 +22,55 @@ export function CartProvider({ children }) {
       const idx = prev.findIndex((x) => x.id === product.id)
       if (idx >= 0) {
         const next = [...prev]
-        next[idx] = { ...next[idx], qty: next[idx].qty + qty }
+        const newQty = next[idx].qty + qty
+        const maxStock = product.stock ?? next[idx].stock
+        
+        // Validar stock disponible
+        if (maxStock !== undefined && newQty > maxStock) {
+          toast.error(`Stock máximo disponible: ${maxStock}`)
+          next[idx] = { ...next[idx], qty: maxStock, stock: maxStock }
+        } else {
+          next[idx] = { ...next[idx], qty: newQty }
+        }
         return next
       }
+      
+      // Validar stock al agregar nuevo item
+      const stockToAdd = product.stock !== undefined && qty > product.stock ? product.stock : qty
+      if (product.stock !== undefined && qty > product.stock) {
+        toast.error(`Stock máximo disponible: ${product.stock}`)
+      }
+      
       return [
         ...prev,
         {
           id: product.id,
           name: product.nombre || product.name,
           price: Number(product.precio ?? product.price ?? 0),
-          image: product.imagen || product.image,
-          qty,
+          image: product.imagen || product.image || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop',
+          stock: product.stock,
+          qty: stockToAdd,
         },
       ]
     })
   }
 
   const removeItem = (id) => setItems((prev) => prev.filter((x) => x.id !== id))
-  const updateQty = (id, qty) => setItems((prev) => prev.map((x) => (x.id === id ? { ...x, qty } : x)))
+  
+  const updateQty = (id, qty) => {
+    setItems((prev) => prev.map((x) => {
+      if (x.id === id) {
+        const maxStock = x.stock
+        if (maxStock !== undefined && qty > maxStock) {
+          toast.error(`Stock máximo disponible: ${maxStock}`)
+          return { ...x, qty: maxStock }
+        }
+        return { ...x, qty }
+      }
+      return x
+    }))
+  }
+  
   const clear = () => setItems([])
 
   const { count, subtotal } = useMemo(() => {

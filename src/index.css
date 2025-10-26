@@ -89,6 +89,8 @@
 .btn-ghost { background: transparent; color: inherit; }
 .btn-ghost:hover { background: rgb(var(--surface-hover)); }
 .card-surface { background-color: rgb(var(--card)); border: 1px solid rgb(var(--border-rgb) / 0.06); border-radius: var(--radius, 0.75rem); }
+.card-hover { transition: box-shadow 150ms ease; }
+.card-hover:hover { box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); }
 .muted { color: rgb(var(--muted)); }
 .input { border: 1px solid rgb(var(--border-rgb) / 0.14); background: rgb(var(--card)); color: rgb(var(--fg)); border-radius: 0.5rem; padding: 0.5rem 0.75rem; font-size: 0.875rem; }
 .input::placeholder { color: rgb(var(--muted)); }
@@ -96,6 +98,22 @@
 .bg-surface-hover { background-color: rgb(var(--surface-hover)); }
 .border-subtle { border-color: rgb(var(--border-rgb) / 0.06); }
 .hover-surface:hover { background-color: rgb(var(--surface-hover)); }
+
+/* Utility: Gradient text */
+.gradient-text {
+  background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary-700)));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Utility: Spinner animation */
+.spinner {
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
 /* Simple page enter animation */
 .page-anim { animation: pageIn 180ms ease-out; }

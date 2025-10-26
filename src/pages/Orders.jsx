@@ -6,6 +6,7 @@ import { formatPrice } from '../utils/format'
 import Pagination from '../components/common/Pagination'
 import StatusChip from '../components/common/StatusChip'
 import { ROUTES } from '../constants/routes'
+import { Package } from 'lucide-react'
 
 export default function Orders() {
   const [loading, setLoading] = useState(true)
@@ -42,7 +43,13 @@ export default function Orders() {
   return (
     <div className="container-responsive py-8">
       <div className="mb-6 flex items-end justify-between">
-        <h1 className="text-xl font-semibold">Mis compras</h1>
+        <div>
+          <h1 className="text-2xl font-semibold flex items-center gap-2">
+            <Package className="h-6 w-6 text-[hsl(var(--primary))]" />
+            Mis compras
+          </h1>
+          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Historial de tus pedidos</p>
+        </div>
       </div>
       {loading ? (
         <div className="h-40 animate-pulse rounded-xl bg-surface-hover" />
@@ -59,7 +66,7 @@ export default function Orders() {
             <table className="w-full text-sm">
               <thead className="bg-surface-hover text-left">
                 <tr>
-                  <th className="p-3">#</th>
+                  <th className="p-3">Pedido</th>
                   <th className="p-3">Fecha</th>
                   <th className="p-3">Total</th>
                   <th className="p-3">Estado</th>
@@ -67,17 +74,59 @@ export default function Orders() {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((o) => (
-                  <tr key={o.id} className="border-t border-subtle hover:bg-surface-hover">
-                    <td className="p-3">{o.id}</td>
-                    <td className="p-3">{o.fecha ? new Date(o.fecha).toLocaleString() : '—'}</td>
-                    <td className="p-3">{formatPrice(Number(o.total ?? 0))}</td>
-                    <td className="p-3"><StatusChip status={o.pagado_en ? 'paid' : 'pending'} /></td>
-                    <td className="p-3 text-right">
-                      <Link className="text-[hsl(var(--primary))] hover:underline" to={ROUTES.orderDetail.replace(':id', String(o.id))}>Ver detalle</Link>
-                    </td>
-                  </tr>
-                ))}
+                {orders.map((o, index) => {
+                  const orderNumber = `SS-${String(o.id).padStart(5, '0')}`
+                  const orderDate = o.fecha ? new Date(o.fecha) : null
+                  const dateStr = orderDate 
+                    ? orderDate.toLocaleDateString('es-ES', { 
+                        day: '2-digit', 
+                        month: 'short', 
+                        year: 'numeric' 
+                      })
+                    : '—'
+                  const timeStr = orderDate 
+                    ? orderDate.toLocaleTimeString('es-ES', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                      })
+                    : ''
+                  
+                  return (
+                    <tr key={o.id} className="border-t border-subtle hover:bg-surface-hover transition-colors">
+                      <td className="p-3">
+                        <div className="flex items-center gap-2">
+                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
+                            <Package className="h-4 w-4" />
+                          </div>
+                          <div>
+                            <div className="font-medium">{orderNumber}</div>
+                            <div className="text-xs text-gray-500">{o.items?.length || 0} {o.items?.length === 1 ? 'producto' : 'productos'}</div>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-3">
+                        <div className="flex flex-col">
+                          <span className="font-medium">{dateStr}</span>
+                          {timeStr && <span className="text-xs text-gray-500">{timeStr}</span>}
+                        </div>
+                      </td>
+                      <td className="p-3">
+                        <span className="font-semibold text-[hsl(var(--primary))]">{formatPrice(Number(o.total ?? 0))}</span>
+                      </td>
+                      <td className="p-3">
+                        <StatusChip status={o.pagado_en ? 'paid' : 'pending'} />
+                      </td>
+                      <td className="p-3 text-right">
+                        <Link 
+                          className="text-[hsl(var(--primary))] hover:underline font-medium text-sm" 
+                          to={ROUTES.orderDetail.replace(':id', String(o.id))}
+                        >
+                          Ver detalle →
+                        </Link>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

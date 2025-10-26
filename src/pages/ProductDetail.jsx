@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { getProductById } from '../services/products'
 import { useCart } from '../hooks/useCart'
 import { formatPrice } from '../utils/format'
+import { ROUTES } from '../constants/routes'
 import Breadcrumbs from '../components/common/Breadcrumbs'
 import Button from '../components/ui/Button'
 
@@ -63,8 +64,8 @@ export default function ProductDetail() {
       <div className="mb-6">
         <Breadcrumbs
           items={[
-            { label: 'Inicio', to: '/' },
-            { label: 'Tienda', to: '/shop' },
+            { label: 'Inicio', to: ROUTES.home },
+            { label: 'Tienda', to: ROUTES.catalog },
             { label: product?.nombre || product?.name },
           ]}
         />
@@ -72,6 +73,8 @@ export default function ProductDetail() {
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
         <div>
           <div className="overflow-hidden rounded-2xl card-surface grid place-items-center aspect-square shadow-sm">
+            {/* Nota: El backend no tiene campo 'imagen' en el modelo Producto según documentación.
+                Se usa imagen placeholder por defecto. Agregar campo al backend si se requiere. */}
             {product?.imagen || product?.image ? (
               <img
                 src={product.imagen || product.image}

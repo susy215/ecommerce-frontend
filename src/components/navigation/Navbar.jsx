@@ -19,7 +19,7 @@ export default function Navbar() {
             <Menu className="h-5 w-5" />
           </button>
           <Link to={ROUTES.home} className="font-semibold tracking-tight text-xl">
-            <span className="bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--primary-700))] bg-clip-text text-transparent">Smart</span>
+            <span className="gradient-text">Smart</span>
             <span className="text-[rgb(var(--fg))]">Sales</span>
           </Link>
           <nav className="hidden lg:flex lg:items-center lg:gap-6 lg:ml-2">
@@ -31,7 +31,7 @@ export default function Navbar() {
 
         <div className="flex flex-1 max-w-lg mx-4">
           <SearchBar
-            placeholder="       Buscar productos…"
+            placeholder="      Buscar productos…"
             onSearch={(q) => {
               const sp = new URLSearchParams()
               if (q) sp.set('search', q)

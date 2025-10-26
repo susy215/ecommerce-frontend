@@ -1,1 +1,0 @@
-This folder is reserved for future global state (e.g., Zustand or Redux). For now, cart/account use Context in hooks/.
