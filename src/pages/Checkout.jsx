@@ -1,13 +1,14 @@
 import { Link, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useCart } from '../hooks/useCart'
 import { formatPrice } from '../utils/format'
 import { checkout as checkoutOrder, payOrder, createStripeSession } from '../services/orders'
+import { validarPromocion } from '../services/promociones'
 import { ROUTES } from '../constants/routes'
 import toast from '../utils/toastBus'
 import Button from '../components/ui/Button'
 import Textarea from '../components/common/Textarea'
-import { ShoppingBag, CreditCard, Check } from 'lucide-react'
+import { ShoppingBag, CreditCard, Check, Tag, X, Sparkles } from 'lucide-react'
 
 export default function Checkout() {
   const navigate = useNavigate()
@@ -19,6 +20,51 @@ export default function Checkout() {
   const [referencia, setReferencia] = useState('')
   const [payError, setPayError] = useState('')
   const [observaciones, setObservaciones] = useState('')
+  
+  // Estados para promoción
+  const [codigoPromocion, setCodigoPromocion] = useState('')
+  const [promocionAplicada, setPromocionAplicada] = useState(null)
+  const [validandoPromo, setValidandoPromo] = useState(false)
+  const [promoError, setPromoError] = useState('')
+  const [totalFinal, setTotalFinal] = useState(subtotal)
+
+  useEffect(() => {
+    setTotalFinal(subtotal)
+  }, [subtotal])
+
+  const handleValidarPromocion = async () => {
+    if (!codigoPromocion.trim()) {
+      setPromoError('Ingrese un código de promoción')
+      return
+    }
+
+    setValidandoPromo(true)
+    setPromoError('')
+    
+    try {
+      const result = await validarPromocion(codigoPromocion, subtotal)
+      setPromocionAplicada(result)
+      setTotalFinal(parseFloat(result.total_final))
+      setPromoError('')
+      toast.success(`¡Promoción aplicada! Descuento: ${formatPrice(parseFloat(result.descuento))}`)
+    } catch (e) {
+      const msg = e?.response?.data?.detail || 'Código inválido o expirado'
+      setPromoError(msg)
+      setPromocionAplicada(null)
+      setTotalFinal(subtotal)
+      toast.error(msg)
+    } finally {
+      setValidandoPromo(false)
+    }
+  }
+
+  const handleQuitarPromocion = () => {
+    setPromocionAplicada(null)
+    setCodigoPromocion('')
+    setTotalFinal(subtotal)
+    setPromoError('')
+    toast.success('Promoción removida')
+  }
 
   async function handleCheckout() {
     setError('')
@@ -27,11 +73,12 @@ export default function Checkout() {
       const payload = {
         items: items.map((i) => ({ producto: i.id, cantidad: i.qty })),
         observaciones,
+        codigo_promocion: promocionAplicada ? codigoPromocion : undefined
       }
       const created = await checkoutOrder(payload)
       setOrder(created)
       clear()
-      toast.success('Compra creada con éxito')
+      toast.success('Pedido creado con éxito')
     } catch (e) {
       const detail = e?.response?.data?.detail
       const msg = detail || 'No se pudo crear la compra. Intenta de nuevo.'
@@ -66,9 +113,9 @@ export default function Checkout() {
           </div>
           
           {order.pagado_en ? (
-            <div className="rounded-xl border-2 border-green-300 bg-green-50 dark:bg-green-900/20 dark:border-green-700 p-4 text-center">
-              <p className="text-green-700 dark:text-green-300 font-medium">✓ Pago confirmado</p>
-              <p className="text-sm text-gray-600 dark:text-gray-400">{new Date(order.pagado_en).toLocaleString()}</p>
+            <div className="rounded-xl p-4 text-center callout-success">
+              <p className="font-medium text-success-strong">✓ Pago confirmado</p>
+              <p className="text-sm text-[rgb(var(--fg))]/80 dark:text-gray-400">{new Date(order.pagado_en).toLocaleString()}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -182,9 +229,31 @@ export default function Checkout() {
                       ))}
                     </div>
                     
-                    <div className="mt-6 flex items-center justify-between py-4 border-t border-subtle">
-                      <span className="text-lg font-semibold">Total</span>
-                      <span className="text-2xl font-bold text-[hsl(var(--primary))]">{formatPrice(subtotal)}</span>
+                    {/* Resumen con promoción */}
+                    <div className="mt-6 space-y-3 py-4 border-t border-subtle">
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-gray-600">Subtotal</span>
+                        <span className="font-medium">{formatPrice(subtotal)}</span>
+                      </div>
+                      
+                      {promocionAplicada && (
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="flex items-center gap-1.5 text-success-strong dark:text-green-400">
+                            <Sparkles className="h-4 w-4" />
+                            Descuento ({promocionAplicada.promocion.nombre})
+                          </span>
+                          <span className="font-semibold text-success-strong dark:text-green-400">
+                            -{formatPrice(parseFloat(promocionAplicada.descuento))}
+                          </span>
+                        </div>
+                      )}
+                      
+                      <div className="flex items-center justify-between pt-3 border-t border-subtle">
+                        <span className="text-lg font-semibold">Total</span>
+                        <span className="text-2xl font-bold text-[hsl(var(--primary))]">
+                          {formatPrice(totalFinal)}
+                        </span>
+                      </div>
                     </div>
                   </>
                 )}
@@ -192,6 +261,78 @@ export default function Checkout() {
 
               {items.length > 0 && (
                 <>
+                  {/* Código de promoción */}
+                  <div className="rounded-xl border border-subtle bg-gradient-to-br from-[hsl(var(--primary))]/5 to-transparent p-5">
+                    <div className="flex items-center gap-2 mb-3">
+                      <Tag className="h-5 w-5 text-[hsl(var(--primary))]" />
+                      <h3 className="font-semibold">¿Tienes un código de promoción?</h3>
+                    </div>
+                    
+                    {!promocionAplicada ? (
+                      <div className="space-y-3">
+                        <div className="flex gap-2">
+                          <input
+                            type="text"
+                            placeholder="Ej: VERANO2025"
+                            value={codigoPromocion}
+                            onChange={(e) => setCodigoPromocion(e.target.value.toUpperCase())}
+                            className="input flex-1"
+                            onKeyPress={(e) => {
+                              if (e.key === 'Enter') {
+                                e.preventDefault()
+                                handleValidarPromocion()
+                              }
+                            }}
+                          />
+                          <Button
+                            onClick={handleValidarPromocion}
+                            disabled={validandoPromo || !codigoPromocion.trim()}
+                            variant="outline"
+                            className="whitespace-nowrap"
+                          >
+                            {validandoPromo ? 'Validando…' : 'Aplicar'}
+                          </Button>
+                        </div>
+                        {promoError && (
+                          <p className="text-sm text-red-600 dark:text-red-400">{promoError}</p>
+                        )}
+                        <Link 
+                          to={ROUTES.promociones}
+                          className="inline-flex items-center gap-1 text-xs text-[hsl(var(--primary))] hover:underline"
+                        >
+                          <Sparkles className="h-3.5 w-3.5" />
+                          Ver promociones disponibles
+                        </Link>
+                      </div>
+                    ) : (
+                      <div className="rounded-lg p-4 callout-success">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <Sparkles className="h-4 w-4" />
+                              <span className="font-semibold">
+                                {promocionAplicada.promocion.nombre}
+                              </span>
+                            </div>
+                            <p className="text-sm">
+                              Código: <span className="font-mono font-bold">{codigoPromocion}</span>
+                            </p>
+                            <p className="text-sm mt-1">
+                              Ahorro: {formatPrice(parseFloat(promocionAplicada.descuento))}
+                            </p>
+                          </div>
+                          <button
+                            onClick={handleQuitarPromocion}
+                            className="rounded-full p-1.5 hover:bg-red-100 dark:hover:bg-red-900/30 transition-colors"
+                            aria-label="Quitar promoción"
+                          >
+                            <X className="h-4 w-4 text-red-600 dark:text-red-400" />
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  
                   <div>
                     <Textarea
                       label="Observaciones (opcional)"
@@ -244,11 +385,11 @@ export default function Checkout() {
                 </ol>
               </div>
               
-              <div className="flex items-start gap-3 rounded-xl bg-emerald-100 dark:bg-emerald-900/20 border-2 border-emerald-400 dark:border-emerald-600 p-4">
-                <Check className="h-5 w-5 text-emerald-700 dark:text-emerald-400 flex-shrink-0 mt-0.5" />
+              <div className="rounded-lg p-4 callout-success flex items-start gap-3">
+                <Check className="h-5 w-5 flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-semibold text-sm text-emerald-950 dark:text-emerald-100 mb-1">Compra segura</h3>
-                  <p className="text-xs text-emerald-900 dark:text-emerald-200">Pagos protegidos con Stripe. Tu información está segura.</p>
+                  <h3 className="font-semibold text-sm mb-1">Compra segura</h3>
+                  <p className="text-xs">Pagos protegidos con Stripe. Tu información está segura.</p>
                 </div>
               </div>
             </div>

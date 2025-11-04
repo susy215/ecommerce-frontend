@@ -1,8 +1,13 @@
 import axios from 'axios'
 import { startLoading, stopLoading } from '../utils/loadingBus'
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: `${API_URL}/api`,
+  headers: {
+    'Content-Type': 'application/json',
+  },
   // Token Auth no requiere cookies; desactivar credenciales evita preflight estricto y problemas CORS
   withCredentials: false,
 })

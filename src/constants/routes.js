@@ -9,4 +9,5 @@ export const ROUTES = {
   account: '/account',
   login: '/login',
   register: '/register',
+  promociones: '/promociones',
 }

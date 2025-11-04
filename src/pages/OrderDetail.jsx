@@ -2,9 +2,12 @@ import { useEffect, useMemo, useState, useCallback } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getOrder, payOrder, createStripeSession, downloadReceipt } from '../services/orders'
 import { formatPrice } from '../utils/format'
+import { verificarGarantia } from '../services/devoluciones'
 import toast from '../utils/toastBus'
 import StatusChip from '../components/common/StatusChip'
-import { Calendar, CreditCard, ClipboardCopy, Printer, AlertCircle, CheckCircle2, Package, Download, ChevronDown, ChevronUp } from 'lucide-react'
+import GarantiaInfo from '../components/common/GarantiaInfo'
+import ModalDevolucion from '../components/common/ModalDevolucion'
+import { Calendar, CreditCard, ClipboardCopy, Printer, AlertCircle, CheckCircle2, Package, Download, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react'
 import Button from '../components/ui/Button'
 
 export default function OrderDetail() {
@@ -15,6 +18,7 @@ export default function OrderDetail() {
   const [paying, setPaying] = useState(false)
   const [error, setError] = useState('')
   const [itemsOpen, setItemsOpen] = useState(false)
+  const [modalItem, setModalItem] = useState(null)
 
   const fetchOrder = useCallback(async () => {
     setLoading(true)
@@ -125,6 +129,10 @@ export default function OrderDetail() {
               </div>
             </div>
           </div>
+
+          {/* Garantía */}
+          {order.pagado_en && <GarantiaInfo compra={order} />}
+
           <div className="rounded-xl border border-black/5 p-4">
             <button
               onClick={() => setItemsOpen(!itemsOpen)}
@@ -138,19 +146,39 @@ export default function OrderDetail() {
             {itemsOpen && (
               <>
                 <ul className="space-y-3">
-                  {items.map((it) => (
-                    <li key={it.id} className="flex items-center justify-between gap-4 text-sm">
-                      <div className="min-w-0">
-                        {it.producto ? (
-                          <Link to={`/product/${it.producto}`} className="truncate font-medium hover:underline">{it.producto_nombre}</Link>
-                        ) : (
-                          <span className="truncate font-medium">{it.producto_nombre}</span>
-                        )}
-                        <div className="text-xs text-gray-600">Cantidad: {it.cantidad}</div>
-                      </div>
-                      <div className="shrink-0 font-medium">{formatPrice(Number(it.subtotal ?? 0))}</div>
-                    </li>
-                  ))}
+                  {items.map((it) => {
+                    const puedeDevolver = order.pagado_en && verificarGarantia(order.fecha).dentroGarantia
+                    
+                    return (
+                      <li key={it.id} className="flex items-center justify-between gap-4 text-sm border-b border-black/5 pb-3 last:border-0 last:pb-0">
+                        <div className="min-w-0 flex-1">
+                          {it.producto ? (
+                            <Link to={`/product/${it.producto}`} className="truncate font-medium hover:underline block">
+                              {it.producto_nombre}
+                            </Link>
+                          ) : (
+                            <span className="truncate font-medium block">{it.producto_nombre}</span>
+                          )}
+                          <div className="text-xs text-gray-600 mt-1">
+                            Cantidad: {it.cantidad} × {formatPrice(Number(it.precio_unitario ?? 0))}
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="shrink-0 font-medium">{formatPrice(Number(it.subtotal ?? 0))}</div>
+                          {puedeDevolver && (
+                            <button
+                              onClick={() => setModalItem(it)}
+                              className="shrink-0 inline-flex items-center gap-1 rounded-md border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2 py-1 text-xs font-medium text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 transition"
+                              title="Solicitar devolución"
+                            >
+                              <RotateCcw size={12} />
+                              Devolver
+                            </button>
+                          )}
+                        </div>
+                      </li>
+                    )
+                  })}
                   {items.length === 0 && (
                     <li className="py-4 text-center text-sm text-gray-600">Sin items.</li>
                   )}
@@ -167,8 +195,11 @@ export default function OrderDetail() {
           <h2 className="mb-3 flex items-center gap-2 font-semibold"><CreditCard size={16} /> Pago</h2>
           {order.pagado_en ? (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 rounded-md bg-green-100 p-3 text-green-800 dark:bg-green-900/30 dark:text-green-200">
-                <CheckCircle2 size={18} /> Pago confirmado.
+              <div className="rounded-lg p-3 text-sm callout-success">
+                <div className="flex items-center gap-2">
+                  <CheckCircle2 size={18} />
+                  <span className="font-medium">Pago confirmado.</span>
+                </div>
               </div>
               <Button
                 variant="outline"
@@ -248,6 +279,18 @@ export default function OrderDetail() {
           )}
         </div>
       </div>
+
+      {/* Modal de devolución */}
+      {modalItem && (
+        <ModalDevolucion
+          item={modalItem}
+          onClose={() => setModalItem(null)}
+          onSuccess={() => {
+            setModalItem(null)
+            fetchOrder() // Recargar orden
+          }}
+        />
+      )}
     </div>
   )
 }

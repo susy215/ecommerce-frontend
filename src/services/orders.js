@@ -1,7 +1,9 @@
 import api from './apiClient'
 
-export async function checkout({ items, observaciones }) {
-  const { data } = await api.post('/compra/compras/checkout/', { items, observaciones })
+export async function checkout({ items, observaciones, codigo_promocion }) {
+  const payload = { items, observaciones }
+  if (codigo_promocion) payload.codigo_promocion = codigo_promocion
+  const { data } = await api.post('/compra/compras/checkout/', payload)
   return data
 }
 

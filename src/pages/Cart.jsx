@@ -46,7 +46,7 @@ export default function Cart() {
                     className="h-20 w-20 rounded-lg object-cover bg-surface-hover" 
                   />
                   <div className="flex-1 min-w-0">
-                    <Link to={`/products/${item.id}`} className="font-medium hover:text-[hsl(var(--primary))] line-clamp-2">
+                    <Link to={`/product/${item.id}`} className="font-medium hover:text-[hsl(var(--primary))] line-clamp-2">
                       {item.name}
                     </Link>
                     <p className="mt-1 text-lg font-semibold text-[hsl(var(--primary))]">

@@ -19,12 +19,12 @@ export default function Navbar() {
             <Menu className="h-5 w-5" />
           </button>
           <Link to={ROUTES.home} className="font-semibold tracking-tight text-xl">
-            <span className="gradient-text">Smart</span>
-            <span className="text-[rgb(var(--fg))]">Sales</span>
+            <span className="gradient-text">SmartSales</span>
           </Link>
           <nav className="hidden lg:flex lg:items-center lg:gap-6 lg:ml-2">
             <NavItem to={ROUTES.home} label="Inicio" />
             <NavItem to={ROUTES.catalog} label="Tienda" />
+            <NavItem to={ROUTES.promociones} label="Promociones" />
             <NavItem to={ROUTES.orders} label="Pedidos" />
           </nav>
         </div>
