@@ -73,7 +73,7 @@
     40-59: Headers, footers, barras fijas
     60-79: Notificaciones y banners
     80-99: Modales y overlays secundarios
-    100+: Menús laterales y elementos de navegación críticos
+    9998-9999: Menús laterales (MÁXIMA PRIORIDAD - siempre visible)
   */
   
   /* Tipografía escalable */

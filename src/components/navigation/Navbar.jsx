@@ -112,14 +112,14 @@ export default function Navbar() {
       {/* Mobile menu drawer - Overlay lateral deslizante */}
       {mobileOpen && (
         <>
-          {/* Overlay oscuro - Mayor z-index para estar sobre todo */}
+          {/* Overlay oscuro - z-index máximo para estar sobre todo */}
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] lg:hidden animate-in fade-in"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[9998] lg:hidden animate-in fade-in"
             onClick={() => setMobileOpen(false)}
           />
           
-          {/* Panel lateral - z-index más alto que el overlay */}
-          <div className="fixed top-0 left-0 bottom-0 w-72 bg-[rgb(var(--bg))] border-r border-subtle shadow-2xl z-[110] lg:hidden animate-in slide-in-from-left">
+          {/* Panel lateral - z-index supremo, siempre visible */}
+          <div className="fixed top-0 left-0 bottom-0 w-72 bg-[rgb(var(--bg))] border-r border-subtle shadow-2xl z-[9999] lg:hidden animate-in slide-in-from-left">
             <div className="flex flex-col h-full">
               {/* Header del menú */}
               <div className="flex items-center justify-between p-4 border-b border-subtle bg-gradient-to-r from-[hsl(var(--primary))]/5 to-transparent">
