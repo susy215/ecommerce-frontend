@@ -6,6 +6,7 @@ import { getProducts } from '../services/products'
 import { toArray } from '../utils/data'
 import { ROUTES } from '../constants/routes'
 import { ArrowRight, Sparkles } from 'lucide-react'
+import InstallPWAButton from '../components/common/InstallPWAButton'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
@@ -55,7 +56,7 @@ export default function Home() {
               Descubre productos de calidad con envío rápido y los mejores precios del mercado.
             </p>
             
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 items-center">
               <Link 
                 to={ROUTES.catalog}
                 className="btn-primary inline-flex items-center gap-2 rounded-lg px-5 py-2.5 text-sm font-semibold shadow-sm transition-all hover:shadow-md"
@@ -69,6 +70,7 @@ export default function Home() {
               >
                 Ver ofertas
               </Link>
+              <InstallPWAButton className="ml-1" />
             </div>
           </div>
         </div>

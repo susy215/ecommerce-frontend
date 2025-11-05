@@ -45,12 +45,12 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route element={<AppLayout />}> 
-          <Route index element={<Home />} />
-          <Route path={ROUTES.catalog} element={<Catalog />} />
-          <Route path={ROUTES.product} element={<ProductDetail />} />
-          <Route path={ROUTES.promociones} element={<Promociones />} />
-          <Route path={ROUTES.cart} element={<Cart />} />
           <Route element={<ProtectedRoute />}>
+            <Route index element={<Home />} />
+            <Route path={ROUTES.catalog} element={<Catalog />} />
+            <Route path={ROUTES.product} element={<ProductDetail />} />
+            <Route path={ROUTES.promociones} element={<Promociones />} />
+            <Route path={ROUTES.cart} element={<Cart />} />
             <Route path={ROUTES.checkout} element={<Checkout />} />
             <Route path={ROUTES.orders} element={<Orders />} />
             <Route path={ROUTES.orderDetail} element={<OrderDetail />} />

@@ -9,7 +9,8 @@ export async function getVapidPublicKey() {
   try {
     const response = await fetch(`${API_URL}/api/notificaciones/vapid-public-key/`)
     const data = await response.json()
-    return data.public_key
+    // Soportar ambas variantes: public_key o publicKey
+    return data.publicKey || data.public_key
   } catch (error) {
     console.error('Error al obtener clave VAPID:', error)
     throw error

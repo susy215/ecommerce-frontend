@@ -41,8 +41,20 @@ export default function Register() {
   return (
     <div className="container-responsive flex min-h-[60vh] items-center justify-center py-10 page-anim">
       <div className="w-full max-w-lg card-surface p-6 sm:p-8">
-        <h1 className="mb-2 text-2xl font-semibold">Crear cuenta</h1>
-        <p className="mb-4 text-sm text-gray-600">Completa el formulario para registrarte</p>
+        <div className="mb-5 flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/15">
+            <span className="gradient-text text-lg">S</span>
+          </div>
+          <div>
+            <div className="gradient-text font-semibold">SmartSales</div>
+            <div className="text-xs text-gray-500">Crea tu cuenta en minutos</div>
+          </div>
+        </div>
+        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))]/10 px-3 py-1.5 text-[hsl(var(--primary))]">
+          <span className="text-xs font-semibold uppercase tracking-wide">Crear cuenta</span>
+        </div>
+        <h1 className="mb-2 h2">Regístrate</h1>
+        <p className="mb-4 subtitle">Completa el formulario para registrarte</p>
         <form className="space-y-4" onSubmit={onSubmit}>
           <div className="grid gap-4 sm:grid-cols-2">
             <Input

@@ -5,6 +5,7 @@ import SearchBar from '../common/SearchBar'
 import { useCart } from '../../hooks/useCart'
 import { useAuth } from '../../hooks/useAuth'
 import ThemeToggle from './ThemeToggle'
+import InstallPWAButton from '../common/InstallPWAButton'
 import VoiceAssistant from '../common/VoiceAssistant'
 
 export default function Navbar() {
@@ -32,7 +33,7 @@ export default function Navbar() {
 
         <div className="flex flex-1 max-w-lg mx-4">
           <SearchBar
-            placeholder="      Buscar productos…"
+            placeholder="Buscar productos…"
             onSearch={(q) => {
               const sp = new URLSearchParams()
               if (q) sp.set('search', q)
@@ -43,6 +44,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-3">
+          <InstallPWAButton />
           <VoiceAssistant />
           <ThemeToggle />
           {user ? (
