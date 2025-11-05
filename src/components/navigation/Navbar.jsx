@@ -80,8 +80,9 @@ export default function Navbar() {
 
           {/* Botones de acción - más grandes y espaciados en móvil */}
           <div className="flex items-center gap-1 md:gap-3">
-            <div className="hidden md:flex items-center gap-2">
-              <InstallPWAButton />
+            {/* InstallPWA visible en móvil, VoiceAssistant solo en sidebar móvil */}
+            <InstallPWAButton />
+            <div className="hidden md:flex">
               <VoiceAssistant />
             </div>
             <ThemeToggle />
@@ -109,12 +110,12 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Barra de búsqueda móvil - segunda línea (ocultar en login/register) */}
+        {/* Barra de búsqueda móvil - segunda línea (ocultar en login/register) esto asi       placeholder="   Buscar productos…"*/}
         {!isAuthPage && (
           <div className="md:hidden border-t border-subtle bg-[rgb(var(--bg))]">
             <div className="container-responsive py-2">
               <SearchBar
-                placeholder="Buscar productos…"
+                placeholder="   Buscar productos…"
                 onSearch={(q) => {
                   const sp = new URLSearchParams()
                   if (q) sp.set('search', q)
