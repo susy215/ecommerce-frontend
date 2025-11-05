@@ -196,7 +196,7 @@ export default function Account() {
 
               <div className="rounded-lg bg-[hsl(var(--primary))]/5 border border-[hsl(var(--primary))]/10 p-3">
                 <p className="text-xs text-[rgb(var(--muted))]">
-                  💡 <strong>Nota:</strong> Las notificaciones solo funcionan en este navegador y dispositivo. 
+                  <strong>Nota:</strong> Las notificaciones solo funcionan en este navegador y dispositivo. 
                   Si usas múltiples dispositivos, actívalas en cada uno.
                 </p>
               </div>
