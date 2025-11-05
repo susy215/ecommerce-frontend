@@ -39,8 +39,6 @@ export default function VoiceFab() {
     }
   }
 
-  if (!isSupported) return null
-
   return (
     <>
       {/* Botón flotante */}
