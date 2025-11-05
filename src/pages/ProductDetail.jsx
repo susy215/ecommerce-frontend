@@ -60,7 +60,7 @@ export default function ProductDetail() {
   }
 
   return (
-    <div className="container-responsive py-10 page-anim">
+    <div className="container-responsive py-10 page-anim pb-24 lg:pb-0">
       <div className="mb-6">
         <Breadcrumbs
           items={[
@@ -138,6 +138,25 @@ export default function ProductDetail() {
               className="flex-1 sm:flex-none"
             >
               {product?.stock === 0 ? 'Agotado' : 'Añadir al carrito'}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Sticky action bar for mobile */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-subtle bg-[rgb(var(--bg))] p-3 pwa-safe-bottom">
+        <div className="container-responsive">
+          <div className="flex items-center gap-3">
+            <div className="flex-1 min-w-0">
+              <div className="truncate text-sm text-gray-600">{product?.nombre || product?.name}</div>
+              <div className="font-bold text-[hsl(var(--primary))]">{formatPrice(Number(product?.precio ?? product?.price ?? 0))}</div>
+            </div>
+            <Button 
+              onClick={() => addItem(product, 1)}
+              disabled={product?.stock === 0}
+              className="flex-shrink-0"
+            >
+              {product?.stock === 0 ? 'Agotado' : 'Añadir'}
             </Button>
           </div>
         </div>

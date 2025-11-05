@@ -153,8 +153,8 @@ export default function Orders() {
           </div>
         ) : (
           <div className="space-y-3">
-          <div className="overflow-hidden rounded-xl border border-subtle">
-            <table className="w-full text-sm">
+          <div className="overflow-x-auto rounded-xl border border-subtle">
+            <table className="w-full text-sm min-w-[640px]">
               <thead className="bg-surface-hover text-left">
                 <tr>
                   <th className="p-3">Pedido</th>
