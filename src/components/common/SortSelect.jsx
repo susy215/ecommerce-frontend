@@ -4,7 +4,7 @@ export default function SortSelect({ value, onChange, className = '' }) {
       value={value}
       onChange={(e) => onChange?.(e.target.value)}
       className={[
-        'input rounded-md',
+        'input rounded-lg text-xs sm:text-sm px-3 py-2.5 sm:py-2 font-medium cursor-pointer',
         className,
       ].join(' ')}
     >

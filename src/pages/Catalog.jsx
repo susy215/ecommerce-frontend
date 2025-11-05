@@ -77,34 +77,34 @@ export default function Catalog() {
   }
 
   return (
-    <div className="container-responsive py-8 page-anim">
-      <div className="mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+    <div className="container-responsive py-4 sm:py-6 md:py-8 page-anim">
+      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-semibold">Tienda</h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">{search ? `Resultados para "${search}"` : 'Descubre nuestros productos'}</p>
+          <h1 className="text-xl sm:text-2xl font-semibold">Tienda</h1>
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-1">{search ? `Resultados para "${search}"` : 'Descubre nuestros productos'}</p>
         </div>
         <SortSelect value={ordering} onChange={onSortChange} />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-6">
+      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
         <FiltersSidebar categories={categories} selectedCategoria={categoria} onChange={onFiltersChange} />
         <div className="flex-1 min-w-0">
           {loading ? (
-            <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
               {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="aspect-square animate-pulse rounded-xl bg-surface-hover" />
+                <div key={i} className="aspect-square animate-pulse rounded-lg sm:rounded-xl bg-surface-hover" />
               ))}
             </div>
           ) : products.length === 0 ? (
-            <div className="card-surface p-12 text-center">
-              <p className="text-gray-600 dark:text-gray-400 mb-4">No se encontraron productos.</p>
+            <div className="card-surface p-8 sm:p-12 text-center">
+              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">No se encontraron productos.</p>
               <button
                 onClick={() => {
                   const next = new URLSearchParams(searchParams)
                   next.delete('search'); next.delete('categoria'); next.set('page','1')
                   setSearchParams(next)
                 }}
-                className="btn-primary rounded-md px-5 py-2 text-sm font-medium"
+                className="btn-primary rounded-lg px-5 py-3 sm:py-2.5 text-sm font-semibold"
               >
                 Limpiar filtros
               </button>

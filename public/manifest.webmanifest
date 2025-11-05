@@ -1,11 +1,12 @@
 {
-  "name": "SmartSales365",
+  "name": "SmartSales365 - Tu Tienda Online",
   "short_name": "SmartSales",
   "start_url": "/",
   "display": "standalone",
+  "orientation": "portrait-primary",
   "background_color": "#FAFAFC",
   "theme_color": "#6D28D9",
-  "description": "Ecommerce PWA for SmartSales365",
+  "description": "Tu tienda online de confianza. Compra productos de calidad con envío rápido y los mejores precios.",
   "categories": ["shopping", "business"],
   "icons": [
     {
