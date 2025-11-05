@@ -5,6 +5,7 @@ import SearchBar from '../common/SearchBar'
 import { useCart } from '../../hooks/useCart'
 import { useAuth } from '../../hooks/useAuth'
 import ThemeToggle from './ThemeToggle'
+import VoiceAssistant from '../common/VoiceAssistant'
 
 export default function Navbar() {
   const { count } = useCart()
@@ -42,6 +43,7 @@ export default function Navbar() {
         </div>
 
         <div className="flex items-center gap-2 md:gap-3">
+          <VoiceAssistant />
           <ThemeToggle />
           {user ? (
             <div className="flex items-center gap-2">
