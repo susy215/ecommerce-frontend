@@ -54,7 +54,7 @@ export function parseIntent(rawText) {
   if (/ver carrito|abrir carrito|ir al carrito/.test(text)) {
     return { type: 'go_cart' }
   }
-  if (/checkout|pagar|ir al checkout|finalizar compra|comprar ahora/.test(text)) {
+  if (/checkout|pagar|ir al checkout|finalizar compra|comprar ahora|proceder pago|proceder al pago|proceder con el pago|proceder a pagar/.test(text)) {
     return { type: 'go_checkout' }
   }
 

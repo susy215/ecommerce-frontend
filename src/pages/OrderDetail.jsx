@@ -279,17 +279,10 @@ export default function OrderDetail() {
             </div>
           ) : (
             <div className="space-y-4">
-              {/* Alerta de pago pendiente */}
-              <div className="rounded-lg border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20 p-3">
-                <div className="flex items-start gap-2 text-sm">
-                  <AlertCircle size={18} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-                  <div>
-                    <div className="font-semibold text-amber-800 dark:text-amber-200">Pago pendiente</div>
-                    <div className="text-xs text-amber-700 dark:text-amber-300 mt-1">
-                      Completa el pago para procesar tu pedido
-                    </div>
-                  </div>
-                </div>
+              {/* Aviso de pago pendiente - sutil */}
+              <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
+                <AlertCircle size={16} className="text-amber-600 dark:text-amber-400" />
+                <span>Pago pendiente. Completa el pago para procesar tu pedido.</span>
               </div>
               
               {/* Pagar con Stripe */}
