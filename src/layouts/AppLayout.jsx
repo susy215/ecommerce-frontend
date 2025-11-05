@@ -7,11 +7,14 @@ import GlobalOverlay from '../components/common/GlobalOverlay'
 import InstallPWA from '../components/common/InstallPWA'
 import PullToRefreshIndicator from '../components/common/PullToRefreshIndicator'
 import { useAuth } from '../hooks/useAuth'
+import { VoiceCommandProvider } from '../components/voice/VoiceCommandProvider'
+import VoiceFab from '../components/voice/VoiceFab'
 
 export default function AppLayout() {
   const location = useLocation()
   const { user } = useAuth()
   const token = localStorage.getItem('auth_token')
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register'
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -28,6 +31,12 @@ export default function AppLayout() {
         </div>
       </main>
       <Footer />
+      {/* Asistente de voz: aislado y modular, oculto en login/register */}
+      {!isAuthPage && (
+        <VoiceCommandProvider>
+          <VoiceFab />
+        </VoiceCommandProvider>
+      )}
     </div>
   )
 }
