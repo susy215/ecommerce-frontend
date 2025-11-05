@@ -43,12 +43,53 @@ export default function Checkout() {
     
     try {
       const result = await validarPromocion(codigoPromocion, subtotal)
+      
+      // Debug: Ver qué responde el backend
+      console.log('📊 Respuesta validación promoción:', result)
+      console.log('💰 Subtotal enviado:', subtotal)
+      
+      // Verificar que el descuento sea mayor a 0
+      const descuento = parseFloat(result.descuento || 0)
+      
+      if (descuento <= 0) {
+        // Si el descuento es 0, verificar si es por monto mínimo
+        const montoMinimo = result.promocion?.monto_minimo
+        if (montoMinimo && subtotal < parseFloat(montoMinimo)) {
+          const msg = `Esta promoción requiere una compra mínima de ${formatPrice(parseFloat(montoMinimo))}`
+          setPromoError(msg)
+          toast.error(msg)
+          setPromocionAplicada(null)
+          setTotalFinal(subtotal)
+          return
+        } else {
+          const msg = 'Esta promoción no aplica para tu compra actual'
+          setPromoError(msg)
+          toast.error(msg)
+          setPromocionAplicada(null)
+          setTotalFinal(subtotal)
+          return
+        }
+      }
+      
       setPromocionAplicada(result)
       setTotalFinal(parseFloat(result.total_final))
       setPromoError('')
-      toast.success(`¡Promoción aplicada! Descuento: ${formatPrice(parseFloat(result.descuento))}`)
+      toast.success(`¡Promoción aplicada! Ahorro de ${formatPrice(descuento)}`)
     } catch (e) {
-      const msg = e?.response?.data?.detail || 'Código inválido o expirado'
+      const errorData = e?.response?.data
+      let msg = 'Código inválido o expirado'
+      
+      // Intentar extraer el mensaje de error específico
+      if (errorData) {
+        if (errorData.detail) {
+          msg = errorData.detail
+        } else if (errorData.error) {
+          msg = errorData.error
+        } else if (errorData.message) {
+          msg = errorData.message
+        }
+      }
+      
       setPromoError(msg)
       setPromocionAplicada(null)
       setTotalFinal(subtotal)
@@ -318,8 +359,13 @@ export default function Checkout() {
                               Código: <span className="font-mono font-bold">{codigoPromocion}</span>
                             </p>
                             <p className="text-sm mt-1">
-                              Ahorro: {formatPrice(parseFloat(promocionAplicada.descuento))}
+                              Ahorro: <span className="font-bold text-lg">{formatPrice(parseFloat(promocionAplicada.descuento))}</span>
                             </p>
+                            {promocionAplicada.promocion.descripcion && (
+                              <p className="text-xs mt-2 opacity-90">
+                                {promocionAplicada.promocion.descripcion}
+                              </p>
+                            )}
                           </div>
                           <button
                             onClick={handleQuitarPromocion}
