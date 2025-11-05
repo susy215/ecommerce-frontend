@@ -187,7 +187,6 @@ export default function Promociones() {
                       </div>
                     </div>
                   )}
-                </div>
 
                 {/* Footer con CTA */}
                 <div className="border-t border-subtle px-6 py-4 bg-surface-hover/50">
