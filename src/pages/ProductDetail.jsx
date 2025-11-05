@@ -7,7 +7,7 @@ import { ROUTES } from '../constants/routes'
 import Breadcrumbs from '../components/common/Breadcrumbs'
 import Button from '../components/ui/Button'
 import { ShoppingCart, Package, Tag, CheckCircle } from 'lucide-react'
-import { toast } from 'sonner'
+import toast from '../utils/toastBus'
 
 export default function ProductDetail() {
   const { id } = useParams()
