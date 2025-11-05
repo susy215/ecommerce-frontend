@@ -91,8 +91,22 @@ export default function VoiceAssistant() {
   }
 
   const handleAddToCart = (product) => {
-    addItem(product, 1)
-    toast.success(`"${product.nombre || product.name}" agregado al carrito`)
+    // Normalizar producto para asegurar estructura consistente
+    // addItem ya maneja la normalización, pero esto asegura que funcione correctamente
+    const normalizedProduct = {
+      id: product.id,
+      nombre: product.nombre || product.name,
+      name: product.name || product.nombre, // Para compatibilidad
+      precio: product.precio ?? product.price ?? 0,
+      price: product.price ?? product.precio ?? 0, // Para compatibilidad
+      imagen: product.imagen || product.image,
+      image: product.image || product.imagen, // Para compatibilidad
+      stock: product.stock,
+    }
+    
+    addItem(normalizedProduct, 1)
+    const productName = normalizedProduct.nombre || normalizedProduct.name || 'Producto'
+    toast.success(`"${productName}" agregado al carrito`)
     setSearchResults([])
   }
 
