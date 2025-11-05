@@ -56,23 +56,21 @@ export default function Home() {
               Descubre productos de calidad con envío rápido y los mejores precios.
             </p>
             
-            <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 items-stretch sm:items-center">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <Link 
                 to={ROUTES.catalog}
-                className="btn-primary inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 sm:py-2.5 text-sm font-semibold shadow-sm transition-all hover:shadow-md"
+                className="btn-primary inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 sm:py-2.5 text-sm font-semibold shadow-md transition-all hover:shadow-lg"
               >
-                Explorar productos
+                Ir a la tienda
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link 
-                to={ROUTES.catalog}
-                className="btn-outline inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 sm:py-2.5 text-sm font-semibold"
+                to={ROUTES.promociones}
+                className="btn-outline inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3 sm:py-2.5 text-sm font-semibold"
               >
-                Ver ofertas
+                <Sparkles className="h-4 w-4" />
+                Ver promociones
               </Link>
-              <div className="hidden sm:block">
-                <InstallPWAButton className="ml-1" />
-              </div>
             </div>
           </div>
         </div>

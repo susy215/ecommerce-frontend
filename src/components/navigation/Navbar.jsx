@@ -41,7 +41,7 @@ export default function Navbar() {
         {/* Barra de búsqueda - Solo desktop */}
         <div className="hidden md:flex flex-1 max-w-lg mx-4">
           <SearchBar
-            placeholder="Buscar productos…"
+            placeholder="   Buscar productos…"
             onSearch={(q) => {
               const sp = new URLSearchParams()
               if (q) sp.set('search', q)
@@ -86,7 +86,7 @@ export default function Navbar() {
       <div className="md:hidden border-t border-subtle bg-[rgb(var(--bg))]">
         <div className="container-responsive py-2">
           <SearchBar
-            placeholder="Buscar productos…"
+            placeholder="   Buscar productos…"
             onSearch={(q) => {
               const sp = new URLSearchParams()
               if (q) sp.set('search', q)
