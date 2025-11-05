@@ -17,7 +17,7 @@ export default function AppLayout() {
       <GlobalOverlay />
       <Toaster />
       <Navbar />
-      <main className="flex-1">
+      <main className="flex-1 pwa-safe-bottom">
         <div key={location.pathname} className="page-anim">
           {/* Prompt de notificaciones deshabilitado por solicitud del cliente */}
           <Outlet />

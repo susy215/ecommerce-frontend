@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
-import { ShoppingCart, Menu, Search, User } from 'lucide-react'
+import { ShoppingCart, Menu, X, User } from 'lucide-react'
 import { ROUTES } from '../../constants/routes'
 import SearchBar from '../common/SearchBar'
 import { useCart } from '../../hooks/useCart'
@@ -12,13 +13,18 @@ export default function Navbar() {
   const { count } = useCart()
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-40 border-b border-subtle bg-[rgb(var(--bg))]/80 backdrop-blur supports-[backdrop-filter]:bg-[rgb(var(--bg))]/60">
+    <header className="sticky top-0 z-40 border-b border-subtle bg-[rgb(var(--bg))]/80 backdrop-blur supports-[backdrop-filter]:bg-[rgb(var(--bg))]/60 pwa-safe-top">
       <div className="container-responsive flex h-16 items-center justify-between gap-4 md:gap-6">
         <div className="flex items-center gap-3 md:gap-4">
-          <button className="inline-flex items-center justify-center rounded-md p-2 hover-surface lg:hidden" aria-label="Open menu">
-            <Menu className="h-5 w-5" />
+          <button 
+            className="inline-flex items-center justify-center rounded-md p-2 hover-surface lg:hidden"
+            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+            onClick={() => setMobileOpen((v) => !v)}
+          >
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
           <Link to={ROUTES.home} className="font-semibold tracking-tight text-xl">
             <span className="gradient-text">SmartSales</span>
@@ -70,6 +76,28 @@ export default function Navbar() {
           </NavLink>
         </div>
       </div>
+
+      {/* Mobile menu drawer */}
+      {mobileOpen && (
+        <div className="lg:hidden border-t border-subtle bg-[rgb(var(--bg))]">
+          <div className="container-responsive py-2">
+            <div className="flex flex-col gap-1">
+              <NavLink to={ROUTES.home} className="rounded-md px-3 py-2 hover-surface" onClick={() => setMobileOpen(false)}>Inicio</NavLink>
+              <NavLink to={ROUTES.catalog} className="rounded-md px-3 py-2 hover-surface" onClick={() => setMobileOpen(false)}>Tienda</NavLink>
+              <NavLink to={ROUTES.promociones} className="rounded-md px-3 py-2 hover-surface" onClick={() => setMobileOpen(false)}>Promociones</NavLink>
+              <NavLink to={ROUTES.orders} className="rounded-md px-3 py-2 hover-surface" onClick={() => setMobileOpen(false)}>Pedidos</NavLink>
+              {user ? (
+                <>
+                  <NavLink to={ROUTES.account} className="rounded-md px-3 py-2 hover-surface" onClick={() => setMobileOpen(false)}>Mi cuenta</NavLink>
+                  <button onClick={() => { setMobileOpen(false); logout() }} className="text-left rounded-md px-3 py-2 hover-surface">Salir</button>
+                </>
+              ) : (
+                <NavLink to={ROUTES.login} className="rounded-md px-3 py-2 hover-surface" onClick={() => setMobileOpen(false)}>Entrar</NavLink>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   )
 }
