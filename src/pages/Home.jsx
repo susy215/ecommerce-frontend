@@ -92,11 +92,11 @@ export default function Home() {
           </Link>
         </div>
         {loading ? (
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="aspect-square animate-pulse rounded-lg sm:rounded-xl bg-surface-hover" />
-            ))}
-          </div>
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="aspect-square rounded-lg sm:rounded-xl skeleton-shimmer" />
+          ))}
+        </div>
         ) : (
           <ProductGrid products={products} onAdd={addItem} />
         )}

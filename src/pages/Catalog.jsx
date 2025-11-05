@@ -90,11 +90,11 @@ export default function Catalog() {
         <FiltersSidebar categories={categories} selectedCategoria={categoria} onChange={onFiltersChange} />
         <div className="flex-1 min-w-0">
           {loading ? (
-            <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="aspect-square animate-pulse rounded-lg sm:rounded-xl bg-surface-hover" />
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="aspect-square rounded-lg sm:rounded-xl skeleton-shimmer" />
+            ))}
+          </div>
           ) : products.length === 0 ? (
             <div className="card-surface p-8 sm:p-12 text-center">
               <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">No se encontraron productos.</p>

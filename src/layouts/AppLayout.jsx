@@ -5,6 +5,7 @@ import GlobalLoader from '../components/common/GlobalLoader'
 import Toaster from '../components/common/Toaster'
 import GlobalOverlay from '../components/common/GlobalOverlay'
 import InstallPWA from '../components/common/InstallPWA'
+import PullToRefreshIndicator from '../components/common/PullToRefreshIndicator'
 import { useAuth } from '../hooks/useAuth'
 
 export default function AppLayout() {
@@ -18,6 +19,7 @@ export default function AppLayout() {
       <GlobalOverlay />
       <Toaster />
       <InstallPWA />
+      <PullToRefreshIndicator />
       <Navbar />
       <main className="flex-1 pwa-safe-bottom">
         <div key={location.pathname} className="page-anim">
