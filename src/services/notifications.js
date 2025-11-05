@@ -117,13 +117,28 @@ export async function subscribeToPushNotifications(token) {
       }
     }
 
-    // Enviar suscripción al backend
-    await api.post('/notificaciones/subscriptions/', {
-      endpoint: subscription.endpoint,
-      p256dh: arrayBufferToBase64(subscription.getKey('p256dh')),
-      auth: arrayBufferToBase64(subscription.getKey('auth')),
-      user_agent: navigator.userAgent
-    })
+    // Evitar POST innecesario si el endpoint ya fue enviado previamente desde este dispositivo
+    const lastEndpoint = localStorage.getItem('push_endpoint')
+    if (subscription.endpoint !== lastEndpoint) {
+      try {
+        await api.post('/notificaciones/subscriptions/', {
+          endpoint: subscription.endpoint,
+          p256dh: arrayBufferToBase64(subscription.getKey('p256dh')),
+          auth: arrayBufferToBase64(subscription.getKey('auth')),
+          user_agent: navigator.userAgent
+        })
+        localStorage.setItem('push_endpoint', subscription.endpoint)
+      } catch (e) {
+        const msg = e?.response?.data
+        const isDuplicate = e?.response?.status === 400 && (
+          (typeof msg === 'string' && /already exists|ya existe/i.test(msg)) ||
+          (msg && msg.endpoint && /already exists|ya existe/i.test(String(msg.endpoint)))
+        )
+        if (!isDuplicate) throw e
+        // Duplicado: tratar como éxito idempotente
+        localStorage.setItem('push_endpoint', subscription.endpoint)
+      }
+    }
 
     console.log('✅ Suscrito a notificaciones push')
     return { success: true, subscription }
