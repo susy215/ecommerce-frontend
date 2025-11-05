@@ -8,8 +8,8 @@ export default function ProductCard({ product, onAdd }) {
   const nombre = product?.nombre || product?.name || 'Producto'
   const precio = product?.precio ?? product?.price ?? 0
   const stock = product?.stock
-  // Imagen por defecto si no existe (backend no tiene campo imagen según doc)
-  const image = product?.image || product?.imagen || 'https://imgs.search.brave.com/aJqdC45IQOsmTLrl_8R3-YWcSAe-zzjK5XrQ3PNo_pQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvOTFmM2FBSlJ1Y0wuanBn'
+  // Imagen por defecto si no existe
+  const image = product?.image || product?.imagen || 'https://placehold.co/600x600?text=Producto'
   
   return (
     <div className="group overflow-hidden rounded-xl card-surface card-hover">

@@ -41,7 +41,7 @@ export default function Cart() {
               <div key={item.id} className="card-surface card-hover p-4">
                 <div className="flex items-center gap-4">
                   <img 
-                    src={item.image || 'https://imgs.search.brave.com/aJqdC45IQOsmTLrl_8R3-YWcSAe-zzjK5XrQ3PNo_pQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvOTFmM2FBSlJ1Y0wuanBn'} 
+                    src={item.image || 'https://placehold.co/160x160?text=Producto'} 
                     alt={item.name} 
                     className="h-20 w-20 rounded-lg object-cover bg-surface-hover" 
                   />

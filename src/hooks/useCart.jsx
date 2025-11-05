@@ -47,7 +47,7 @@ export function CartProvider({ children }) {
           id: product.id,
           name: product.nombre || product.name,
           price: Number(product.precio ?? product.price ?? 0),
-          image: product.imagen || product.image || 'https://imgs.search.brave.com/aJqdC45IQOsmTLrl_8R3-YWcSAe-zzjK5XrQ3PNo_pQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvOTFmM2FBSlJ1Y0wuanBn',
+          image: product.imagen || product.image || 'https://placehold.co/600x600?text=Producto',
           stock: product.stock,
           qty: stockToAdd,
         },
