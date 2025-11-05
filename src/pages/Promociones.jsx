@@ -138,38 +138,34 @@ export default function Promociones() {
                   </div>
                 </div>
 
-                {/* Detalles */}
-                <div className="px-6 pb-6 space-y-3">
-                  {/* Fechas */}
-                  <div className="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-400">
-                    <Calendar className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <div className="font-medium">Válido del {formatFecha(promo.fecha_inicio)}</div>
-                      <div>al {formatFecha(promo.fecha_fin)}</div>
-                    </div>
+                {/* Detalles compactos */}
+                <div className="px-6 pb-6">
+                  <div className="flex flex-wrap items-center gap-2 text-xs">
+                    {/* Vigencia - pill compacta */}
+                    <span className="inline-flex items-center gap-1 rounded-full bg-surface-hover px-2 py-1 text-[11px] text-gray-700 dark:text-gray-300">
+                      <Calendar className="h-3.5 w-3.5" />
+                      <span className="font-medium">{formatFecha(promo.fecha_inicio)}</span>
+                      <span>→</span>
+                      <span className="font-medium">{formatFecha(promo.fecha_fin)}</span>
+                    </span>
+
+                    {/* Mínimo - pill brillante pero sutil */}
+                    {promo.monto_minimo && parseFloat(promo.monto_minimo) > 0 && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-amber-100 text-amber-800 border border-amber-200 px-2 py-1 text-[11px] font-semibold dark:bg-amber-900/40 dark:text-amber-200 dark:border-amber-700/50">
+                        <ShoppingCart className="h-3.5 w-3.5" />
+                        Mín {formatPrice(parseFloat(promo.monto_minimo))}
+                      </span>
+                    )}
+
+                    {/* Tope - pill neutra */}
+                    {promo.descuento_maximo && parseFloat(promo.descuento_maximo) > 0 && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-surface-hover px-2 py-1 text-[11px] text-gray-700 dark:text-gray-300">
+                        <DollarSign className="h-3.5 w-3.5" />
+                        Tope {formatPrice(parseFloat(promo.descuento_maximo))}
+                      </span>
+                    )}
                   </div>
-
-                  {/* Condiciones - Monto mínimo destacado */}
-                  {promo.monto_minimo && parseFloat(promo.monto_minimo) > 0 && (
-                    <div className="rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-3">
-                      <div className="flex items-center gap-2 text-xs">
-                        <ShoppingCart className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
-                        <div>
-                          <span className="text-amber-900 dark:text-amber-200">Compra mínima requerida:</span>
-                          <div className="font-bold text-base text-amber-700 dark:text-amber-300 mt-0.5">
-                            {formatPrice(parseFloat(promo.monto_minimo))}
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {promo.descuento_maximo && parseFloat(promo.descuento_maximo) > 0 && (
-                    <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                      <DollarSign className="h-4 w-4 flex-shrink-0" />
-                      <span>Descuento máximo: <strong className="text-[rgb(var(--fg))]">{formatPrice(parseFloat(promo.descuento_maximo))}</strong></span>
-                    </div>
-                  )}
+                </div>
 
                   {/* Disponibilidad */}
                   {promo.usos_maximos && (

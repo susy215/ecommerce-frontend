@@ -13,6 +13,13 @@ export default function VoiceFab() {
     if (isListening) setOpen(true)
   }, [isListening])
 
+  // Permite abrir el panel desde otros lugares (ej: botón del sidebar)
+  useEffect(() => {
+    const onOpen = () => setOpen(true)
+    window.addEventListener('openVoicePanel', onOpen)
+    return () => window.removeEventListener('openVoicePanel', onOpen)
+  }, [])
+
   useEffect(() => {
     const onFeedback = (e) => {
       if (e?.detail?.type === 'added') {
@@ -50,7 +57,7 @@ export default function VoiceFab() {
         <div className="mb-2 flex justify-end">
           {showHint && (
             <div className="rounded-full bg-[rgb(var(--card))] border border-subtle px-3 py-1 text-xs shadow-md text-gray-700 dark:text-gray-200">
-              {isListening ? 'Escuchando… di: "agrega 2 coca cola"' : 'Hablar'}
+              {isListening ? 'Escuchando… di: "agrega 1 aire acondicionado LG"' : 'Hablar'}
             </div>
           )}
         </div>
