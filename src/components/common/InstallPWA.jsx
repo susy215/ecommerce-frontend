@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Download, X, Smartphone } from 'lucide-react'
-import Button from '../ui/Button'
+import { Download, X, Sparkles } from 'lucide-react'
 
 export default function InstallPWA() {
   const [deferredPrompt, setDeferredPrompt] = useState(null)
@@ -22,10 +21,16 @@ export default function InstallPWA() {
       // Mostrar el prompt después de un delay (para no ser intrusivo)
       setTimeout(() => {
         const dismissed = localStorage.getItem('pwa_prompt_dismissed')
-        if (!dismissed) {
-          setShowPrompt(true)
+        const dismissedTime = localStorage.getItem('pwa_prompt_dismissed_time')
+        
+        // Si fue cerrado, no mostrarlo por 7 días
+        if (dismissed && dismissedTime) {
+          const daysSince = (Date.now() - parseInt(dismissedTime)) / (1000 * 60 * 60 * 24)
+          if (daysSince < 7) return
         }
-      }, 5000) // 5 segundos después de cargar
+        
+        setShowPrompt(true)
+      }, 8000) // 8 segundos después de cargar (menos invasivo)
     }
 
     window.addEventListener('beforeinstallprompt', handler)
@@ -35,6 +40,7 @@ export default function InstallPWA() {
       setIsInstalled(true)
       setShowPrompt(false)
       localStorage.removeItem('pwa_prompt_dismissed')
+      localStorage.removeItem('pwa_prompt_dismissed_time')
     })
 
     return () => {
@@ -59,48 +65,49 @@ export default function InstallPWA() {
   const handleDismiss = () => {
     setShowPrompt(false)
     localStorage.setItem('pwa_prompt_dismissed', 'true')
+    localStorage.setItem('pwa_prompt_dismissed_time', Date.now().toString())
   }
 
   if (isInstalled || !showPrompt) return null
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md animate-in slide-in-from-bottom-4 fade-in">
-      <div className="relative rounded-xl border border-[hsl(var(--primary))]/20 bg-gradient-to-br from-[hsl(var(--primary))]/10 via-white to-white dark:from-[hsl(var(--primary))]/20 dark:via-[rgb(var(--card))] dark:to-[rgb(var(--card))] p-4 shadow-2xl backdrop-blur-sm">
+    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-sm animate-slide-up">
+      <div className="relative rounded-2xl border border-[hsl(var(--primary))]/20 bg-[rgb(var(--card))] p-4 shadow-2xl backdrop-blur-xl">
+        {/* Botón de cerrar más sutil */}
         <button
           onClick={handleDismiss}
-          className="absolute top-2 right-2 rounded-full p-1.5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors"
+          className="absolute -top-2 -right-2 flex h-6 w-6 items-center justify-center rounded-full bg-[rgb(var(--card))] border border-subtle shadow-md hover:bg-surface-hover transition-all active:scale-95"
           aria-label="Cerrar"
         >
-          <X className="h-4 w-4" />
+          <X className="h-3.5 w-3.5 text-gray-500" />
         </button>
 
-        <div className="flex gap-4">
-          <div className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10">
-            <Smartphone className="h-6 w-6 text-[hsl(var(--primary))]" />
+        <div className="flex items-start gap-3">
+          {/* Icono con gradiente */}
+          <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] shadow-md">
+            <Sparkles className="h-5 w-5 text-white" />
           </div>
           
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold mb-1">Instala SmartSales365</h3>
-            <p className="text-sm text-[rgb(var(--muted))] mb-3">
-              Accede más rápido y recibe notificaciones de tus pedidos.
+          <div className="flex-1 min-w-0 pt-0.5">
+            <h3 className="font-semibold text-sm mb-1">¿Instalar SmartSales?</h3>
+            <p className="text-xs text-gray-600 dark:text-gray-400 mb-3 leading-relaxed">
+              Acceso rápido desde tu pantalla de inicio
             </p>
             
             <div className="flex gap-2">
-              <Button
+              <button
                 onClick={handleInstall}
-                size="sm"
-                className="flex-1 sm:flex-none"
+                className="btn-primary flex-1 inline-flex items-center justify-center gap-1.5 rounded-lg px-3 py-2 text-xs font-semibold"
               >
-                <Download className="h-4 w-4 mr-2" />
+                <Download className="h-3.5 w-3.5" />
                 Instalar
-              </Button>
-              <Button
+              </button>
+              <button
                 onClick={handleDismiss}
-                variant="outline"
-                size="sm"
+                className="btn-ghost inline-flex items-center justify-center rounded-lg px-3 py-2 text-xs font-medium text-gray-600 dark:text-gray-400"
               >
-                Ahora no
-              </Button>
+                Más tarde
+              </button>
             </div>
           </div>
         </div>

@@ -38,46 +38,72 @@ export default function Login() {
   }
 
   return (
-    <div className="container-responsive flex min-h-[70vh] items-center justify-center py-10 page-anim">
-      <div className="w-full max-w-md card-surface p-6 sm:p-8">
-        <div className="mb-5 flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/15">
-            <span className="gradient-text text-lg">S</span>
+    <div className="container-responsive flex min-h-[calc(100vh-8rem)] items-center justify-center py-6 sm:py-10 page-anim">
+      <div className="w-full max-w-md">
+        {/* Card principal */}
+        <div className="card-surface p-5 sm:p-8 shadow-xl">
+          {/* Header con logo */}
+          <div className="mb-6 sm:mb-8 text-center">
+            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] shadow-lg mb-4">
+              <span className="text-white font-bold text-2xl">S</span>
+            </div>
+            <h1 className="text-xl sm:text-2xl font-bold mb-2">Bienvenido de nuevo</h1>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Inicia sesión para continuar</p>
           </div>
-          <div>
-            <div className="gradient-text font-semibold">SmartSales</div>
-            <div className="text-xs text-gray-500">La forma más simple de comprar</div>
-          </div>
+
+          {/* Formulario */}
+          <form className="space-y-4 sm:space-y-5" onSubmit={onSubmit}>
+            <Input
+              label="Usuario o Email"
+              value={form.username}
+              onChange={(e) => setForm({ ...form, username: e.target.value })}
+              placeholder="Tu usuario o email"
+              required
+              autoComplete="username"
+            />
+            <Input
+              label="Contraseña"
+              type="password"
+              value={form.password}
+              onChange={(e) => setForm({ ...form, password: e.target.value })}
+              placeholder="••••••••"
+              required
+              autoComplete="current-password"
+            />
+            
+            {/* Error message mejorado */}
+            {error && (
+              <div className="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-3">
+                <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium">{error}</p>
+              </div>
+            )}
+            
+            <Button type="submit" disabled={loading} className="w-full py-3 sm:py-2.5 text-sm sm:text-base font-semibold">
+              {loading ? (
+                <span className="flex items-center gap-2">
+                  <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                  </svg>
+                  Entrando...
+                </span>
+              ) : 'Iniciar sesión'}
+            </Button>
+          </form>
         </div>
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-[hsl(var(--primary))]/10 px-3 py-1.5 text-[hsl(var(--primary))]">
-          <span className="text-xs font-semibold uppercase tracking-wide">Bienvenido</span>
+
+        {/* Footer con enlace a registro */}
+        <div className="mt-6 text-center">
+          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
+            ¿No tienes cuenta?{' '}
+            <Link 
+              to={ROUTES.register} 
+              className="text-[hsl(var(--primary))] hover:underline font-semibold underline-offset-4"
+            >
+              Regístrate gratis
+            </Link>
+          </p>
         </div>
-        <h1 className="mb-2 h2">Inicia sesión</h1>
-        <p className="mb-6 subtitle">Accede a tu cuenta para continuar</p>
-        <form className="space-y-4" onSubmit={onSubmit}>
-          <Input
-            label="Usuario o Email"
-            value={form.username}
-            onChange={(e) => setForm({ ...form, username: e.target.value })}
-            placeholder="Tu usuario o email"
-            required
-          />
-          <Input
-            label="Contraseña"
-            type="password"
-            value={form.password}
-            onChange={(e) => setForm({ ...form, password: e.target.value })}
-            placeholder="••••••••"
-            required
-          />
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <Button type="submit" disabled={loading} className="w-full">
-            {loading ? 'Entrando…' : 'Entrar'}
-          </Button>
-        </form>
-        <p className="mt-6 text-center text-sm text-gray-600">
-          ¿No tienes cuenta? <Link to={ROUTES.register} className="text-[hsl(var(--primary))] hover:underline font-medium">Regístrate</Link>
-        </p>
       </div>
     </div>
   )

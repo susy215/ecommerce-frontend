@@ -128,13 +128,13 @@ export default function VoiceAssistant() {
 
   return (
     <>
-      {/* Botón del micrófono */}
+      {/* Botón del micrófono - Mejorado para móvil */}
       <button
         onClick={handleToggle}
-        className={`relative inline-flex items-center justify-center rounded-md p-2 transition-all ${
+        className={`relative inline-flex items-center justify-center rounded-lg p-2.5 transition-all ${
           isListening 
-            ? 'bg-red-500 text-white animate-pulse' 
-            : 'hover-surface'
+            ? 'bg-red-500 text-white shadow-lg shadow-red-500/50 animate-pulse' 
+            : 'hover-surface active:scale-95'
         }`}
         aria-label={isListening ? 'Detener reconocimiento de voz' : 'Iniciar reconocimiento de voz'}
         title="Búsqueda por voz"
@@ -152,20 +152,20 @@ export default function VoiceAssistant() {
         )}
       </button>
 
-      {/* Panel de resultados */}
+      {/* Panel de resultados - Optimizado para móvil */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 sm:pt-24">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-start sm:justify-center sm:pt-24 lg:hidden">
           {/* Overlay */}
           <div 
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in"
             onClick={() => {
               setIsOpen(false)
               stopListening()
             }}
           />
 
-          {/* Panel */}
-          <div className="relative w-full max-w-md card-surface shadow-2xl rounded-xl overflow-hidden animate-in fade-in slide-in-from-top-4">
+          {/* Panel - Desliza desde abajo en móvil, centrado en desktop */}
+          <div className="relative w-full sm:max-w-md card-surface shadow-2xl rounded-t-2xl sm:rounded-xl overflow-hidden animate-in slide-in-from-bottom sm:slide-in-from-top-4 sm:fade-in max-h-[85vh] sm:max-h-[80vh] flex flex-col">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-subtle bg-gradient-to-r from-[hsl(var(--primary))]/10 to-transparent">
               <div className="flex items-center gap-3">
@@ -200,21 +200,29 @@ export default function VoiceAssistant() {
               </button>
             </div>
 
-            {/* Contenido */}
-            <div className="p-4 max-h-[60vh] overflow-y-auto">
+            {/* Contenido - Scrolleable */}
+            <div className="flex-1 overflow-y-auto p-4">
               {isListening && !transcript && (
-                <div className="text-center py-8">
-                  <div className="mb-4">
-                    <div className="mx-auto h-16 w-16 rounded-full bg-red-500/20 flex items-center justify-center">
-                      <Mic className="h-8 w-8 text-red-500 animate-pulse" />
+                <div className="text-center py-6 sm:py-8">
+                  <div className="mb-3 sm:mb-4">
+                    <div className="mx-auto h-14 w-14 sm:h-16 sm:w-16 rounded-full bg-red-500/20 flex items-center justify-center">
+                      <Mic className="h-7 w-7 sm:h-8 sm:w-8 text-red-500 animate-pulse" />
                     </div>
                   </div>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    Habla ahora... Di el nombre de un producto o un comando.
+                  <p className="text-sm sm:text-base font-medium mb-2 text-gray-700 dark:text-gray-300">
+                    Habla ahora...
                   </p>
-                  <p className="text-xs text-gray-500 dark:text-gray-500 mt-2">
-                    Ejemplos: "Buscar laptop", "Agregar iPhone", "Ir al carrito", "Pagar"
+                  <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 px-4">
+                    Di el nombre de un producto o un comando
                   </p>
+                  <div className="mt-4 pt-4 border-t border-subtle max-w-xs mx-auto">
+                    <p className="text-xs text-gray-500 dark:text-gray-500 mb-2 font-semibold">Ejemplos:</p>
+                    <div className="space-y-1 text-xs text-gray-500">
+                      <p>"Buscar laptop"</p>
+                      <p>"Ir al carrito"</p>
+                      <p>"Pagar"</p>
+                    </div>
+                  </div>
                 </div>
               )}
 
@@ -229,32 +237,32 @@ export default function VoiceAssistant() {
 
               {!isListening && !loading && searchResults.length > 0 && (
                 <div className="space-y-2">
-                  <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-3">
-                    Productos encontrados:
+                  <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">
+                    Productos encontrados
                   </p>
                   {searchResults.map((product) => (
                     <div
                       key={product.id}
-                      className="flex items-center gap-3 p-3 rounded-lg border border-subtle hover:bg-surface-hover transition-colors group"
+                      className="flex items-center gap-3 p-3 rounded-lg border border-subtle hover:bg-surface-hover transition-all active:scale-[0.98] group"
                     >
                       <div className="flex-1 min-w-0">
                         <h4 
-                          className="font-medium text-sm cursor-pointer hover:text-[hsl(var(--primary))]"
+                          className="font-medium text-sm cursor-pointer hover:text-[hsl(var(--primary))] line-clamp-1 mb-1"
                           onClick={() => handleProductClick(product)}
                         >
                           {product.nombre || product.name}
                         </h4>
-                        <p className="text-xs text-gray-600 dark:text-gray-400 mt-0.5">
+                        <p className="text-sm font-semibold text-[hsl(var(--primary))]">
                           ${parseFloat(product.precio || product.price || 0).toFixed(2)}
                         </p>
                       </div>
                       <button
                         onClick={() => handleAddToCart(product)}
-                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 transition-colors text-xs font-medium"
+                        className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 active:scale-95 transition-all text-xs font-semibold"
                         disabled={product.stock === 0}
                       >
-                        <ShoppingCart className="h-3.5 w-3.5" />
-                        Agregar
+                        <ShoppingCart className="h-4 w-4" />
+                        <span className="hidden sm:inline">Agregar</span>
                       </button>
                     </div>
                   ))}
@@ -263,14 +271,15 @@ export default function VoiceAssistant() {
 
               {!isListening && !loading && transcript && searchResults.length === 0 && (
                 <div className="text-center py-8">
-                  <Search className="h-12 w-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
-                  <p className="text-sm text-gray-600 dark:text-gray-400">
-                    No se encontraron productos para "{transcript}"
+                  <Search className="h-10 w-10 sm:h-12 sm:w-12 text-gray-300 dark:text-gray-600 mx-auto mb-3" />
+                  <p className="text-sm text-gray-600 dark:text-gray-400 px-4">
+                    No se encontraron productos para <span className="font-semibold">"{transcript}"</span>
                   </p>
                   <button
                     onClick={startListening}
-                    className="mt-4 btn-primary text-sm px-4 py-2"
+                    className="mt-4 btn-primary rounded-lg text-xs sm:text-sm px-5 py-2.5 font-semibold"
                   >
+                    <Mic className="inline h-4 w-4 mr-1.5" />
                     Intentar de nuevo
                   </button>
                 </div>
@@ -279,8 +288,8 @@ export default function VoiceAssistant() {
               {/* Comandos rápidos */}
               {!isListening && !loading && (
                 <div className="mt-6 pt-4 border-t border-subtle">
-                  <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">
-                    Comandos disponibles:
+                  <p className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-3 uppercase tracking-wider">
+                    Accesos rápidos
                   </p>
                   <div className="grid grid-cols-2 gap-2">
                     <button
@@ -288,20 +297,20 @@ export default function VoiceAssistant() {
                         navigate(ROUTES.cart)
                         setIsOpen(false)
                       }}
-                      className="flex items-center gap-2 p-2 rounded-md border border-subtle hover:bg-surface-hover transition-colors text-xs"
+                      className="flex flex-col sm:flex-row items-center justify-center gap-2 p-3 rounded-lg border border-subtle hover:bg-surface-hover active:scale-[0.98] transition-all text-xs font-medium"
                     >
-                      <ShoppingCart className="h-4 w-4" />
-                      Ver carrito
+                      <ShoppingCart className="h-5 w-5 sm:h-4 sm:w-4 text-[hsl(var(--primary))]" />
+                      <span>Ver carrito</span>
                     </button>
                     <button
                       onClick={() => {
                         navigate(ROUTES.checkout)
                         setIsOpen(false)
                       }}
-                      className="flex items-center gap-2 p-2 rounded-md border border-subtle hover:bg-surface-hover transition-colors text-xs"
+                      className="flex flex-col sm:flex-row items-center justify-center gap-2 p-3 rounded-lg border border-subtle hover:bg-surface-hover active:scale-[0.98] transition-all text-xs font-medium"
                     >
-                      <CreditCard className="h-4 w-4" />
-                      Pagar
+                      <CreditCard className="h-5 w-5 sm:h-4 sm:w-4 text-[hsl(var(--primary))]" />
+                      <span>Pagar</span>
                     </button>
                   </div>
                 </div>

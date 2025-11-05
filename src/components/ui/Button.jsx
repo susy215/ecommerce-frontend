@@ -5,13 +5,19 @@ export default function Button({
   disabled = false,
   ...props
 }) {
-  const base = 'inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium focus-visible:outline-none';
+  const base = 'inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold focus-visible:outline-none active:scale-[0.98] transition-transform min-h-[44px]';
   const variants = {
     primary: 'btn-primary',
     outline: 'btn-outline',
     ghost: 'btn-ghost',
   }
-  const cls = [base, variants[variant] || variants.primary, disabled ? 'opacity-60 cursor-not-allowed' : '', className].join(' ')
+  const cls = [
+    base, 
+    variants[variant] || variants.primary, 
+    disabled ? 'opacity-60 cursor-not-allowed active:scale-100' : '', 
+    className
+  ].join(' ')
+  
   return (
     <button className={cls} disabled={disabled} {...props}>
       {children}
