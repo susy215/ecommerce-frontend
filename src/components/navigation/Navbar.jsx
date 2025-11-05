@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { ShoppingCart, Menu, X, User } from 'lucide-react'
 import { ROUTES } from '../../constants/routes'
@@ -14,6 +14,18 @@ export default function Navbar() {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  // Bloquear scroll del body cuando el sidebar está abierto
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [mobileOpen])
 
   return (
     <header className="sticky top-0 z-40 border-b border-subtle bg-[rgb(var(--bg))]/80 backdrop-blur supports-[backdrop-filter]:bg-[rgb(var(--bg))]/60 pwa-safe-top">
@@ -100,14 +112,14 @@ export default function Navbar() {
       {/* Mobile menu drawer - Overlay lateral deslizante */}
       {mobileOpen && (
         <>
-          {/* Overlay oscuro */}
+          {/* Overlay oscuro - Mayor z-index para estar sobre todo */}
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden animate-in fade-in"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] lg:hidden animate-in fade-in"
             onClick={() => setMobileOpen(false)}
           />
           
-          {/* Panel lateral */}
-          <div className="fixed top-0 left-0 bottom-0 w-72 bg-[rgb(var(--bg))] border-r border-subtle shadow-2xl z-50 lg:hidden animate-in slide-in-from-left">
+          {/* Panel lateral - z-index más alto que el overlay */}
+          <div className="fixed top-0 left-0 bottom-0 w-72 bg-[rgb(var(--bg))] border-r border-subtle shadow-2xl z-[110] lg:hidden animate-in slide-in-from-left">
             <div className="flex flex-col h-full">
               {/* Header del menú */}
               <div className="flex items-center justify-between p-4 border-b border-subtle bg-gradient-to-r from-[hsl(var(--primary))]/5 to-transparent">

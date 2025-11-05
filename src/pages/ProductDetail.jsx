@@ -144,7 +144,7 @@ export default function ProductDetail() {
       </div>
 
       {/* Sticky action bar for mobile */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 border-t border-subtle bg-[rgb(var(--bg))] p-3 pwa-safe-bottom">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-[40] border-t border-subtle bg-[rgb(var(--bg))] p-3 pwa-safe-bottom">
         <div className="container-responsive">
           <div className="flex items-center gap-3">
             <div className="flex-1 min-w-0">

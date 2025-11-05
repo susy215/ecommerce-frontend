@@ -154,10 +154,10 @@ export default function VoiceAssistant() {
 
       {/* Panel de resultados - Optimizado para móvil */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-start sm:justify-center sm:pt-24 lg:hidden">
+        <div className="fixed inset-0 z-[80] flex items-end sm:items-start sm:justify-center sm:pt-24 lg:hidden">
           {/* Overlay */}
           <div 
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm animate-in fade-in z-[80]"
             onClick={() => {
               setIsOpen(false)
               stopListening()
@@ -165,7 +165,7 @@ export default function VoiceAssistant() {
           />
 
           {/* Panel - Desliza desde abajo en móvil, centrado en desktop */}
-          <div className="relative w-full sm:max-w-md card-surface shadow-2xl rounded-t-2xl sm:rounded-xl overflow-hidden animate-in slide-in-from-bottom sm:slide-in-from-top-4 sm:fade-in max-h-[85vh] sm:max-h-[80vh] flex flex-col">
+          <div className="relative w-full sm:max-w-md card-surface shadow-2xl rounded-t-2xl sm:rounded-xl overflow-hidden animate-in slide-in-from-bottom sm:slide-in-from-top-4 sm:fade-in max-h-[85vh] sm:max-h-[80vh] flex flex-col z-[85]">
             {/* Header */}
             <div className="flex items-center justify-between p-4 border-b border-subtle bg-gradient-to-r from-[hsl(var(--primary))]/10 to-transparent">
               <div className="flex items-center gap-3">

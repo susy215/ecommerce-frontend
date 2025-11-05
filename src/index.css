@@ -66,6 +66,16 @@
 }
 
 @layer utilities {
+  /* Z-index hierarchy system - Jerarquía de capas */
+  /* 
+    0-9: Contenido base
+    10-39: Elementos elevados (dropdowns, tooltips)
+    40-59: Headers, footers, barras fijas
+    60-79: Notificaciones y banners
+    80-99: Modales y overlays secundarios
+    100+: Menús laterales y elementos de navegación críticos
+  */
+  
   /* Tipografía escalable */
   .h1 { @apply text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight; }
   .h2 { @apply text-2xl sm:text-3xl font-semibold tracking-tight; }
