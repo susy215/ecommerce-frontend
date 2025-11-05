@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate, useLocation } from 'react-router-dom'
 import { ShoppingCart, Menu, X, User } from 'lucide-react'
 import { ROUTES } from '../../constants/routes'
 import SearchBar from '../common/SearchBar'
@@ -13,7 +13,18 @@ export default function Navbar() {
   const { count } = useCart()
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
+
+  // Ocultar sidebar en páginas de autenticación
+  const isAuthPage = location.pathname === ROUTES.login || location.pathname === ROUTES.register
+
+  // Cerrar sidebar al navegar a login/register
+  useEffect(() => {
+    if (isAuthPage) {
+      setMobileOpen(false)
+    }
+  }, [isAuthPage])
 
   // Bloquear scroll del body cuando el sidebar está abierto
   useEffect(() => {
@@ -32,13 +43,16 @@ export default function Navbar() {
       {/* Barra principal - simplificada para móvil */}
       <div className="container-responsive flex h-14 md:h-16 items-center justify-between gap-2">
         <div className="flex items-center gap-2 md:gap-4">
-          <button 
-            className="inline-flex items-center justify-center rounded-lg p-2.5 hover-surface lg:hidden active:scale-95 transition-transform"
-            aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
-            onClick={() => setMobileOpen((v) => !v)}
-          >
-            {mobileOpen ? <X className="h-5 w-5 md:h-6 md:w-6" /> : <Menu className="h-5 w-5 md:h-6 md:w-6" />}
-          </button>
+          {/* Ocultar botón de menú en login/register */}
+          {!isAuthPage && (
+            <button 
+              className="inline-flex items-center justify-center rounded-lg p-2.5 hover-surface lg:hidden active:scale-95 transition-transform"
+              aria-label={mobileOpen ? 'Cerrar menú' : 'Abrir menú'}
+              onClick={() => setMobileOpen((v) => !v)}
+            >
+              {mobileOpen ? <X className="h-5 w-5 md:h-6 md:w-6" /> : <Menu className="h-5 w-5 md:h-6 md:w-6" />}
+            </button>
+          )}
           <Link to={ROUTES.home} className="font-semibold tracking-tight text-lg md:text-xl">
             <span className="gradient-text">SmartSales</span>
           </Link>
@@ -109,8 +123,8 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Mobile menu drawer - Overlay lateral deslizante */}
-      {mobileOpen && (
+      {/* Mobile menu drawer - Overlay lateral deslizante - NO mostrar en login/register */}
+      {mobileOpen && !isAuthPage && (
         <>
           {/* Overlay oscuro - z-index máximo para estar sobre todo */}
           <div 
