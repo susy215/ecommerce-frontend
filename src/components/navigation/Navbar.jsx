@@ -39,7 +39,7 @@ export default function Navbar() {
   }, [mobileOpen])
 
   return (
-    <header className="sticky top-0 z-40 border-b border-subtle bg-[rgb(var(--bg))]/80 backdrop-blur supports-[backdrop-filter]:bg-[rgb(var(--bg))]/60 pwa-safe-top">
+    <header className="sticky top-0 z-[100] border-b border-subtle bg-[rgb(var(--bg))]/80 backdrop-blur supports-[backdrop-filter]:bg-[rgb(var(--bg))]/60 pwa-safe-top">
       {/* Barra principal - simplificada para móvil */}
       <div className="container-responsive flex h-14 md:h-16 items-center justify-between gap-2">
         <div className="flex items-center gap-2 md:gap-4">
@@ -108,20 +108,22 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Barra de búsqueda móvil - segunda línea */}
-      <div className="md:hidden border-t border-subtle bg-[rgb(var(--bg))]">
-        <div className="container-responsive py-2">
-          <SearchBar
-            placeholder="   Buscar productos…"
-            onSearch={(q) => {
-              const sp = new URLSearchParams()
-              if (q) sp.set('search', q)
-              sp.set('page', '1')
-              navigate(`${ROUTES.catalog}?${sp.toString()}`)
-            }}
-          />
+      {/* Barra de búsqueda móvil - segunda línea (ocultar en login/register) */}
+      {!isAuthPage && (
+        <div className="md:hidden border-t border-subtle bg-[rgb(var(--bg))]">
+          <div className="container-responsive py-2">
+            <SearchBar
+              placeholder="Buscar productos…"
+              onSearch={(q) => {
+                const sp = new URLSearchParams()
+                if (q) sp.set('search', q)
+                sp.set('page', '1')
+                navigate(`${ROUTES.catalog}?${sp.toString()}`)
+              }}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Mobile menu drawer - Overlay lateral deslizante - NO mostrar en login/register */}
       {mobileOpen && !isAuthPage && (

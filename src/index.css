@@ -66,14 +66,18 @@
 }
 
 @layer utilities {
-  /* Z-index hierarchy system - Jerarquía de capas */
+  /* Z-index hierarchy system - Jerarquía de capas DEFINITIVA */
   /* 
-    0-9: Contenido base
+    0-9:   Contenido base (páginas, cards, formularios)
     10-39: Elementos elevados (dropdowns, tooltips)
-    40-59: Headers, footers, barras fijas
-    60-79: Notificaciones y banners
-    80-99: Modales y overlays secundarios
-    9998-9999: Menús laterales (MÁXIMA PRIORIDAD - siempre visible)
+    40-59: Elementos fijos secundarios (bottom bars)
+    60-79: Notificaciones y banners (InstallPWA)
+    80-99: Modales y overlays secundarios (VoiceAssistant, GlobalOverlay)
+    100:   Navbar principal (sticky top, siempre visible)
+    110:   Loaders y Toasts (sobre navbar)
+    1000+: Modales críticos (ModalDevolucion)
+    9998:  Sidebar overlay (backdrop)
+    9999:  Sidebar panel (MÁXIMA PRIORIDAD)
   */
   
   /* Tipografía escalable */

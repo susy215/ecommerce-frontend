@@ -15,7 +15,7 @@ export default function Toaster() {
   }, [])
   if (!items.length) return null
   return (
-    <div className="pointer-events-none fixed right-4 top-16 z-[100] space-y-2">
+    <div className="pointer-events-none fixed right-4 top-16 z-[110] space-y-2">
       {items.map((t) => (
         <div
           key={t.id}
