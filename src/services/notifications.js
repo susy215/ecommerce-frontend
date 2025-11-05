@@ -9,8 +9,9 @@ export async function getVapidPublicKey() {
   try {
     const response = await fetch(`${API_URL}/api/notificaciones/vapid-public-key/`)
     const data = await response.json()
-    // Soportar ambas variantes: public_key o publicKey
-    return data.publicKey || data.public_key
+    // Soportar ambas variantes: public_key o publicKey y limpiar espacios
+    const key = data.publicKey || data.public_key || ''
+    return String(key).trim()
   } catch (error) {
     console.error('Error al obtener clave VAPID:', error)
     throw error
@@ -97,11 +98,23 @@ export async function subscribeToPushNotifications(token) {
       const vapidPublicKey = await getVapidPublicKey()
       const convertedVapidKey = urlBase64ToUint8Array(vapidPublicKey)
 
-      // Crear nueva suscripción
-      subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: convertedVapidKey
-      })
+      // Crear nueva suscripción (con intento de recuperación)
+      try {
+        subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedVapidKey
+        })
+      } catch (e) {
+        // Si falla, intenta limpiar suscripción existente y reintentar una vez
+        try {
+          const existing = await registration.pushManager.getSubscription()
+          if (existing) await existing.unsubscribe()
+        } catch {}
+        subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: convertedVapidKey
+        })
+      }
     }
 
     // Enviar suscripción al backend

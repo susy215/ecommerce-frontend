@@ -47,7 +47,7 @@ export function CartProvider({ children }) {
           id: product.id,
           name: product.nombre || product.name,
           price: Number(product.precio ?? product.price ?? 0),
-          image: product.imagen || product.image || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop',
+          image: product.imagen || product.image || 'https://imgs.search.brave.com/aJqdC45IQOsmTLrl_8R3-YWcSAe-zzjK5XrQ3PNo_pQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvOTFmM2FBSlJ1Y0wuanBn',
           stock: product.stock,
           qty: stockToAdd,
         },

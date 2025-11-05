@@ -33,7 +33,7 @@ export default function Navbar() {
 
         <div className="flex flex-1 max-w-lg mx-4">
           <SearchBar
-            placeholder="Buscar productos…"
+            placeholder="   Buscar productos…"
             onSearch={(q) => {
               const sp = new URLSearchParams()
               if (q) sp.set('search', q)

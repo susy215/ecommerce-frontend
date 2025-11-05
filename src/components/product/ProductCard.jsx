@@ -9,7 +9,7 @@ export default function ProductCard({ product, onAdd }) {
   const precio = product?.precio ?? product?.price ?? 0
   const stock = product?.stock
   // Imagen por defecto si no existe (backend no tiene campo imagen según doc)
-  const image = product?.image || product?.imagen || 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop'
+  const image = product?.image || product?.imagen || 'https://imgs.search.brave.com/aJqdC45IQOsmTLrl_8R3-YWcSAe-zzjK5XrQ3PNo_pQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1lZGlhLWFtYXpvbi5jb20vaW1hZ2VzL0kvOTFmM2FBSlJ1Y0wuanBn'
   
   return (
     <div className="group overflow-hidden rounded-xl card-surface card-hover">
