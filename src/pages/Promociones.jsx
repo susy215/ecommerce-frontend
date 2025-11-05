@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getPromociones } from '../services/promociones'
 import { toArray } from '../utils/data'
-import { Tag, Calendar, Percent, DollarSign, Gift, TrendingUp, Clock, CheckCircle2, XCircle } from 'lucide-react'
+import { formatPrice } from '../utils/format'
+import { Tag, Calendar, Percent, DollarSign, Gift, TrendingUp, Clock, CheckCircle2, XCircle, ShoppingCart } from 'lucide-react'
 
 export default function Promociones() {
   const [loading, setLoading] = useState(true)
@@ -148,18 +149,25 @@ export default function Promociones() {
                     </div>
                   </div>
 
-                  {/* Condiciones */}
+                  {/* Condiciones - Monto mínimo destacado */}
                   {promo.monto_minimo && parseFloat(promo.monto_minimo) > 0 && (
-                    <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                      <TrendingUp className="h-4 w-4 flex-shrink-0" />
-                      <span>Compra mínima: <strong className="text-[rgb(var(--fg))]">${promo.monto_minimo}</strong></span>
+                    <div className="rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 p-3">
+                      <div className="flex items-center gap-2 text-xs">
+                        <ShoppingCart className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0" />
+                        <div>
+                          <span className="text-amber-900 dark:text-amber-200">Compra mínima requerida:</span>
+                          <div className="font-bold text-base text-amber-700 dark:text-amber-300 mt-0.5">
+                            {formatPrice(parseFloat(promo.monto_minimo))}
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
 
                   {promo.descuento_maximo && parseFloat(promo.descuento_maximo) > 0 && (
                     <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                       <DollarSign className="h-4 w-4 flex-shrink-0" />
-                      <span>Descuento máximo: <strong className="text-[rgb(var(--fg))]">${promo.descuento_maximo}</strong></span>
+                      <span>Descuento máximo: <strong className="text-[rgb(var(--fg))]">{formatPrice(parseFloat(promo.descuento_maximo))}</strong></span>
                     </div>
                   )}
 

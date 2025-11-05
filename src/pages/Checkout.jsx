@@ -304,9 +304,14 @@ export default function Checkout() {
                 <>
                   {/* Código de promoción */}
                   <div className="rounded-xl border border-subtle bg-gradient-to-br from-[hsl(var(--primary))]/5 to-transparent p-5">
-                    <div className="flex items-center gap-2 mb-3">
-                      <Tag className="h-5 w-5 text-[hsl(var(--primary))]" />
-                      <h3 className="font-semibold">¿Tienes un código de promoción?</h3>
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <div className="flex items-center gap-2">
+                        <Tag className="h-5 w-5 text-[hsl(var(--primary))]" />
+                        <h3 className="font-semibold">¿Tienes un código de promoción?</h3>
+                      </div>
+                      <div className="text-xs text-gray-500">
+                        Total: <span className="font-bold text-[hsl(var(--primary))]">{formatPrice(subtotal)}</span>
+                      </div>
                     </div>
                     
                     {!promocionAplicada ? (
