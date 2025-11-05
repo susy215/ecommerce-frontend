@@ -180,29 +180,33 @@ export default function OrderDetail() {
                         )}
                       </div>
                       
-                      {/* Info y acciones */}
-                      <div className="flex items-end justify-between gap-3">
-                        <div className="text-xs text-gray-600 dark:text-gray-400 space-y-0.5">
-                          <div>Cantidad: <span className="font-medium text-[rgb(var(--fg))]">{it.cantidad}</span></div>
-                          <div>Precio: <span className="font-medium text-[rgb(var(--fg))]">{formatPrice(Number(it.precio_unitario ?? 0))}</span></div>
+                      {/* Info del producto - Grid responsivo */}
+                      <div className="grid grid-cols-2 gap-2 text-xs text-gray-600 dark:text-gray-400 mb-3">
+                        <div>
+                          <span>Cantidad:</span>
+                          <span className="ml-1 font-medium text-[rgb(var(--fg))]">{it.cantidad}</span>
                         </div>
-                        
-                        <div className="flex flex-col items-end gap-2">
-                          <div className="text-base sm:text-lg font-bold text-[hsl(var(--primary))]">
-                            {formatPrice(Number(it.subtotal ?? 0))}
-                          </div>
-                          {puedeDevolver && (
-                            <button
-                              onClick={() => setModalItem(it)}
-                              className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2.5 py-1.5 text-xs font-medium text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 active:scale-95 transition"
-                              title="Solicitar devolución"
-                            >
-                              <RotateCcw size={12} />
-                              <span className="hidden sm:inline">Devolver</span>
-                              <span className="sm:hidden">Dev.</span>
-                            </button>
-                          )}
+                        <div className="text-right">
+                          <span>Precio unit:</span>
+                          <span className="ml-1 font-medium text-[rgb(var(--fg))]">{formatPrice(Number(it.precio_unitario ?? 0))}</span>
                         </div>
+                      </div>
+                      
+                      {/* Total y botón de devolución - Layout vertical en móvil, horizontal en desktop */}
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2 border-t border-subtle">
+                        <div className="text-base sm:text-lg font-bold text-[hsl(var(--primary))]">
+                          Total: {formatPrice(Number(it.subtotal ?? 0))}
+                        </div>
+                        {puedeDevolver && (
+                          <button
+                            onClick={() => setModalItem(it)}
+                            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-3 py-2 text-xs font-medium text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 active:scale-95 transition min-h-[40px]"
+                            title="Solicitar devolución"
+                          >
+                            <RotateCcw size={14} />
+                            <span>Solicitar devolución</span>
+                          </button>
+                        )}
                       </div>
                     </div>
                   )
