@@ -100,14 +100,16 @@ export default function Orders() {
   }
 
   return (
-    <div className="container-responsive py-8">
-      <div className="mb-6 flex items-end justify-between">
-        <div>
-          <h1 className="text-2xl font-semibold flex items-center gap-2">
-            <Package className="h-6 w-6 text-[hsl(var(--primary))]" />
-            Mis compras
-          </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Historial de tus pedidos y devoluciones</p>
+    <div className="container-responsive py-4 sm:py-8">
+      <div className="mb-4 sm:mb-6">
+        <div className="flex items-center gap-3 mb-2">
+          <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10">
+            <Package className="h-5 w-5 sm:h-6 sm:w-6 text-[hsl(var(--primary))]" />
+          </div>
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold">Mis compras</h1>
+            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Historial de tus pedidos</p>
+          </div>
         </div>
       </div>
 
@@ -152,77 +154,137 @@ export default function Orders() {
             </div>
           </div>
         ) : (
-          <div className="space-y-3">
-          <div className="overflow-x-auto rounded-xl border border-subtle">
-            <table className="w-full text-sm min-w-[640px]">
-              <thead className="bg-surface-hover text-left">
-                <tr>
-                  <th className="p-3">Pedido</th>
-                  <th className="p-3">Fecha</th>
-                  <th className="p-3">Total</th>
-                  <th className="p-3">Estado</th>
-                  <th className="p-3"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {orders.map((o, index) => {
-                  const orderNumber = `SS-${String(o.id).padStart(5, '0')}`
-                  const orderDate = o.fecha ? new Date(o.fecha) : null
-                  const dateStr = orderDate 
-                    ? orderDate.toLocaleDateString('es-ES', { 
-                        day: '2-digit', 
-                        month: 'short', 
-                        year: 'numeric' 
-                      })
-                    : '—'
-                  const timeStr = orderDate 
-                    ? orderDate.toLocaleTimeString('es-ES', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                      })
-                    : ''
-                  
-                  return (
-                    <tr key={o.id} className="border-t border-subtle hover:bg-surface-hover transition-colors">
-                      <td className="p-3">
-                        <div className="flex items-center gap-2">
-                          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
-                            <Package className="h-4 w-4" />
-                          </div>
-                          <div>
-                            <div className="font-medium">{orderNumber}</div>
-                            <div className="text-xs text-gray-500">{o.items?.length || 0} {o.items?.length === 1 ? 'producto' : 'productos'}</div>
+          <>
+            {/* Cards para móvil */}
+            <div className="space-y-3 sm:hidden">
+              {orders.map((o) => {
+                const orderNumber = `SS-${String(o.id).padStart(5, '0')}`
+                const orderDate = o.fecha ? new Date(o.fecha) : null
+                const dateStr = orderDate 
+                  ? orderDate.toLocaleDateString('es-ES', { 
+                      day: '2-digit', 
+                      month: 'short', 
+                      year: 'numeric' 
+                    })
+                  : '—'
+                const timeStr = orderDate 
+                  ? orderDate.toLocaleTimeString('es-ES', { 
+                      hour: '2-digit', 
+                      minute: '2-digit' 
+                    })
+                  : ''
+                
+                return (
+                  <Link
+                    key={o.id}
+                    to={ROUTES.orderDetail.replace(':id', String(o.id))}
+                    className="block card-surface rounded-xl p-4 hover:bg-surface-hover active:scale-[0.99] transition"
+                  >
+                    <div className="flex items-start justify-between gap-3 mb-3">
+                      <div className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
+                          <Package className="h-5 w-5" />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-base">{orderNumber}</div>
+                          <div className="text-xs text-gray-500">
+                            {o.items?.length || 0} {o.items?.length === 1 ? 'producto' : 'productos'}
                           </div>
                         </div>
-                      </td>
-                      <td className="p-3">
-                        <div className="flex flex-col">
-                          <span className="font-medium">{dateStr}</span>
-                          {timeStr && <span className="text-xs text-gray-500">{timeStr}</span>}
-                        </div>
-                      </td>
-                      <td className="p-3">
-                        <span className="font-semibold text-[hsl(var(--primary))]">{formatPrice(Number(o.total ?? 0))}</span>
-                      </td>
-                      <td className="p-3">
-                        <StatusChip status={o.pagado_en ? 'paid' : 'pending'} />
-                      </td>
-                      <td className="p-3 text-right">
-                        <Link 
-                          className="text-[hsl(var(--primary))] hover:underline font-medium text-sm" 
-                          to={ROUTES.orderDetail.replace(':id', String(o.id))}
-                        >
-                          Ver detalle →
-                        </Link>
-                      </td>
+                      </div>
+                      <StatusChip status={o.pagado_en ? 'paid' : 'pending'} />
+                    </div>
+                    
+                    <div className="flex items-center justify-between text-sm">
+                      <div>
+                        <div className="text-gray-500 text-xs">Fecha</div>
+                        <div className="font-medium">{dateStr}</div>
+                        {timeStr && <div className="text-xs text-gray-500">{timeStr}</div>}
+                      </div>
+                      <div className="text-right">
+                        <div className="text-gray-500 text-xs">Total</div>
+                        <div className="text-lg font-bold text-[hsl(var(--primary))]">{formatPrice(Number(o.total ?? 0))}</div>
+                      </div>
+                    </div>
+                  </Link>
+                )
+              })}
+            </div>
+
+            {/* Tabla para desktop */}
+            <div className="hidden sm:block space-y-3">
+              <div className="overflow-x-auto rounded-xl border border-subtle">
+                <table className="w-full text-sm min-w-[640px]">
+                  <thead className="bg-surface-hover text-left">
+                    <tr>
+                      <th className="p-3">Pedido</th>
+                      <th className="p-3">Fecha</th>
+                      <th className="p-3">Total</th>
+                      <th className="p-3">Estado</th>
+                      <th className="p-3"></th>
                     </tr>
-                  )
-                })}
-              </tbody>
-            </table>
-          </div>
-          <Pagination page={page} total={totalPages} onPageChange={setPage} />
-        </div>
+                  </thead>
+                  <tbody>
+                    {orders.map((o) => {
+                      const orderNumber = `SS-${String(o.id).padStart(5, '0')}`
+                      const orderDate = o.fecha ? new Date(o.fecha) : null
+                      const dateStr = orderDate 
+                        ? orderDate.toLocaleDateString('es-ES', { 
+                            day: '2-digit', 
+                            month: 'short', 
+                            year: 'numeric' 
+                          })
+                        : '—'
+                      const timeStr = orderDate 
+                        ? orderDate.toLocaleTimeString('es-ES', { 
+                            hour: '2-digit', 
+                            minute: '2-digit' 
+                          })
+                        : ''
+                      
+                      return (
+                        <tr key={o.id} className="border-t border-subtle hover:bg-surface-hover transition-colors">
+                          <td className="p-3">
+                            <div className="flex items-center gap-2">
+                              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
+                                <Package className="h-4 w-4" />
+                              </div>
+                              <div>
+                                <div className="font-medium">{orderNumber}</div>
+                                <div className="text-xs text-gray-500">{o.items?.length || 0} {o.items?.length === 1 ? 'producto' : 'productos'}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td className="p-3">
+                            <div className="flex flex-col">
+                              <span className="font-medium">{dateStr}</span>
+                              {timeStr && <span className="text-xs text-gray-500">{timeStr}</span>}
+                            </div>
+                          </td>
+                          <td className="p-3">
+                            <span className="font-semibold text-[hsl(var(--primary))]">{formatPrice(Number(o.total ?? 0))}</span>
+                          </td>
+                          <td className="p-3">
+                            <StatusChip status={o.pagado_en ? 'paid' : 'pending'} />
+                          </td>
+                          <td className="p-3 text-right">
+                            <Link 
+                              className="text-[hsl(var(--primary))] hover:underline font-medium text-sm" 
+                              to={ROUTES.orderDetail.replace(':id', String(o.id))}
+                            >
+                              Ver detalle →
+                            </Link>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            
+            <Pagination page={page} total={totalPages} onPageChange={setPage} />
+          </>
         )
       ) : (
         // Tab de Devoluciones
@@ -231,21 +293,21 @@ export default function Orders() {
             No tienes solicitudes de devolución.
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3 sm:space-y-4">
             {devoluciones.map((dev) => (
-              <div key={dev.id} className="card-surface p-5">
-                <div className="flex items-start justify-between mb-4">
+              <div key={dev.id} className="card-surface rounded-xl p-4 sm:p-5">
+                <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold">Devolución #{dev.id}</h3>
+                    <div className="flex flex-wrap items-center gap-2 mb-1">
+                      <h3 className="font-semibold text-base">Devolución #{dev.id}</h3>
                       {getEstadoBadge(dev.estado)}
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                    <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                       {dev.tipo === 'devolucion' ? 'Devolución con reembolso' : 'Cambio por otro producto'}
                     </p>
                   </div>
-                  <div className="text-right text-sm">
-                    <div className="text-gray-600 dark:text-gray-400">Solicitado</div>
+                  <div className="text-left sm:text-right text-sm">
+                    <div className="text-xs text-gray-600 dark:text-gray-400">Solicitado</div>
                     <div className="font-medium">
                       {new Date(dev.fecha_solicitud).toLocaleDateString('es-ES', {
                         day: '2-digit',
@@ -256,24 +318,24 @@ export default function Orders() {
                   </div>
                 </div>
 
-                <div className="border-t border-black/5 pt-4 space-y-3">
-                  <div className="grid grid-cols-2 gap-4 text-sm">
-                    <div>
-                      <span className="text-gray-600 dark:text-gray-400">Producto:</span>
-                      <p className="font-medium">{dev.compra_item_info?.producto_nombre || '—'}</p>
+                <div className="border-t border-subtle pt-4 space-y-3">
+                  <div className="space-y-3 sm:grid sm:grid-cols-2 sm:gap-4 sm:space-y-0">
+                    <div className="text-sm">
+                      <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Producto</div>
+                      <p className="font-medium line-clamp-2">{dev.compra_item_info?.producto_nombre || '—'}</p>
                     </div>
-                    <div>
-                      <span className="text-gray-600 dark:text-gray-400">Cantidad:</span>
+                    <div className="text-sm">
+                      <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Cantidad</div>
                       <p className="font-medium">{dev.cantidad}</p>
                     </div>
-                    <div>
-                      <span className="text-gray-600 dark:text-gray-400">Motivo:</span>
+                    <div className="text-sm">
+                      <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Motivo</div>
                       <p className="font-medium">{dev.motivo}</p>
                     </div>
                     {dev.tipo === 'devolucion' && dev.monto_reembolso && (
-                      <div>
-                        <span className="text-gray-600 dark:text-gray-400">Monto:</span>
-                        <p className="font-semibold text-green-600 dark:text-green-400">
+                      <div className="text-sm">
+                        <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Monto</div>
+                        <p className="text-base font-bold text-green-600 dark:text-green-400">
                           {formatPrice(parseFloat(dev.monto_reembolso))}
                         </p>
                       </div>
@@ -281,18 +343,18 @@ export default function Orders() {
                   </div>
 
                   {dev.descripcion && (
-                    <div className="text-sm">
-                      <span className="text-gray-600 dark:text-gray-400">Descripción:</span>
-                      <p className="mt-1">{dev.descripcion}</p>
+                    <div className="text-sm pt-2 border-t border-subtle">
+                      <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Descripción</div>
+                      <p className="text-gray-700 dark:text-gray-300">{dev.descripcion}</p>
                     </div>
                   )}
 
                   {dev.respuesta_admin && (
-                    <div className="rounded-lg bg-blue-500/10 border border-blue-500/20 p-3 text-sm">
-                      <div className="font-semibold text-blue-700 dark:text-blue-300 mb-1">
-                        Respuesta del administrador:
+                    <div className="rounded-lg bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 p-3 text-sm">
+                      <div className="font-semibold text-blue-800 dark:text-blue-200 mb-1 text-xs uppercase tracking-wide">
+                        Respuesta del administrador
                       </div>
-                      <p className="text-blue-600 dark:text-blue-400">{dev.respuesta_admin}</p>
+                      <p className="text-blue-700 dark:text-blue-300">{dev.respuesta_admin}</p>
                     </div>
                   )}
 
@@ -310,8 +372,9 @@ export default function Orders() {
                             }
                           }
                         }}
-                        className="text-sm text-red-600 hover:underline dark:text-red-400"
+                        className="text-sm font-medium text-red-600 hover:underline dark:text-red-400 active:scale-95 transition inline-flex items-center gap-1"
                       >
+                        <XCircle size={14} />
                         Cancelar solicitud
                       </button>
                     </div>

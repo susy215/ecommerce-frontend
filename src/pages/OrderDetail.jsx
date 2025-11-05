@@ -76,157 +76,222 @@ export default function OrderDetail() {
   const orderNumber = `SS-${String(order.id).padStart(5, '0')}`
 
   return (
-    <div className="container-responsive py-8">
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
-              <Package className="h-5 w-5" />
-            </div>
-            <div>
-              <h1 className="text-xl font-semibold flex items-center gap-2">
-                Pedido {orderNumber}
-                <StatusChip status={order.pagado_en ? 'paid' : 'pending'} />
-              </h1>
-              <p className="text-xs text-gray-500">{items.length} {items.length === 1 ? 'producto' : 'productos'}</p>
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <button onClick={() => window.print()} className="inline-flex items-center gap-1 rounded-md border border-black/10 px-2 py-1.5 text-xs hover:bg-black/5">
-            <Printer size={14} /> Imprimir
+    <div className="container-responsive py-4 sm:py-8">
+      {/* Header Mobile-Optimized */}
+      <div className="mb-4 space-y-3">
+        {/* Top row: Back link y acciones */}
+        <div className="flex items-center justify-between">
+          <Link to="/orders" className="text-sm text-[hsl(var(--primary))] hover:underline font-medium flex items-center gap-1">
+            ← Volver
+          </Link>
+          <button 
+            onClick={() => window.print()} 
+            className="inline-flex items-center gap-1.5 rounded-lg border border-subtle px-3 py-2 text-xs font-medium hover:bg-surface-hover active:scale-95 transition"
+          >
+            <Printer size={14} />
+            <span className="hidden sm:inline">Imprimir</span>
           </button>
-          <Link to="/orders" className="text-sm text-[hsl(var(--primary))] hover:underline font-medium">← Volver</Link>
+        </div>
+        
+        {/* Info del pedido */}
+        <div className="flex items-start gap-3">
+          <div className="flex h-12 w-12 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
+            <Package className="h-6 w-6 sm:h-5 sm:w-5" />
+          </div>
+          <div className="min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <h1 className="text-lg sm:text-xl font-semibold">Pedido {orderNumber}</h1>
+              <StatusChip status={order.pagado_en ? 'paid' : 'pending'} />
+            </div>
+            <p className="text-xs sm:text-sm text-gray-500">
+              {items.length} {items.length === 1 ? 'producto' : 'productos'} • {order.fecha ? new Date(order.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }) : '—'}
+            </p>
+          </div>
         </div>
       </div>
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-4">
-          <div className="rounded-xl border border-black/5 p-4">
-            <h2 className="mb-3 flex items-center gap-2 font-semibold"><Calendar size={16} /> Resumen</h2>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <div className="text-sm">
-                <div className="text-gray-500">Fecha</div>
-                <div>{order.fecha ? new Date(order.fecha).toLocaleString() : '—'}</div>
-              </div>
-              <div className="text-sm">
-                <div className="text-gray-500">Estado</div>
-                <div className="flex items-center gap-2">
-                  <StatusChip status={order.pagado_en ? 'paid' : 'pending'} />
-                  <span className="text-xs text-gray-600">{order.pagado_en ? `Pagado el ${new Date(order.pagado_en).toLocaleString()}` : 'Pendiente de pago'}</span>
+          <div className="card-surface rounded-xl p-4 sm:p-5">
+            <h2 className="mb-3 flex items-center gap-2 text-base sm:text-lg font-semibold">
+              <Calendar size={18} className="text-[hsl(var(--primary))]" /> 
+              Resumen
+            </h2>
+            <div className="space-y-3">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <div className="text-sm">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Fecha</div>
+                  <div className="font-medium">{order.fecha ? new Date(order.fecha).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' }) : '—'}</div>
+                </div>
+                <div className="text-sm">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Total</div>
+                  <div className="text-lg font-bold text-[hsl(var(--primary))]">{formatPrice(Number(order.total ?? 0))}</div>
                 </div>
               </div>
-              <div className="text-sm">
-                <div className="text-gray-500">Total</div>
-                <div className="font-medium">{formatPrice(Number(order.total ?? 0))}</div>
-              </div>
-              <div className="text-sm sm:col-span-2">
-                <div className="text-gray-500">Observaciones</div>
-                <div>{order.observaciones || '—'}</div>
-              </div>
-              <div className="text-sm sm:col-span-2">
-                <div className="text-gray-500">Referencia de pago</div>
-                <div>{order.pago_referencia || '—'}</div>
-              </div>
+              
+              {order.observaciones && (
+                <div className="text-sm pt-2 border-t border-subtle">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Observaciones</div>
+                  <div className="text-gray-700 dark:text-gray-300">{order.observaciones}</div>
+                </div>
+              )}
+              
+              {order.pago_referencia && (
+                <div className="text-sm pt-2 border-t border-subtle">
+                  <div className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-1">Referencia de pago</div>
+                  <div className="font-mono text-gray-700 dark:text-gray-300">{order.pago_referencia}</div>
+                </div>
+              )}
             </div>
           </div>
 
           {/* Garantía */}
           {order.pagado_en && <GarantiaInfo compra={order} />}
 
-          <div className="rounded-xl border border-black/5 p-4">
+          <div className="card-surface rounded-xl p-4 sm:p-5">
             <button
               onClick={() => setItemsOpen(!itemsOpen)}
-              className="mb-3 flex w-full items-center justify-between font-semibold hover:opacity-70"
+              className="flex w-full items-center justify-between font-semibold hover:opacity-70 transition active:scale-[0.99]"
             >
-              <span className="flex items-center gap-2">
-                <Package size={16} /> Items ({items.length})
+              <span className="flex items-center gap-2 text-base sm:text-lg">
+                <Package size={18} className="text-[hsl(var(--primary))]" /> 
+                Items ({items.length})
               </span>
-              {itemsOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+              {itemsOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
             </button>
+            
             {itemsOpen && (
-              <>
-                <ul className="space-y-3">
-                  {items.map((it) => {
-                    const puedeDevolver = order.pagado_en && verificarGarantia(order.fecha).dentroGarantia
-                    
-                    return (
-                      <li key={it.id} className="flex items-center justify-between gap-4 text-sm border-b border-black/5 pb-3 last:border-0 last:pb-0">
-                        <div className="min-w-0 flex-1">
-                          {it.producto ? (
-                            <Link to={`/product/${it.producto}`} className="truncate font-medium hover:underline block">
-                              {it.producto_nombre}
-                            </Link>
-                          ) : (
-                            <span className="truncate font-medium block">{it.producto_nombre}</span>
-                          )}
-                          <div className="text-xs text-gray-600 mt-1">
-                            Cantidad: {it.cantidad} × {formatPrice(Number(it.precio_unitario ?? 0))}
-                          </div>
+              <div className="mt-4 space-y-3">
+                {items.map((it) => {
+                  const puedeDevolver = order.pagado_en && verificarGarantia(order.fecha).dentroGarantia
+                  
+                  return (
+                    <div key={it.id} className="border border-subtle rounded-lg p-3 hover:bg-surface-hover transition">
+                      {/* Nombre del producto */}
+                      <div className="mb-2">
+                        {it.producto ? (
+                          <Link 
+                            to={`/product/${it.producto}`} 
+                            className="font-medium hover:text-[hsl(var(--primary))] transition line-clamp-2 text-sm sm:text-base"
+                          >
+                            {it.producto_nombre}
+                          </Link>
+                        ) : (
+                          <span className="font-medium line-clamp-2 text-sm sm:text-base">{it.producto_nombre}</span>
+                        )}
+                      </div>
+                      
+                      {/* Info y acciones */}
+                      <div className="flex items-end justify-between gap-3">
+                        <div className="text-xs text-gray-600 dark:text-gray-400 space-y-0.5">
+                          <div>Cantidad: <span className="font-medium text-[rgb(var(--fg))]">{it.cantidad}</span></div>
+                          <div>Precio: <span className="font-medium text-[rgb(var(--fg))]">{formatPrice(Number(it.precio_unitario ?? 0))}</span></div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <div className="shrink-0 font-medium">{formatPrice(Number(it.subtotal ?? 0))}</div>
+                        
+                        <div className="flex flex-col items-end gap-2">
+                          <div className="text-base sm:text-lg font-bold text-[hsl(var(--primary))]">
+                            {formatPrice(Number(it.subtotal ?? 0))}
+                          </div>
                           {puedeDevolver && (
                             <button
                               onClick={() => setModalItem(it)}
-                              className="shrink-0 inline-flex items-center gap-1 rounded-md border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2 py-1 text-xs font-medium text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 transition"
+                              className="inline-flex items-center gap-1.5 rounded-lg border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2.5 py-1.5 text-xs font-medium text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 active:scale-95 transition"
                               title="Solicitar devolución"
                             >
                               <RotateCcw size={12} />
-                              Devolver
+                              <span className="hidden sm:inline">Devolver</span>
+                              <span className="sm:hidden">Dev.</span>
                             </button>
                           )}
                         </div>
-                      </li>
-                    )
-                  })}
-                  {items.length === 0 && (
-                    <li className="py-4 text-center text-sm text-gray-600">Sin items.</li>
-                  )}
-                </ul>
-                <div className="mt-4 flex items-center justify-end gap-6 border-t border-black/5 pt-3 text-sm">
-                  <div className="text-gray-600">Subtotal items</div>
-                  <div className="font-medium">{formatPrice(computedSubtotal)}</div>
+                      </div>
+                    </div>
+                  )
+                })}
+                
+                {items.length === 0 && (
+                  <div className="py-6 text-center text-sm text-gray-600 dark:text-gray-400">
+                    Sin items.
+                  </div>
+                )}
+                
+                {/* Subtotal */}
+                <div className="flex items-center justify-between border-t border-subtle pt-3 mt-3">
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">Subtotal items</span>
+                  <span className="text-lg font-bold text-[hsl(var(--primary))]">{formatPrice(computedSubtotal)}</span>
                 </div>
-              </>
+              </div>
             )}
           </div>
         </div>
-        <div className="rounded-xl border border-black/5 p-4">
-          <h2 className="mb-3 flex items-center gap-2 font-semibold"><CreditCard size={16} /> Pago</h2>
+        <div className="card-surface rounded-xl p-4 sm:p-5">
+          <h2 className="mb-4 flex items-center gap-2 text-base sm:text-lg font-semibold">
+            <CreditCard size={18} className="text-[hsl(var(--primary))]" /> 
+            Pago
+          </h2>
           {order.pagado_en ? (
             <div className="space-y-3">
-              <div className="rounded-lg p-3 text-sm callout-success">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 size={18} />
-                  <span className="font-medium">Pago confirmado.</span>
+              {/* Confirmación de pago */}
+              <div className="rounded-lg border border-green-200 bg-green-50 dark:border-green-800 dark:bg-green-900/20 p-3">
+                <div className="flex items-start gap-2 text-sm">
+                  <CheckCircle2 size={18} className="text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-green-800 dark:text-green-200">Pago confirmado</div>
+                    <div className="text-xs text-green-700 dark:text-green-300 mt-1">
+                      {new Date(order.pagado_en).toLocaleString('es-ES', { dateStyle: 'medium', timeStyle: 'short' })}
+                    </div>
+                  </div>
                 </div>
               </div>
+              
+              {/* Botón de descarga - Grande y visible en móvil */}
               <Button
-                variant="outline"
+                variant="primary"
                 onClick={async () => {
                   try {
+                    toast.info('Descargando comprobante...')
                     const blob = await downloadReceipt(order.id)
                     const url = URL.createObjectURL(blob)
                     const a = document.createElement('a')
                     a.href = url
-                    a.download = `compra-${order.id}.pdf`
+                    a.download = `SmartSales365-Compra-${orderNumber}.pdf`
+                    document.body.appendChild(a)
                     a.click()
+                    document.body.removeChild(a)
                     URL.revokeObjectURL(url)
+                    toast.success('Comprobante descargado')
                   } catch (e) {
                     const msg = e?.response?.data?.detail || 'No se pudo descargar el comprobante'
                     toast.error(msg)
                   }
                 }}
-                className="w-full"
+                className="w-full min-h-[48px] font-semibold"
               >
-                <span className="inline-flex items-center gap-2"><Download size={16} /> Descargar comprobante</span>
+                <span className="inline-flex items-center gap-2">
+                  <Download size={18} /> 
+                  <span className="hidden sm:inline">Descargar comprobante</span>
+                  <span className="sm:hidden">Descargar PDF</span>
+                </span>
               </Button>
             </div>
           ) : (
             <div className="space-y-4">
+              {/* Alerta de pago pendiente */}
+              <div className="rounded-lg border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-900/20 p-3">
+                <div className="flex items-start gap-2 text-sm">
+                  <AlertCircle size={18} className="text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                  <div>
+                    <div className="font-semibold text-amber-800 dark:text-amber-200">Pago pendiente</div>
+                    <div className="text-xs text-amber-700 dark:text-amber-300 mt-1">
+                      Completa el pago para procesar tu pedido
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              {/* Pagar con Stripe */}
               <div>
                 <Button
-                  className="w-full"
+                  className="w-full min-h-[48px] font-semibold"
                   onClick={async () => {
                     try {
                       const origin = window.location.origin
@@ -243,21 +308,39 @@ export default function OrderDetail() {
                     }
                   }}
                 >
+                  <CreditCard size={18} className="inline mr-2" />
                   Pagar con Stripe
                 </Button>
               </div>
+              
+              {/* Separador */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-subtle" />
+                </div>
+                <div className="relative flex justify-center text-xs">
+                  <span className="bg-[rgb(var(--card))] px-2 text-gray-500">O confirma pago manual</span>
+                </div>
+              </div>
+              
+              {/* Pago manual */}
               <div className="space-y-3">
-                <p className="text-sm text-gray-600">O confirma tu pago manual ingresando la referencia.</p>
-                <label className="block text-sm">
-                  <span className="mb-1 block text-gray-600">Referencia de pago</span>
+                <label className="block">
+                  <span className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                    Referencia de pago
+                  </span>
                   <input
                     value={referencia}
                     onChange={(e) => setReferencia(e.target.value)}
                     placeholder="Ej: TRANS-123456"
                     className="input w-full"
                   />
+                  <span className="mt-1 block text-xs text-gray-500">
+                    Ingresa tu número de transacción o referencia bancaria
+                  </span>
                 </label>
                 <Button
+                  variant="outline"
                   disabled={!referencia || paying}
                   onClick={async () => {
                     setPaying(true)
@@ -270,9 +353,9 @@ export default function OrderDetail() {
                       toast.error(msg)
                     } finally { setPaying(false) }
                   }}
-                  className="w-full"
+                  className="w-full min-h-[48px] font-semibold"
                 >
-                  {paying ? 'Confirmando…' : 'Confirmar pago'}
+                  {paying ? 'Confirmando…' : 'Confirmar pago manual'}
                 </Button>
               </div>
             </div>
