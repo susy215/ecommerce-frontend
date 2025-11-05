@@ -45,7 +45,7 @@ export default function VoiceFab() {
     <>
       {/* Botón flotante */}
       <div
-        className="fixed right-4 sm:right-6 z-[85]"
+        className="fixed right-4 sm:right-6 z-[120]"
         style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)' }}
       >
         {/* Tooltip / pista */}
@@ -63,15 +63,22 @@ export default function VoiceFab() {
             <span className="absolute inset-0 -m-1 rounded-full bg-[hsl(var(--primary))]/40 animate-ping" />
           )}
           <button
-            onClick={() => { isListening ? stopListening() : startListening(); haptic('toggle') }}
-            className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-white shadow-lg active:scale-95 transition focus:outline-none focus:ring-4 focus:ring-[hsl(var(--primary))]/30"
-            aria-label={isListening ? 'Detener micrófono' : 'Iniciar micrófono'}
+            onClick={() => {
+              setOpen(true)
+              if (isSupported) {
+                isListening ? stopListening() : startListening()
+                haptic('toggle')
+              }
+            }}
+            className={`relative inline-flex h-14 w-14 items-center justify-center rounded-full shadow-lg active:scale-95 transition focus:outline-none focus:ring-4 ${isSupported ? 'bg-[hsl(var(--primary))] text-white focus:ring-[hsl(var(--primary))]/30' : 'bg-gray-500 text-white focus:ring-gray-400/40'}`}
+            aria-label={isSupported ? (isListening ? 'Detener micrófono' : 'Iniciar micrófono') : 'Asistente de voz (entrada manual)'}
+            title={isSupported ? (isListening ? 'Detener micrófono' : 'Iniciar micrófono') : 'Micrófono no soportado: usa comandos por texto'}
           >
             {addedFlash ? (
               <span className="absolute inset-0 grid place-items-center">
                 <CheckCircle className="h-6 w-6 text-white animate-in fade-in" />
               </span>
-            ) : isListening ? (
+            ) : isSupported && isListening ? (
               <MicOff className="h-6 w-6" />
             ) : (
               <Mic className="h-6 w-6" />
@@ -82,7 +89,7 @@ export default function VoiceFab() {
 
       {/* Panel inferior */}
       {open && (
-        <div className="fixed inset-0 z-[84]" aria-modal="true" role="dialog">
+        <div className="fixed inset-0 z-[119]" aria-modal="true" role="dialog">
           <div
             className="absolute inset-0 bg-black/40" 
             onClick={() => { setOpen(false); stopListening(); }}
@@ -98,22 +105,24 @@ export default function VoiceFab() {
             {/* Estado de escucha */}
             <div className="mb-3 rounded-lg border border-subtle p-3">
               <div className="flex items-center gap-2 text-sm">
-                {isListening ? (
+                {isSupported && isListening ? (
                   <span className="inline-flex h-2.5 w-2.5 animate-pulse rounded-full bg-green-500" />
                 ) : (
                   <span className="inline-flex h-2.5 w-2.5 rounded-full bg-gray-400" />
                 )}
-                <span className="font-medium">{isListening ? 'Escuchando…' : 'Micrófono apagado'}</span>
+                <span className="font-medium">
+                  {isSupported ? (isListening ? 'Escuchando…' : 'Micrófono apagado') : 'Micrófono no soportado'}
+                </span>
               </div>
-              {lastTranscript && (
+              {isSupported && lastTranscript && (
                 <div className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                   “{lastTranscript}”
                 </div>
               )}
             </div>
 
-            {/* Entrada manual si no está escuchando */}
-            {!isListening && (
+            {/* Entrada manual siempre disponible si no hay soporte o no está escuchando */}
+            {(!isSupported || !isListening) && (
               <ManualInput onSubmit={(text) => processText(text)} />
             )}
 
