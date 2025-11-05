@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ROUTES } from '../constants/routes'
 import Button from '../components/ui/Button'
 import { ShoppingCart, Trash2, Plus, Minus } from 'lucide-react'
+import { resolveImageUrl } from '../utils/image'
 
 export default function Cart() {
   const { items, updateQty, removeItem, subtotal, clear } = useCart()
@@ -41,7 +42,7 @@ export default function Cart() {
               <div key={item.id} className="card-surface p-3 sm:p-4">
                 <div className="flex gap-3 sm:gap-4">
                   <img 
-                    src={item.image || 'https://placehold.co/160x160?text=Producto'} 
+                    src={resolveImageUrl(item.image || item.imagen)} 
                     alt={item.name} 
                     className="h-20 w-20 sm:h-24 sm:w-24 flex-shrink-0 rounded-lg object-cover bg-surface-hover" 
                   />
