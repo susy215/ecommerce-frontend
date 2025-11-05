@@ -1,29 +1,84 @@
 import { useEffect, useState } from 'react'
-import { Mic, MicOff, X, ShoppingCart, ArrowRight, Loader2 } from 'lucide-react'
+import { Mic, MicOff, X, ShoppingCart, ArrowRight, Loader2, CheckCircle } from 'lucide-react'
 import { useVoiceCommands } from './VoiceCommandProvider'
 import { formatPrice } from '../../utils/format'
 
 export default function VoiceFab() {
   const { isSupported, isListening, startListening, stopListening, lastTranscript, candidates, processing, clearCandidates, processText } = useVoiceCommands()
   const [open, setOpen] = useState(false)
+  const [addedFlash, setAddedFlash] = useState(null)
+  const [showHint, setShowHint] = useState(false)
 
   useEffect(() => {
     if (isListening) setOpen(true)
   }, [isListening])
+
+  useEffect(() => {
+    const onFeedback = (e) => {
+      if (e?.detail?.type === 'added') {
+        setAddedFlash({ qty: e.detail.quantity, name: e.detail.productName })
+        setTimeout(() => setAddedFlash(null), 1400)
+      }
+    }
+    window.addEventListener('voiceFeedback', onFeedback)
+    return () => window.removeEventListener('voiceFeedback', onFeedback)
+  }, [])
+
+  useEffect(() => {
+    if (isListening) {
+      setShowHint(true)
+      const t = setTimeout(() => setShowHint(false), 2200)
+      return () => clearTimeout(t)
+    }
+  }, [isListening])
+
+  const haptic = (type = 'light') => {
+    if ('vibrate' in navigator) {
+      if (type === 'light') navigator.vibrate(10)
+      if (type === 'toggle') navigator.vibrate([10, 20])
+    }
+  }
 
   if (!isSupported) return null
 
   return (
     <>
       {/* Botón flotante */}
-      <button
-        onClick={() => (isListening ? stopListening() : startListening())}
-        className="fixed right-4 z-[85] sm:right-6 inline-flex h-14 w-14 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-white shadow-lg active:scale-95 transition focus:outline-none focus:ring-4 focus:ring-[hsl(var(--primary))]/30"
+      <div
+        className="fixed right-4 sm:right-6 z-[85]"
         style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)' }}
-        aria-label={isListening ? 'Detener micrófono' : 'Iniciar micrófono'}
       >
-        {isListening ? <MicOff className="h-6 w-6" /> : <Mic className="h-6 w-6" />}
-      </button>
+        {/* Tooltip / pista */}
+        <div className="mb-2 flex justify-end">
+          {showHint && (
+            <div className="rounded-full bg-[rgb(var(--card))] border border-subtle px-3 py-1 text-xs shadow-md text-gray-700 dark:text-gray-200">
+              {isListening ? 'Escuchando… di: "agrega 2 coca cola"' : 'Hablar'}
+            </div>
+          )}
+        </div>
+
+        {/* Anillo pulsante cuando escucha */}
+        <div className="relative">
+          {isListening && (
+            <span className="absolute inset-0 -m-1 rounded-full bg-[hsl(var(--primary))]/40 animate-ping" />
+          )}
+          <button
+            onClick={() => { isListening ? stopListening() : startListening(); haptic('toggle') }}
+            className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-white shadow-lg active:scale-95 transition focus:outline-none focus:ring-4 focus:ring-[hsl(var(--primary))]/30"
+            aria-label={isListening ? 'Detener micrófono' : 'Iniciar micrófono'}
+          >
+            {addedFlash ? (
+              <span className="absolute inset-0 grid place-items-center">
+                <CheckCircle className="h-6 w-6 text-white animate-in fade-in" />
+              </span>
+            ) : isListening ? (
+              <MicOff className="h-6 w-6" />
+            ) : (
+              <Mic className="h-6 w-6" />
+            )}
+          </button>
+        </div>
+      </div>
 
       {/* Panel inferior */}
       {open && (

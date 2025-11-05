@@ -160,7 +160,7 @@ export default function OrderDetail() {
             </button>
             
             {itemsOpen && (
-              <div className="mt-4 space-y-3">
+              <div className="mt-4 space-y-3 max-h-[60vh] overflow-y-auto pr-1 sm:max-h-none sm:overflow-visible sm:pr-0">
                 {items.map((it) => {
                   const puedeDevolver = order.pagado_en && verificarGarantia(order.fecha).dentroGarantia
                   
@@ -192,19 +192,19 @@ export default function OrderDetail() {
                         </div>
                       </div>
                       
-                      {/* Total y botón de devolución - Layout vertical en móvil, horizontal en desktop */}
-                      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-2 border-t border-subtle">
+                      {/* Total y botón de devolución - Compacto en una sola línea */}
+                      <div className="flex items-center justify-between gap-2 pt-2 border-t border-subtle">
                         <div className="text-base sm:text-lg font-bold text-[hsl(var(--primary))]">
                           Total: {formatPrice(Number(it.subtotal ?? 0))}
                         </div>
                         {puedeDevolver && (
                           <button
                             onClick={() => setModalItem(it)}
-                            className="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 rounded-lg border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-3 py-2 text-xs font-medium text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 active:scale-95 transition min-h-[40px]"
+                            className="inline-flex items-center gap-1 rounded-md border border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/10 px-2.5 py-1 text-[11px] font-medium text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/20 active:scale-95 transition whitespace-nowrap"
                             title="Solicitar devolución"
                           >
-                            <RotateCcw size={14} />
-                            <span>Solicitar devolución</span>
+                            <RotateCcw size={12} />
+                            Devolver
                           </button>
                         )}
                       </div>

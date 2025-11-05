@@ -121,6 +121,10 @@ export function VoiceCommandProvider({ children }) {
         addItem(product, qty)
         toast.success(`${product.nombre || product.name} x${qty} agregado`) 
         haptic('success')
+        // Aviso para UI del FAB
+        try {
+          window.dispatchEvent(new CustomEvent('voiceFeedback', { detail: { type: 'added', quantity: qty, productName: product.nombre || product.name } }))
+        } catch {}
         if (intent.type === 'buy') {
           navigate(ROUTES.checkout)
         }
