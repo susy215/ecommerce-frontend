@@ -78,11 +78,6 @@ export function VoiceCommandProvider({ children }) {
         haptic('light')
         return
       case 'go_checkout':
-        if (items.length === 0) {
-          toast.info('Tu carrito está vacío')
-          haptic('warn')
-          return
-        }
         navigate(ROUTES.checkout)
         toast.success('Yendo a checkout')
         haptic('light')
