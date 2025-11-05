@@ -43,8 +43,8 @@ export default function VoiceFab() {
     <>
       {/* Botón flotante */}
       <div
-        className="fixed right-4 sm:right-6 z-[120]"
-        style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)' }}
+        className="fixed right-4 sm:right-6 z-[9997]"
+        style={{ bottom: 'calc(env(safe-area-inset-bottom, 0px) + 64px)' }}
       >
         {/* Tooltip / pista */}
         <div className="mb-2 flex justify-end">
