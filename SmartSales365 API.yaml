@@ -1861,9 +1861,83 @@ paths:
               schema:
                 $ref: '#/components/schemas/Promocion'
           description: ''
+  /api/reportes/health/:
+    get:
+      operationId: api_reportes_health_retrieve
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/reportes/kpis/:
+    get:
+      operationId: api_reportes_kpis_retrieve
+      description: KPIs rápidos para dashboard administrativo.
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/reportes/series/ventas-por-dia/:
+    get:
+      operationId: api_reportes_series_ventas_por_dia_retrieve
+      description: 'Serie temporal: ventas por día (completa con ceros).'
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
   /api/reportes/summary/:
     get:
       operationId: api_reportes_summary_retrieve
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/reportes/ventas/por-categoria/:
+    get:
+      operationId: api_reportes_ventas_por_categoria_retrieve
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/reportes/ventas/por-producto/:
+    get:
+      operationId: api_reportes_ventas_por_producto_retrieve
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - cookieAuth: []
+      - basicAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/reportes/ventas/top-clientes/:
+    get:
+      operationId: api_reportes_ventas_top_clientes_retrieve
       tags:
       - api
       security:
