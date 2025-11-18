@@ -171,7 +171,7 @@ export default function ProductDetail() {
                   <Tag className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" strokeWidth={2.5} />
                   <div>
                     <span className="text-xs font-semibold text-gray-700 dark:text-gray-500 block uppercase tracking-wider">SKU</span>
-                    <p className="font-bold text-base mt-1">{product.sku}</p>
+                    <p className="font-bold text-base mt-1 text-gray-900 dark:text-gray-100">{product.sku}</p>
                   </div>
                 </div>
               )}
@@ -182,7 +182,7 @@ export default function ProductDetail() {
                   </svg>
                   <div>
                     <span className="text-xs font-semibold text-gray-700 dark:text-gray-500 block uppercase tracking-wider">Categoría</span>
-                    <p className="font-bold text-base mt-1">{product.categoria.nombre}</p>
+                    <p className="font-bold text-base mt-1 text-gray-900 dark:text-gray-100">{product.categoria.nombre}</p>
                   </div>
                 </div>
               )}
