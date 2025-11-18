@@ -1,10 +1,7 @@
 @import "tailwindcss";
 
 /* Configurar dark mode para usar clase 'dark' */
-@theme {
-  --color-scheme: light;
-  --color-scheme-dark: dark;
-}
+@variant dark (&:where(.dark, .dark *));
 
 /* Base design tokens and light/dark handling */
 @layer base {
