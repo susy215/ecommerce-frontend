@@ -11,6 +11,7 @@ import ModalDevolucion from '../components/common/ModalDevolucion'
 import toast from '../utils/toastBus'
 import { ROUTES } from '../constants/routes'
 import { Package, RotateCcw, Clock, CheckCircle2, XCircle } from 'lucide-react'
+import PageTitle from '../components/common/PageTitle'
 
 export default function Orders() {
   const [loading, setLoading] = useState(true)
@@ -101,17 +102,12 @@ export default function Orders() {
 
   return (
     <div className="container-responsive py-6 sm:py-10">
-      <div className="mb-8">
-        <div className="flex items-center gap-4 mb-3">
-          <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg">
-            <Package className="h-7 w-7 text-white" />
-          </div>
-          <div>
-            <h1 className="text-3xl sm:text-4xl font-black">Mis <span className="gradient-text">compras</span></h1>
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">Historial completo de tus pedidos y devoluciones</p>
-          </div>
-        </div>
-      </div>
+      <PageTitle
+        icon={<Package className="h-7 w-7" />}
+        eyebrow="Pedidos"
+        title="Mis compras"
+        subtitle="Historial completo de pedidos, estado de pago y solicitudes de devolución."
+      />
 
       {/* Tabs premium */}
       <div className="mb-8 flex gap-2 border-b-2 border-[hsl(var(--primary))]/10">

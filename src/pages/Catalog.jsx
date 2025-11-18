@@ -7,6 +7,8 @@ import { useCart } from '../hooks/useCart'
 import { getProducts, getCategories } from '../services/products'
 import { toArray } from '../utils/data'
 import SortSelect from '../components/common/SortSelect'
+import PageTitle from '../components/common/PageTitle'
+import { ShoppingBag } from 'lucide-react'
 
 export default function Catalog() {
   const [loading, setLoading] = useState(true)
@@ -78,36 +80,25 @@ export default function Catalog() {
 
   return (
     <div className="container-responsive py-6 sm:py-8 md:py-10 page-anim">
-      <div className="mb-6 sm:mb-8 space-y-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.4em] text-gray-500">Shop</p>
-            <h1 className="text-3xl sm:text-4xl font-black leading-tight">
-              {search ? (
-                <>Resultados para <span className="gradient-text">"{search}"</span></>
-              ) : (
-                <>Explora nuestra <span className="gradient-text">tienda</span></>
-              )}
-            </h1>
-            <p className="mt-2 text-sm sm:text-base text-gray-600 dark:text-gray-400">
-              {search ? 'Mostrando sugerencias relacionadas a tu búsqueda.' : 'Productos seleccionados para un setup equilibrado y portátil.'}
-            </p>
-          </div>
-          <SortSelect value={ordering} onChange={onSortChange} />
-        </div>
-        {search && (
-          <button
-            onClick={() => {
-              const next = new URLSearchParams(searchParams)
-              next.delete('search'); next.set('page', '1')
-              setSearchParams(next)
-            }}
-            className="text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--primary))] hover:underline"
-          >
-            Limpiar búsqueda
-          </button>
-        )}
-      </div>
+      <PageTitle
+        icon={<ShoppingBag className="h-7 w-7" />}
+        eyebrow="Shop"
+        title={search ? `Resultados para "${search}"` : 'Explora nuestra tienda'}
+        subtitle={search ? 'Mostrando sugerencias relacionadas a tu búsqueda.' : 'Promociones activas, lanzamientos y básicos siempre disponibles.'}
+        actions={<SortSelect value={ordering} onChange={onSortChange} />}
+      />
+      {search && (
+        <button
+          onClick={() => {
+            const next = new URLSearchParams(searchParams)
+            next.delete('search'); next.set('page', '1')
+            setSearchParams(next)
+          }}
+          className="mb-6 text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--primary))] hover:underline"
+        >
+          Limpiar búsqueda
+        </button>
+      )}
 
       <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
         <FiltersSidebar categories={categories} selectedCategoria={categoria} onChange={onFiltersChange} />

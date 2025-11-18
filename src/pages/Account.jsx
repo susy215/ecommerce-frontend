@@ -5,7 +5,8 @@ import { usePushNotifications } from '../hooks/usePushNotifications'
 import Button from '../components/ui/Button'
 import Input from '../components/common/Input'
 import toast from '../utils/toastBus'
-import { Bell, BellOff, CheckCircle2 } from 'lucide-react'
+import { Bell, BellOff, CheckCircle2, UserRound } from 'lucide-react'
+import PageTitle from '../components/common/PageTitle'
 
 export default function Account() {
   const { user, refreshUser } = useAuth()
@@ -57,7 +58,12 @@ export default function Account() {
   return (
     <div className="container-responsive py-8 page-anim">
       <div className="mx-auto max-w-2xl">
-        <h1 className="mb-6 text-2xl font-semibold">Mi cuenta</h1>
+        <PageTitle
+          icon={<UserRound className="h-7 w-7" />}
+          eyebrow="Perfil"
+          title="Mi cuenta"
+          subtitle="Actualiza tus datos, gestiona notificaciones y mantén tu perfil al día."
+        />
         
         {/* Perfil */}
         <div className="card-surface p-6 mb-6">

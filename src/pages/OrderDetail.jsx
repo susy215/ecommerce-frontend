@@ -9,6 +9,7 @@ import GarantiaInfo from '../components/common/GarantiaInfo'
 import ModalDevolucion from '../components/common/ModalDevolucion'
 import { Calendar, CreditCard, ClipboardCopy, Printer, AlertCircle, CheckCircle2, Package, Download, ChevronDown, ChevronUp, RotateCcw } from 'lucide-react'
 import Button from '../components/ui/Button'
+import PageTitle from '../components/common/PageTitle'
 
 export default function OrderDetail() {
   const { id } = useParams()
@@ -74,41 +75,44 @@ export default function OrderDetail() {
 
   // Generar número de pedido formateado
   const orderNumber = `SS-${String(order.id).padStart(5, '0')}`
+  const orderDate = order.fecha ? new Date(order.fecha) : null
+  const orderDateLabel = orderDate
+    ? orderDate.toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' })
+    : 'Fecha pendiente'
+  const statusSubtitle = (
+    <span className="flex flex-wrap items-center gap-2">
+      <span>
+        {items.length} {items.length === 1 ? 'producto' : 'productos'}
+      </span>
+      <span className="text-gray-400">•</span>
+      <span>{orderDateLabel}</span>
+      <span className="text-gray-400">•</span>
+      <StatusChip status={order.pagado_en ? 'paid' : 'pending'} />
+    </span>
+  )
 
   return (
     <div className="container-responsive py-4 sm:py-8">
-      {/* Header Mobile-Optimized */}
-      <div className="mb-4 space-y-3">
-        {/* Top row: Back link y acciones */}
-        <div className="flex items-center justify-between">
-          <Link to="/orders" className="text-sm text-[hsl(var(--primary))] hover:underline font-medium flex items-center gap-1">
-            ← Volver
-          </Link>
-          <button 
-            onClick={() => window.print()} 
-            className="inline-flex items-center gap-1.5 rounded-lg border border-subtle px-3 py-2 text-xs font-medium hover:bg-surface-hover active:scale-95 transition"
-          >
-            <Printer size={14} />
-            <span className="hidden sm:inline">Imprimir</span>
-          </button>
-        </div>
-        
-        {/* Info del pedido */}
-        <div className="flex items-start gap-3">
-          <div className="flex h-12 w-12 sm:h-10 sm:w-10 flex-shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
-            <Package className="h-6 w-6 sm:h-5 sm:w-5" />
-          </div>
-          <div className="min-w-0 flex-1">
-            <div className="flex flex-wrap items-center gap-2 mb-1">
-              <h1 className="text-lg sm:text-xl font-semibold">Pedido {orderNumber}</h1>
-              <StatusChip status={order.pagado_en ? 'paid' : 'pending'} />
-            </div>
-            <p className="text-xs sm:text-sm text-gray-500">
-              {items.length} {items.length === 1 ? 'producto' : 'productos'} • {order.fecha ? new Date(order.fecha).toLocaleDateString('es-ES', { day: '2-digit', month: 'short', year: 'numeric' }) : '—'}
-            </p>
-          </div>
-        </div>
-      </div>
+      <PageTitle
+        icon={<Package className="h-7 w-7" />}
+        eyebrow="Pedido"
+        title={`Pedido ${orderNumber}`}
+        subtitle={statusSubtitle}
+        actions={(
+          <>
+            <Link to="/orders" className="text-sm font-semibold text-[hsl(var(--primary))] hover:underline">
+              ← Volver
+            </Link>
+            <button 
+              onClick={() => window.print()} 
+              className="inline-flex items-center gap-1.5 rounded-lg border border-subtle px-3 py-2 text-xs font-medium hover:bg-surface-hover active:scale-95 transition"
+            >
+              <Printer size={14} />
+              <span className="hidden sm:inline">Imprimir</span>
+            </button>
+          </>
+        )}
+      />
       <div className="grid gap-6 lg:grid-cols-3">
         <div className="lg:col-span-2 space-y-4">
           <div className="card-surface rounded-xl p-4 sm:p-5">

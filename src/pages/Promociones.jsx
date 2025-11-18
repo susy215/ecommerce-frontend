@@ -3,6 +3,7 @@ import { getPromociones } from '../services/promociones'
 import { toArray } from '../utils/data'
 import { formatPrice } from '../utils/format'
 import { Tag, Calendar, Percent, DollarSign, Gift, TrendingUp, Clock, CheckCircle2, XCircle, ShoppingCart } from 'lucide-react'
+import PageTitle from '../components/common/PageTitle'
 
 export default function Promociones() {
   const [loading, setLoading] = useState(true)
@@ -46,17 +47,12 @@ export default function Promociones() {
 
   return (
     <div className="container-responsive py-8 page-anim">
-      <div className="mb-8">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10">
-            <Gift className="h-6 w-6 text-[hsl(var(--primary))]" />
-          </div>
-          <div>
-            <h1 className="text-3xl font-bold">Promociones Activas</h1>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Aprovecha nuestros descuentos especiales</p>
-          </div>
-        </div>
-      </div>
+      <PageTitle
+        icon={<Gift className="h-7 w-7" />}
+        eyebrow="Beneficios"
+        title="Promociones activas"
+        subtitle="Aprovecha descuentos especiales y códigos exclusivos antes de que se agoten."
+      />
 
       {loading ? (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

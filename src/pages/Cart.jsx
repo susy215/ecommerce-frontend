@@ -5,33 +5,25 @@ import { ROUTES } from '../constants/routes'
 import Button from '../components/ui/Button'
 import { ShoppingCart, Trash2, Plus, Minus } from 'lucide-react'
 import { resolveImageUrl } from '../utils/image'
+import PageTitle from '../components/common/PageTitle'
 
 export default function Cart() {
   const { items, updateQty, removeItem, subtotal, clear } = useCart()
 
   return (
     <div className="container-responsive py-4 sm:py-8 md:py-10 page-anim">
-      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl sm:text-4xl font-black flex items-center gap-3">
-            <div className="h-12 w-12 rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg">
-              <ShoppingCart className="h-6 w-6 text-white" />
-            </div>
-            Carrito de compras
-          </h1>
-          {items.length > 0 && (
-            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mt-2 font-medium">
-              {items.length} {items.length === 1 ? 'producto' : 'productos'} en tu carrito
-            </p>
-          )}
-        </div>
-        {items.length > 0 && (
-          <button onClick={clear} className="inline-flex items-center gap-2 text-sm font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-2.5 rounded-xl transition-all border border-transparent hover:border-red-200 dark:hover:border-red-800 self-start sm:self-auto">
+      <PageTitle
+        icon={<ShoppingCart className="h-7 w-7" />}
+        eyebrow="Carrito"
+        title="Carrito de compras"
+        subtitle={items.length > 0 ? `${items.length} ${items.length === 1 ? 'producto' : 'productos'} listos para checkout.` : 'Todavía no agregaste productos. Explora el catálogo para comenzar.'}
+        actions={items.length > 0 && (
+          <button onClick={clear} className="inline-flex items-center gap-2 text-sm font-bold text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 px-4 py-2.5 rounded-xl transition-all border border-transparent hover:border-red-200 dark:hover:border-red-800">
             <Trash2 className="h-4 w-4" />
             Vaciar carrito
           </button>
         )}
-      </div>
+      />
 
       {items.length === 0 ? (
         <div className="card-surface p-12 sm:p-16 text-center border-2 border-dashed border-[hsl(var(--primary))]/20 rounded-3xl">
