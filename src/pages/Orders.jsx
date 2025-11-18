@@ -100,44 +100,44 @@ export default function Orders() {
   }
 
   return (
-    <div className="container-responsive py-4 sm:py-8">
-      <div className="mb-4 sm:mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <div className="flex h-10 w-10 sm:h-12 sm:w-12 items-center justify-center rounded-xl bg-[hsl(var(--primary))]/10">
-            <Package className="h-5 w-5 sm:h-6 sm:w-6 text-[hsl(var(--primary))]" />
+    <div className="container-responsive py-6 sm:py-10">
+      <div className="mb-8">
+        <div className="flex items-center gap-4 mb-3">
+          <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg">
+            <Package className="h-7 w-7 text-white" />
           </div>
           <div>
-            <h1 className="text-xl sm:text-2xl font-bold">Mis compras</h1>
-            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Historial de tus pedidos</p>
+            <h1 className="text-3xl sm:text-4xl font-black">Mis <span className="gradient-text">compras</span></h1>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">Historial completo de tus pedidos y devoluciones</p>
           </div>
         </div>
       </div>
 
-      {/* Tabs */}
-      <div className="mb-6 flex gap-2 border-b border-black/10">
+      {/* Tabs premium */}
+      <div className="mb-8 flex gap-2 border-b-2 border-[hsl(var(--primary))]/10">
         <button
           onClick={() => setTab('compras')}
-          className={`px-4 py-2 text-sm font-medium transition border-b-2 -mb-px ${
+          className={`px-6 py-3 text-sm font-bold transition-all border-b-3 -mb-[2px] rounded-t-lg ${
             tab === 'compras'
-              ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))]'
-              : 'border-transparent text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))] bg-[hsl(var(--primary))]/5'
+              : 'border-transparent text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-surface-hover'
           }`}
         >
           <span className="flex items-center gap-2">
-            <Package className="h-4 w-4" />
+            <Package className="h-5 w-5" />
             Compras ({orders.length})
           </span>
         </button>
         <button
           onClick={() => setTab('devoluciones')}
-          className={`px-4 py-2 text-sm font-medium transition border-b-2 -mb-px ${
+          className={`px-6 py-3 text-sm font-bold transition-all border-b-3 -mb-[2px] rounded-t-lg ${
             tab === 'devoluciones'
-              ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))]'
-              : 'border-transparent text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200'
+              ? 'border-[hsl(var(--primary))] text-[hsl(var(--primary))] bg-[hsl(var(--primary))]/5'
+              : 'border-transparent text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-200 hover:bg-surface-hover'
           }`}
         >
           <span className="flex items-center gap-2">
-            <RotateCcw className="h-4 w-4" />
+            <RotateCcw className="h-5 w-5" />
             Devoluciones ({devoluciones.length})
           </span>
         </button>
@@ -147,10 +147,16 @@ export default function Orders() {
         <div className="h-40 animate-pulse rounded-xl bg-surface-hover" />
       ) : tab === 'compras' ? (
         orders.length === 0 ? (
-          <div className="card-surface p-6 text-center text-[rgb(var(--fg))]/70">
-            Aún no tienes compras.
-            <div className="mt-3">
-              <Link to={ROUTES.catalog} className="btn-primary inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium">Ir a la tienda</Link>
+          <div className="card-surface p-12 sm:p-16 text-center border-2 border-dashed border-[hsl(var(--primary))]/20 rounded-3xl">
+            <div className="mx-auto mb-6 flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(var(--primary))]/10 to-[hsl(var(--accent))]/10">
+              <Package className="h-10 w-10 sm:h-12 sm:w-12 text-[hsl(var(--primary))]" />
+            </div>
+            <h2 className="mb-3 text-2xl sm:text-3xl font-black">Aún no tienes compras</h2>
+            <p className="mb-8 text-base sm:text-lg text-gray-600 dark:text-gray-400 font-medium max-w-md mx-auto">
+              Comienza a explorar nuestros productos increíbles
+            </p>
+            <div className="mt-6">
+              <Link to={ROUTES.catalog} className="btn-primary inline-flex items-center justify-center rounded-2xl px-8 py-4 text-base font-bold shadow-[0_8px_24px_rgba(0,128,255,0.35)]">Ir a la tienda</Link>
             </div>
           </div>
         ) : (

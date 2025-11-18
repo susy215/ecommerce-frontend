@@ -77,36 +77,52 @@ export default function Catalog() {
   }
 
   return (
-    <div className="container-responsive py-4 sm:py-6 md:py-8 page-anim">
-      <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 sm:gap-4">
+    <div className="container-responsive py-6 sm:py-8 md:py-10 page-anim">
+      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl sm:text-2xl font-semibold">Tienda</h1>
-          <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5 sm:mt-1 line-clamp-1">{search ? `Resultados para "${search}"` : 'Descubre nuestros productos'}</p>
+          <h1 className="text-3xl sm:text-4xl font-black mb-2">
+            {search ? (
+              <>Resultados para <span className="gradient-text">"{search}"</span></>
+            ) : (
+              <>Explora nuestra <span className="gradient-text">tienda</span></>
+            )}
+          </h1>
+          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">
+            {search ? `Mostrando productos relacionados con tu búsqueda` : 'Descubre productos increíbles seleccionados para ti'}
+          </p>
         </div>
         <SortSelect value={ordering} onChange={onSortChange} />
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
+      <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">
         <FiltersSidebar categories={categories} selectedCategoria={categoria} onChange={onFiltersChange} />
         <div className="flex-1 min-w-0">
           {loading ? (
-          <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 sm:gap-5 md:grid-cols-3 lg:grid-cols-4">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="aspect-square rounded-lg sm:rounded-xl skeleton-shimmer" />
+              <div key={i} className="aspect-square rounded-2xl skeleton-shimmer shadow-md" />
             ))}
           </div>
           ) : products.length === 0 ? (
-            <div className="card-surface p-8 sm:p-12 text-center">
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">No se encontraron productos.</p>
+            <div className="card-surface p-12 sm:p-16 text-center border-2 border-dashed border-[hsl(var(--primary))]/20 rounded-3xl">
+              <div className="mx-auto mb-6 flex h-20 w-20 sm:h-24 sm:w-24 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(var(--primary))]/10 to-[hsl(var(--accent))]/10">
+                <svg className="h-10 w-10 sm:h-12 sm:w-12 text-[hsl(var(--primary))]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </div>
+              <h2 className="mb-3 text-2xl sm:text-3xl font-black">No encontramos productos</h2>
+              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-8 font-medium max-w-md mx-auto">
+                Intenta ajustar tus filtros o búsqueda para encontrar lo que necesitas
+              </p>
               <button
                 onClick={() => {
                   const next = new URLSearchParams(searchParams)
                   next.delete('search'); next.delete('categoria'); next.set('page','1')
                   setSearchParams(next)
                 }}
-                className="btn-primary rounded-lg px-5 py-3 sm:py-2.5 text-sm font-semibold"
+                className="btn-primary rounded-2xl px-8 py-4 text-base font-bold shadow-[0_8px_24px_rgba(0,128,255,0.35)]"
               >
-                Limpiar filtros
+                Limpiar todos los filtros
               </button>
             </div>
           ) : (

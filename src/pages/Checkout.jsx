@@ -131,11 +131,18 @@ export default function Checkout() {
   }
 
   return (
-    <div className="container-responsive py-8 page-anim">
-      <h1 className="mb-6 text-2xl font-semibold flex items-center gap-2">
-        <ShoppingBag className="h-6 w-6 text-[hsl(var(--primary))]" />
-        Checkout
-      </h1>
+    <div className="container-responsive py-6 sm:py-10 page-anim">
+      <div className="mb-8">
+        <div className="flex items-center gap-4">
+          <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg">
+            <ShoppingBag className="h-7 w-7 text-white" />
+          </div>
+          <div>
+            <h1 className="text-3xl sm:text-4xl font-black">Finalizar <span className="gradient-text">compra</span></h1>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">Revisa tu pedido y completa el pago</p>
+          </div>
+        </div>
+      </div>
       {order ? (
         <div className="mx-auto max-w-2xl">
           <div className="mb-6 flex items-center justify-center">

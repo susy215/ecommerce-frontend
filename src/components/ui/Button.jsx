@@ -5,16 +5,16 @@ export default function Button({
   disabled = false,
   ...props
 }) {
-  const base = 'inline-flex items-center justify-center rounded-lg px-4 py-2.5 text-sm font-semibold focus-visible:outline-none active:scale-[0.98] transition-transform min-h-[44px]';
+  const base = 'inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-bold focus-visible:outline-none active:scale-[0.98] transition-all min-h-[48px]';
   const variants = {
-    primary: 'btn-primary',
+    primary: 'btn-primary shadow-[0_8px_24px_rgba(0,128,255,0.35)] hover:shadow-[0_12px_32px_rgba(0,128,255,0.45)]',
     outline: 'btn-outline',
     ghost: 'btn-ghost',
   }
   const cls = [
     base, 
     variants[variant] || variants.primary, 
-    disabled ? 'opacity-60 cursor-not-allowed active:scale-100' : '', 
+    disabled ? 'opacity-60 cursor-not-allowed active:scale-100 hover:shadow-none' : '', 
     className
   ].join(' ')
   

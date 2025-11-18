@@ -3,52 +3,59 @@
 /* Base design tokens and light/dark handling */
 @layer base {
   :root {
-    /* Paleta de colores modernos para modo claro */
-    --bg: 250 250 252; /* Casi blanco con tono frío */
-    --fg: 15 23 42; /* Azul oscuro profundo */
-    --muted: 100 116 139; /* Gris azulado */
-    --card: 255 255 255; /* Blanco puro */
-    --surface-hover: 248 250 252; /* Gris muy claro */
-    --border-rgb: 226 232 240; /* Gris claro para bordes */
+    /* Paleta de colores premium - Modo Claro */
+    --bg: 252 252 254; /* Blanco casi puro con matiz lavanda */
+    --fg: 15 23 42; /* Azul marino profundo para texto */
+    --muted: 100 116 139; /* Gris azulado suave */
+    --card: 255 255 255; /* Blanco puro para tarjetas */
+    --surface-hover: 248 249 252; /* Lavanda muy tenue */
+    --border-rgb: 226 232 240; /* Gris platino para bordes */
     
-    /* Paleta de colores primarios vibrante */
-    --primary: 239 68% 58%; /* Púrpura/rosa vibrante */
-    --primary-hover: 239 68% 52%; /* Más oscuro */
-    --primary-light: 239 80% 95%; /* Muy claro */
-    --primary-700: 239 65% 48%;
+    /* Paleta de colores primarios NUEVA - Azul eléctrico elegante */
+    --primary: 210 100% 50%; /* Azul eléctrico vibrante #0080ff */
+    --primary-hover: 210 100% 45%; /* Azul más intenso */
+    --primary-light: 210 100% 96%; /* Azul hielo muy claro */
+    --primary-700: 210 100% 40%; /* Azul profundo */
     
-    /* Colores de acento */
-    --accent: 199 89% 50%; /* Azul cielo */
-    --success: 142 76% 48%; /* Verde esmeralda vibrante */
-    --warning: 38 92% 55%; /* Naranja brillante */
-    --error: 0 72% 58%; /* Rojo coral */
-    --success-strong: 142 71% 38%;
+    /* Colores de acento NUEVOS - Turquesa premium */
+    --accent: 178 70% 48%; /* Turquesa premium #26B7A8 */
+    --accent-hover: 178 70% 42%; /* Turquesa oscuro */
+    --success: 152 69% 48%; /* Verde esmeralda brillante */
+    --warning: 36 100% 60%; /* Naranja dorado */
+    --error: 3 85% 58%; /* Rojo coral vibrante */
+    --success-strong: 152 65% 38%; /* Verde intenso */
     
-    /* Sombras modernas */
-    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    /* Sombras elegantes con más profundidad */
+    --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.08), 0 1px 2px -1px rgb(0 0 0 / 0.06);
+    --shadow-md: 0 4px 8px -2px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.06);
+    --shadow-lg: 0 10px 20px -5px rgb(0 0 0 / 0.12), 0 4px 8px -4px rgb(0 0 0 / 0.08);
+    --shadow-xl: 0 20px 30px -8px rgb(0 0 0 / 0.15), 0 8px 12px -6px rgb(0 0 0 / 0.1);
+    
+    /* Gradientes premium */
+    --gradient-primary: linear-gradient(135deg, hsl(210 100% 50%) 0%, hsl(178 70% 48%) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(178 70% 48%) 0%, hsl(152 69% 48%) 100%);
     
     color-scheme: light;
   }
   
   :root.dark {
-    --bg: 12 12 15;
-    --fg: 248 250 252;
-    --muted: 148 163 184;
-    --card: 24 24 27;
-    --surface-hover: 30 30 35;
-    --border-rgb: 255 255 255;
-    --primary: 239 75% 68%;
-    --primary-hover: 239 70% 63%;
-    --primary-light: 239 50% 20%;
-    --primary-700: 239 72% 58%;
-    --accent: 199 89% 65%;
-    --success: 142 76% 58%;
-    --warning: 38 92% 65%;
-    --error: 0 72% 65%;
-    --success-strong: 142 71% 45%;
+    /* Paleta de colores premium - Modo Oscuro */
+    --bg: 10 12 18; /* Azul marino casi negro */
+    --fg: 248 250 252; /* Texto claro */
+    --muted: 148 163 184; /* Gris azulado */
+    --card: 20 24 32; /* Azul oscuro para tarjetas */
+    --surface-hover: 28 32 42; /* Azul grisáceo */
+    --border-rgb: 255 255 255; /* Blanco para bordes */
+    --primary: 210 100% 58%; /* Azul brillante más claro en dark mode */
+    --primary-hover: 210 100% 63%; /* Azul luminoso */
+    --primary-light: 210 80% 20%; /* Azul oscuro */
+    --primary-700: 210 100% 55%; /* Azul eléctrico */
+    --accent: 178 70% 55%; /* Turquesa brillante */
+    --accent-hover: 178 70% 60%; /* Turquesa luminoso */
+    --success: 152 69% 55%; /* Verde brillante */
+    --warning: 36 100% 65%; /* Naranja brillante */
+    --error: 3 85% 62%; /* Rojo coral brillante */
+    --success-strong: 152 65% 48%; /* Verde intenso */
     
     color-scheme: dark;
   }
@@ -90,13 +97,16 @@
     @apply mx-auto w-full px-4 sm:px-6 lg:px-8 max-w-7xl;
   }
 
-  /* Superficies y tarjetas modernas */
+  /* Superficies y tarjetas premium con efectos elegantes */
   .card-surface {
-    @apply bg-[rgb(var(--card))] rounded-xl border border-[rgb(var(--border-rgb))]/20 shadow-sm;
+    @apply bg-[rgb(var(--card))] rounded-2xl border border-[rgb(var(--border-rgb))]/15 
+           shadow-[0_2px_8px_rgba(0,0,0,0.04)] backdrop-blur-sm;
   }
   
   .card-hover {
-    @apply transition-all duration-300 hover:shadow-md hover:-translate-y-0.5;
+    @apply transition-all duration-300 ease-out 
+           hover:shadow-[0_8px_24px_rgba(0,0,0,0.1)] hover:-translate-y-1
+           hover:border-[hsl(var(--primary))]/20;
   }
   
   .surface-hover {
@@ -104,49 +114,60 @@
   }
   
   .hover-surface {
-    @apply transition-colors hover:bg-[rgb(var(--surface-hover))];
+    @apply transition-all duration-200 ease-out hover:bg-[rgb(var(--surface-hover))];
   }
 
-  /* Botones modernos */
+  /* Botones premium con gradientes y efectos modernos */
   .btn-primary {
-    @apply inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold text-white 
-           bg-[hsl(var(--primary))] hover:bg-[hsl(var(--primary-hover))] 
-           shadow-sm hover:shadow-md active:scale-[0.98]
-           transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-bold text-white 
+           bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))]
+           hover:shadow-[0_8px_20px_rgba(0,128,255,0.35)] hover:scale-[1.02]
+           active:scale-[0.98] active:shadow-md
+           transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
+           disabled:hover:scale-100 disabled:hover:shadow-none;
   }
-  .btn-sm { @apply px-3 py-1.5 text-xs rounded-lg; }
-  .btn-lg { @apply px-6 py-3 text-base rounded-xl; }
+  .btn-sm { @apply px-4 py-2 text-xs rounded-lg; }
+  .btn-lg { @apply px-8 py-4 text-base rounded-xl; }
   
   .btn-outline {
-    @apply inline-flex items-center justify-center rounded-xl px-5 py-2.5 text-sm font-semibold
-           border-2 border-[hsl(var(--primary))]/30 text-[hsl(var(--primary))]
-           hover:bg-[hsl(var(--primary))]/10 active:scale-[0.98]
-           transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+    @apply inline-flex items-center justify-center rounded-xl px-6 py-3 text-sm font-bold
+           border-2 border-[hsl(var(--primary))]/40 text-[hsl(var(--primary))]
+           hover:bg-[hsl(var(--primary))]/5 hover:border-[hsl(var(--primary))]/60
+           hover:shadow-[0_4px_12px_rgba(0,128,255,0.15)]
+           active:scale-[0.98] transition-all duration-200 
+           disabled:opacity-50 disabled:cursor-not-allowed;
   }
   
   .btn-ghost {
-    @apply inline-flex items-center justify-center rounded-xl px-4 py-2 text-sm font-medium
-           hover:bg-[rgb(var(--surface-hover))] active:scale-[0.98]
-           transition-all duration-200;
+    @apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold
+           hover:bg-[rgb(var(--surface-hover))] hover:shadow-sm
+           active:scale-[0.98] transition-all duration-200;
   }
 
-  /* Badges y chips */
+  /* Badges y chips con diseño premium */
   .badge-success {
-    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold
-           bg-[hsl(var(--success))]/15 text-[hsl(var(--success-strong))] border border-[hsl(var(--success))]/30
-           dark:bg-[hsl(var(--success))]/20 dark:text-[hsl(var(--success))];
+    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold
+           bg-gradient-to-r from-[hsl(var(--success))]/20 to-[hsl(var(--success))]/10 
+           text-[hsl(var(--success-strong))] 
+           border border-[hsl(var(--success))]/30 shadow-sm
+           dark:bg-gradient-to-r dark:from-[hsl(var(--success))]/25 dark:to-[hsl(var(--success))]/15 
+           dark:text-[hsl(var(--success))];
   }
   
   .badge-warning {
-    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold
-           bg-[hsl(var(--warning))]/15 text-amber-700 border border-[hsl(var(--warning))]/30
-           dark:bg-[hsl(var(--warning))]/20 dark:text-amber-300;
+    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold
+           bg-gradient-to-r from-[hsl(var(--warning))]/20 to-[hsl(var(--warning))]/10
+           text-amber-800 border border-[hsl(var(--warning))]/30 shadow-sm
+           dark:bg-gradient-to-r dark:from-[hsl(var(--warning))]/25 dark:to-[hsl(var(--warning))]/15
+           dark:text-amber-300;
   }
   
   .badge-error {
-    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold
-           bg-[hsl(var(--error))]/15 text-red-700 border border-[hsl(var(--error))]/30
-           dark:bg-[hsl(var(--error))]/20 dark:text-red-300;
+    @apply inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-xs font-bold
+           bg-gradient-to-r from-[hsl(var(--error))]/20 to-[hsl(var(--error))]/10
+           text-red-800 border border-[hsl(var(--error))]/30 shadow-sm
+           dark:bg-gradient-to-r dark:from-[hsl(var(--error))]/25 dark:to-[hsl(var(--error))]/15
+           dark:text-red-300;
   }
 
   /* Callouts modernos */
@@ -165,20 +186,29 @@
     @apply border-[rgb(var(--border-rgb))]/20;
   }
 
-  /* Inputs modernos */
+  /* Inputs premium con efectos glassmorphism */
   .input {
-    @apply w-full rounded-xl border border-[rgb(var(--border-rgb))]/30 
-           bg-[rgb(var(--card))] px-4 py-2.5 text-sm
-           transition-all duration-200
-           placeholder:text-[rgb(var(--muted))]/50
-           focus:border-[hsl(var(--primary))]/50 focus:ring-2 focus:ring-[hsl(var(--primary))]/20 focus:outline-none
+    @apply w-full rounded-xl border-2 border-[rgb(var(--border-rgb))]/20 
+           bg-[rgb(var(--card))]/80 backdrop-blur-sm px-4 py-3 text-sm
+           transition-all duration-300 ease-out
+           placeholder:text-[rgb(var(--muted))]/40
+           focus:border-[hsl(var(--primary))]/60 focus:ring-4 focus:ring-[hsl(var(--primary))]/10 
+           focus:outline-none focus:shadow-[0_0_0_3px_rgba(0,128,255,0.1)]
+           hover:border-[rgb(var(--border-rgb))]/40
            disabled:opacity-50 disabled:cursor-not-allowed;
   }
 
-  /* Texto gradiente */
+  /* Texto con gradiente premium */
   .gradient-text {
-    @apply bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] 
-           bg-clip-text text-transparent font-bold;
+    @apply bg-gradient-to-r from-[hsl(var(--primary))] via-[hsl(var(--accent))] to-[hsl(var(--primary))]
+           bg-clip-text text-transparent font-extrabold
+           bg-[length:200%_auto];
+    animation: gradient 3s ease infinite;
+  }
+  
+  @keyframes gradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
   }
 
   /* Animaciones de página */

@@ -41,19 +41,20 @@ export default function Register() {
   return (
     <div className="container-responsive flex min-h-[calc(100vh-8rem)] items-center justify-center py-6 sm:py-10 page-anim">
       <div className="w-full max-w-lg">
-        {/* Card principal */}
-        <div className="card-surface p-5 sm:p-8 shadow-xl">
-          {/* Header con logo */}
-          <div className="mb-6 sm:mb-8 text-center">
-            <div className="inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] shadow-lg mb-4">
-              <span className="text-white font-bold text-2xl">S</span>
+        {/* Card principal premium */}
+        <div className="card-surface p-6 sm:p-10 shadow-[0_20px_60px_rgba(0,128,255,0.15)] border-2 border-[hsl(var(--primary))]/10">
+          {/* Header con logo mejorado */}
+          <div className="mb-8 sm:mb-10 text-center">
+            <div className="inline-flex h-16 w-16 items-center justify-center rounded-3xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] shadow-[0_8px_24px_rgba(0,128,255,0.35)] mb-5 relative">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl" />
+              <span className="text-white font-black text-3xl relative z-10">S</span>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold mb-2">Crear cuenta</h1>
-            <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Completa tus datos para comenzar</p>
+            <h1 className="text-2xl sm:text-3xl font-black mb-2">Únete a SmartSales</h1>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">Crea tu cuenta y descubre una nueva forma de comprar</p>
           </div>
 
-          {/* Formulario */}
-          <form className="space-y-4" onSubmit={onSubmit}>
+          {/* Formulario premium */}
+          <form className="space-y-5" onSubmit={onSubmit}>
             {/* Nombre y Apellido - Stack en móvil, grid en desktop */}
             <div className="space-y-4 sm:space-y-0 sm:grid sm:gap-4 sm:grid-cols-2">
               <Input
@@ -117,14 +118,19 @@ export default function Register() {
               hint="Mínimo 8 caracteres"
             />
             
-            {/* Error general mejorado */}
+            {/* Error general premium */}
             {errors.general && (
-              <div className="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 p-3">
-                <p className="text-xs sm:text-sm text-red-600 dark:text-red-400 font-medium">{errors.general}</p>
+              <div className="rounded-xl bg-gradient-to-r from-red-50 to-red-100/50 dark:from-red-900/20 dark:to-red-900/10 border-2 border-red-200 dark:border-red-800 p-4 shadow-sm">
+                <div className="flex items-start gap-2">
+                  <svg className="h-5 w-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <p className="text-sm text-red-700 dark:text-red-300 font-semibold">{errors.general}</p>
+                </div>
               </div>
             )}
             
-            <Button type="submit" disabled={loading} className="w-full py-3 sm:py-2.5 text-sm sm:text-base font-semibold">
+            <Button type="submit" disabled={loading} className="w-full py-4 sm:py-3.5 text-base font-bold shadow-[0_8px_20px_rgba(0,128,255,0.35)]">
               {loading ? (
                 <span className="flex items-center gap-2">
                   <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24">

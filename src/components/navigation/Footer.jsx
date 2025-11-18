@@ -1,13 +1,21 @@
 export default function Footer() {
   const year = new Date().getFullYear()
   return (
-    <footer className="border-t border-subtle bg-gradient-to-b from-transparent to-[rgb(var(--border-rgb))]/[0.03] pwa-safe-bottom">
-      <div className="container-responsive flex flex-col items-center justify-between gap-3 sm:gap-4 py-6 sm:py-8 sm:flex-row">
-        <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">© {year} SmartSales. Todos los derechos reservados.</p>
-        <nav className="flex items-center gap-4 sm:gap-6 text-xs sm:text-sm text-gray-500 dark:text-gray-400">
-          <a href="#" className="hover:text-[hsl(var(--primary))] hover:underline underline-offset-4 transition-colors">Privacidad</a>
-          <a href="#" className="hover:text-[hsl(var(--primary))] hover:underline underline-offset-4 transition-colors">Términos</a>
-          <a href="#" className="hover:text-[hsl(var(--primary))] hover:underline underline-offset-4 transition-colors">Contacto</a>
+    <footer className="border-t-2 border-[hsl(var(--primary))]/10 bg-gradient-to-b from-transparent via-[hsl(var(--primary))]/[0.02] to-[hsl(var(--primary))]/[0.05] pwa-safe-bottom">
+      <div className="container-responsive flex flex-col items-center justify-between gap-4 sm:gap-6 py-8 sm:py-10 sm:flex-row">
+        <div className="flex items-center gap-3">
+          <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] flex items-center justify-center shadow-lg">
+            <span className="text-white font-black text-lg">S</span>
+          </div>
+          <div>
+            <p className="font-black text-base gradient-text">SmartSales</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">© {year} Todos los derechos reservados</p>
+          </div>
+        </div>
+        <nav className="flex items-center gap-6 sm:gap-8 text-sm text-gray-600 dark:text-gray-400">
+          <a href="#" className="font-semibold hover:text-[hsl(var(--primary))] hover:underline underline-offset-4 transition-all">Privacidad</a>
+          <a href="#" className="font-semibold hover:text-[hsl(var(--primary))] hover:underline underline-offset-4 transition-all">Términos</a>
+          <a href="#" className="font-semibold hover:text-[hsl(var(--primary))] hover:underline underline-offset-4 transition-all">Contacto</a>
         </nav>
       </div>
     </footer>
