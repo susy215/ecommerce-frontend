@@ -46,7 +46,7 @@ export default function ProductCard({ product, onAdd }) {
         </div>
       </Link>
       
-      <div className="space-y-3 p-4">
+      <div className="space-y-4 p-4">
         <Link 
           to={to} 
           className="block text-sm sm:text-base line-clamp-2 font-bold hover:text-[hsl(var(--primary))] transition-colors min-h-[2.5rem] sm:min-h-[1.5rem] leading-tight"
@@ -54,14 +54,21 @@ export default function ProductCard({ product, onAdd }) {
           {nombre}
         </Link>
         
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] bg-clip-text text-transparent">
-            {formatPrice(Number(precio))}
-          </span>
+        <div className="flex flex-col gap-3">
+          <div className="flex items-start justify-between gap-3">
+            <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] bg-clip-text text-transparent">
+              {formatPrice(Number(precio))}
+            </span>
+            {typeof stock === 'number' && (
+              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
+                {stock === 0 ? 'SIN STOCK' : `${stock} uds`}
+              </span>
+            )}
+          </div>
           <button
             onClick={() => onAdd?.(product)}
             disabled={stock === 0}
-            className="group/btn bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] rounded-xl w-full sm:w-auto px-4 py-2.5 text-xs sm:text-sm font-bold text-white shadow-md hover:shadow-[0_8px_20px_rgba(0,128,255,0.35)] hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 flex items-center justify-center gap-2"
+            className="group/btn inline-flex items-center justify-center gap-2 rounded-xl md:rounded-full w-full md:w-auto px-4 py-2.5 text-xs sm:text-sm font-semibold tracking-wide text-white bg-[hsl(var(--primary))] shadow-[0_8px_20px_rgba(0,128,255,0.25)] hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed md:px-5 md:py-2 md:bg-transparent md:text-[hsl(var(--primary))] md:border md:border-[hsl(var(--primary))]/40 md:shadow-none md:hover:bg-[hsl(var(--primary))]/10"
           >
             {stock === 0 ? (
               'Agotado'

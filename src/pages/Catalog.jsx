@@ -76,22 +76,77 @@ export default function Catalog() {
     setSearchParams(next)
   }
 
+  const quickThemes = useMemo(() => [
+    { label: 'Audio inmersivo', search: 'audio' },
+    { label: 'Setup híbrido', search: 'desk' },
+    { label: 'Wellness tech', search: 'wellness' },
+    { label: 'Movilidad', search: 'smart' },
+  ], [])
+
+  const activeCategoryName = useMemo(() => {
+    if (!categoria) return ''
+    const current = categories.find((cat) => String(cat.id) === String(categoria))
+    return current?.nombre || ''
+  }, [categoria, categories])
+
+  const applyQuickTheme = (theme) => {
+    const next = new URLSearchParams(searchParams)
+    if (theme.search) next.set('search', theme.search)
+    if (theme.ordering) next.set('ordering', theme.ordering)
+    if (theme.categoria) next.set('categoria', String(theme.categoria))
+    else if (!theme.categoria) next.delete('categoria')
+    next.set('page', '1')
+    setSearchParams(next)
+  }
+
   return (
     <div className="container-responsive py-6 sm:py-8 md:py-10 page-anim">
-      <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl sm:text-4xl font-black mb-2">
+      <div className="mb-8 grid gap-6 lg:grid-cols-[1.4fr_0.6fr]">
+        <div className="rounded-3xl border border-[rgb(var(--border-rgb))]/30 bg-[rgb(var(--card))] p-6 sm:p-8 shadow-[0_20px_60px_rgba(15,23,42,0.06)]">
+          <div className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.3em] text-gray-500">
+            Shop / Temporada 05
+          </div>
+          <h1 className="mt-3 text-3xl sm:text-[2.5rem] font-black leading-tight">
             {search ? (
-              <>Resultados para <span className="gradient-text">"{search}"</span></>
+              <>Curamos <span className="gradient-text">"{search}"</span> para ti</>
             ) : (
-              <>Explora nuestra <span className="gradient-text">tienda</span></>
+              <>Colección editada para <span className="gradient-text">creadores</span></>
             )}
           </h1>
-          <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 font-medium">
-            {search ? `Mostrando productos relacionados con tu búsqueda` : 'Descubre productos increíbles seleccionados para ti'}
+          <p className="mt-4 text-sm sm:text-base text-gray-600 dark:text-gray-400 max-w-2xl">
+            {activeCategoryName
+              ? `Mostrando primeras unidades de la categoría ${activeCategoryName}.`
+              : 'Filtra por estilos, ensambla tu setup modular y muévete entre drops como si fuera una app nativa.'}
           </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            {quickThemes.map((theme) => (
+              <button
+                key={theme.label}
+                onClick={() => applyQuickTheme(theme)}
+                className="rounded-full border border-[hsl(var(--primary))]/30 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-600 hover:border-[hsl(var(--primary))] hover:text-[hsl(var(--primary))] transition"
+              >
+                {theme.label}
+              </button>
+            ))}
+          </div>
         </div>
-        <SortSelect value={ordering} onChange={onSortChange} />
+        <div className="rounded-3xl border border-[rgb(var(--border-rgb))]/30 bg-[rgb(var(--surface-hover))] p-6 sm:p-8 flex flex-col gap-4">
+          <div className="flex items-center justify-between text-xs font-semibold uppercase tracking-[0.3em] text-gray-500">
+            <span>Ordenar</span>
+            <span>{products.length || '–'} items</span>
+          </div>
+          <SortSelect value={ordering} onChange={onSortChange} className="w-full" />
+          <button
+            onClick={() => {
+              const next = new URLSearchParams(searchParams)
+              next.delete('search'); next.delete('categoria'); next.set('page', '1')
+              setSearchParams(next)
+            }}
+            className="inline-flex items-center justify-center rounded-xl border border-dashed border-[hsl(var(--primary))]/40 px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-[hsl(var(--primary))] hover:bg-white"
+          >
+            Reiniciar filtros
+          </button>
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row gap-6 sm:gap-8">

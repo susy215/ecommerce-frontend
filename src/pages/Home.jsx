@@ -32,46 +32,75 @@ export default function Home() {
 
   return (
     <div className="page-anim">
-      {/* Hero Section Premium - Diseño completamente nuevo */}
-      <section className="container-responsive py-6 sm:py-12 md:py-16">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[hsl(var(--primary))]/10 via-[hsl(var(--accent))]/5 to-transparent border-2 border-[hsl(var(--primary))]/15 p-6 sm:p-10 md:p-14 shadow-[0_20px_60px_rgba(0,128,255,0.15)]">
-          {/* Elementos decorativos mejorados */}
-          <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gradient-to-br from-[hsl(var(--primary))]/20 to-[hsl(var(--accent))]/10 blur-3xl animate-pulse-slow" />
-          <div className="absolute -bottom-16 -left-16 h-56 w-56 rounded-full bg-gradient-to-tr from-[hsl(var(--accent))]/20 to-[hsl(var(--primary))]/10 blur-3xl animate-pulse-slow" style={{ animationDelay: '1s' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-96 w-96 rounded-full bg-[hsl(var(--accent))]/5 blur-3xl" />
-          
-          <div className="relative z-10 mx-auto max-w-4xl text-center">
-            <div className="mb-4 sm:mb-6 inline-flex items-center gap-2 rounded-full bg-white/80 dark:bg-[rgb(var(--card))]/80 backdrop-blur-sm px-4 sm:px-5 py-2 sm:py-2.5 text-[hsl(var(--primary))] border border-[hsl(var(--primary))]/20 shadow-lg">
-              <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 animate-pulse" />
-              <span className="text-xs sm:text-sm font-bold uppercase tracking-wider">Bienvenido a SmartSales</span>
+      {/* Hero Section editorial */}
+      <section className="container-responsive py-8 sm:py-12 md:py-16">
+        <div className="relative overflow-hidden rounded-3xl border border-[hsl(var(--primary))]/15 bg-[rgb(var(--card))] shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center p-6 sm:p-10 lg:p-12">
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--primary))]/40 bg-white/80 dark:bg-[rgb(var(--card))]/80 px-4 py-1.5 text-[hsl(var(--primary))] text-xs font-semibold uppercase tracking-[0.18em]">
+                <Sparkles className="h-4 w-4" />
+                Nueva curaduría 2025
+              </div>
+              <h1 className="text-[clamp(2rem,6vw,3.75rem)] font-black leading-tight text-left">
+                Tecnología fina,{' '}
+                <span className="gradient-text inline-block">menos ruido.</span>
+              </h1>
+              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-xl leading-relaxed">
+                Inspirado en las vitrinas minimalistas de las concept stores europeas: colecciones cortas, lanzamientos semanales y un servicio que responde como app nativa.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to={ROUTES.catalog}
+                  className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm sm:text-base font-semibold text-white bg-[hsl(var(--primary))] shadow-[0_10px_24px_rgba(0,128,255,0.25)] hover:-translate-y-0.5 transition-all"
+                >
+                  Ver novedades
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to={ROUTES.promociones}
+                  className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm sm:text-base font-semibold border border-[hsl(var(--primary))]/30 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/5"
+                >
+                  Colecciones cápsula
+                </Link>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {[{
+                  label: 'Stock boutique',
+                  value: '120+',
+                }, {
+                  label: 'Pedidos en 24h',
+                  value: '92%',
+                }, {
+                  label: 'Clientes recurrentes',
+                  value: '4.9★',
+                }].map(({ label, value }) => (
+                  <div key={label} className="rounded-2xl border border-[rgb(var(--border-rgb))]/30 bg-[rgb(var(--bg))]/40 p-4">
+                    <p className="text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 font-semibold">{label}</p>
+                    <p className="text-2xl font-black mt-2">{value}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            
-            <h1 className="mb-4 sm:mb-6 text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight">
-              Descubre el futuro del{' '}
-              <span className="gradient-text block sm:inline mt-2 sm:mt-0">
-                comercio online
-              </span>
-            </h1>
-            
-            <p className="mb-6 sm:mb-8 md:mb-10 mx-auto max-w-2xl text-base sm:text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-              Productos premium con tecnología de vanguardia. Envíos ultra rápidos y experiencia de compra inigualable.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <Link 
-                to={ROUTES.catalog}
-                className="group inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-bold text-white bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] shadow-[0_8px_24px_rgba(0,128,255,0.35)] hover:shadow-[0_12px_32px_rgba(0,128,255,0.45)] hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
-              >
-                Explorar tienda
-                <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Link>
-              <Link 
-                to={ROUTES.promociones}
-                className="inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-bold border-2 border-[hsl(var(--primary))]/40 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/5 hover:border-[hsl(var(--primary))]/60 hover:shadow-[0_4px_16px_rgba(0,128,255,0.2)] active:scale-[0.98] transition-all duration-300 bg-white/60 dark:bg-[rgb(var(--card))]/60 backdrop-blur-sm"
-              >
-                <Sparkles className="h-5 w-5" />
-                Ver ofertas especiales
-              </Link>
+            <div className="relative">
+              <div className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-[hsl(var(--primary))]/25 via-transparent to-[hsl(var(--accent))]/25 blur-3xl" />
+              <div className="relative rounded-[2.5rem] border border-white/30 dark:border-white/10 bg-gradient-to-br from-[rgb(var(--card))] to-[hsl(var(--primary))]/5 p-6 lg:p-8 flex flex-col gap-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+                <div>
+                  <p className="text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">Preview exclusivo</p>
+                  <p className="text-3xl font-black mt-2">Smart Desk Set</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400">Disponibles 40 unidades</p>
+                </div>
+                <div className="rounded-2xl bg-[rgb(var(--surface-hover))] p-4 flex flex-col gap-4">
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-gray-500">Versión</span>
+                    <span className="font-bold">Graphite Frost</span>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm font-semibold text-gray-500">Entrega</span>
+                    <span className="font-bold text-[hsl(var(--accent))]">48h express</span>
+                  </div>
+                </div>
+                <InstallPWAButton className="rounded-xl px-4 py-2.5 text-sm" />
+              </div>
             </div>
           </div>
         </div>
