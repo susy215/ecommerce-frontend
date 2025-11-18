@@ -108,7 +108,7 @@ export default function Promociones() {
                     <h3 className="text-xl font-bold mb-1">{promo.nombre}</h3>
                     
                     {promo.descripcion && (
-                      <p className="text-sm text-white/90 line-clamp-2">
+                      <p className="text-sm text-gray-900 dark:text-white/90 line-clamp-2">
                         {promo.descripcion}
                       </p>
                     )}
