@@ -33,9 +33,9 @@ export default function Home() {
     <div className="page-anim">
       {/* Banner principal limpio y elegante */}
       <section className="container-responsive py-8 sm:py-12">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 sm:p-12 lg:p-16 text-white border border-white/5">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[hsl(var(--primary))] via-[hsl(var(--primary))]/90 to-[hsl(var(--primary))]/80 p-8 sm:p-12 lg:p-16 text-white border border-[hsl(var(--primary))]/20 dark:border-[hsl(var(--primary))]/40">
           {/* Patrón de fondo sutil */}
-          <div className="absolute inset-0 opacity-[0.03]">
+          <div className="absolute inset-0 opacity-[0.05]">
             <div className="absolute inset-0" style={{ 
               backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
               backgroundSize: '32px 32px'
@@ -43,7 +43,7 @@ export default function Home() {
           </div>
           
           <div className="relative max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
               <Zap className="h-3.5 w-3.5" />
               SmartSales365
             </div>
@@ -53,21 +53,21 @@ export default function Home() {
               Entrega rápida.
             </h1>
             
-            <p className="text-lg sm:text-xl text-gray-300 font-medium mb-8 max-w-2xl leading-relaxed">
+            <p className="text-lg sm:text-xl text-white/90 font-medium mb-8 max-w-2xl leading-relaxed">
               Miles de productos verificados con envío express y garantía extendida. Tu tienda online que funciona como una física.
             </p>
             
             <div className="flex flex-wrap gap-4 mb-10">
               <Link
                 to={ROUTES.catalog}
-                className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-base font-bold text-gray-900 hover:bg-gray-100 transition-colors"
+                className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-base font-bold text-[hsl(var(--primary))] hover:bg-white/95 transition-colors"
               >
                 Explorar catálogo
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
                 to={ROUTES.promociones}
-                className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-6 py-3.5 text-base font-bold hover:bg-white/10 transition-colors"
+                className="inline-flex items-center gap-2 rounded-2xl border-2 border-white/30 bg-white/10 px-6 py-3.5 text-base font-bold hover:bg-white/20 transition-colors"
               >
                 Ver ofertas
               </Link>
@@ -80,12 +80,12 @@ export default function Home() {
                 { icon: Zap, label: 'Atención', value: '24/7' }
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 border border-white/20">
                     <item.icon className="h-5 w-5" />
                   </div>
                   <div>
                     <p className="font-bold text-base">{item.value}</p>
-                    <p className="text-gray-400 text-xs">{item.label}</p>
+                    <p className="text-white/80 text-xs">{item.label}</p>
                   </div>
                 </div>
               ))}
