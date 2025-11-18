@@ -80,40 +80,20 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div className="relative">
-              <div className="rounded-[28px] border border-white/30 bg-white/85 p-6 shadow-[0_25px_60px_rgba(0,0,0,0.12)] backdrop-blur dark:border-white/10 dark:bg-[rgb(var(--card))]/90">
-                <div className="flex items-center justify-between gap-4">
-                  <div>
-                    <p className="text-xs uppercase tracking-[0.35em] text-gray-500">Colecciones activas</p>
-                    <p className="text-lg font-semibold text-[rgb(var(--fg))]">Lookbook urbano · AW25</p>
-                  </div>
-                  <span className="rounded-full bg-[hsl(var(--primary))]/15 px-3 py-1 text-xs font-semibold text-[hsl(var(--primary))]">Nuevo</span>
-                </div>
-                <div className="mt-6 space-y-4">
-                  {[{
-                    title: 'Living & deco',
-                    copy: 'Textiles, aromas y piezas para vitrina.'
-                  }, {
-                    title: 'Gadgets creativos',
-                    copy: 'Tecnología compacta para showroom y retail.'
-                  }, {
-                    title: 'Accesorios pro',
-                    copy: 'Ediciones limitadas listas para entrega express.'
-                  }].map((item) => (
-                    <div key={item.title} className="rounded-2xl border border-[rgb(var(--border-rgb))]/25 bg-[rgb(var(--surface-hover))] px-5 py-4">
-                      <p className="text-xs uppercase tracking-[0.3em] text-gray-500">{item.title}</p>
-                      <p className="text-sm font-semibold text-[rgb(var(--fg))]">{item.copy}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {['Pagos verificados', 'Soporte en vivo', 'Despacho monitoreado'].map((tag) => (
-                    <span key={tag} className="rounded-full border border-white/40 bg-white/70 px-3 py-1 text-xs font-semibold text-gray-700 backdrop-blur dark:border-white/10 dark:bg-white/10 dark:text-gray-200">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
+            <div className="relative hero-anim h-[260px] sm:h-[340px] lg:h-[420px]">
+              {/* Animated orbs */}
+              <div className="hero-orb hero-orb-a" style={{ width: '55%', height: '55%', left: '5%', top: '15%' }} />
+              <div className="hero-orb hero-orb-b" style={{ width: '48%', height: '48%', right: '8%', top: '8%' }} />
+              <div className="hero-orb hero-orb-c" style={{ width: '38%', height: '38%', left: '35%', bottom: '10%' }} />
+
+              {/* Rotating dashed ring */}
+              <div className="hero-ring" />
+
+              {/* Rising sparks */}
+              <span className="hero-spark" style={{ left: '12%', bottom: '12%', animationDelay: '0s' }} />
+              <span className="hero-spark" style={{ left: '32%', bottom: '8%', animationDelay: '0.6s' }} />
+              <span className="hero-spark" style={{ right: '18%', bottom: '14%', animationDelay: '1.1s' }} />
+              <span className="hero-spark" style={{ right: '8%', top: '12%', animationDelay: '1.7s' }} />
             </div>
           </div>
         </div>
