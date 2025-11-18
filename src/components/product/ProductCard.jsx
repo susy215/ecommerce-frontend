@@ -59,11 +59,6 @@ export default function ProductCard({ product, onAdd }) {
             <span className="text-2xl font-bold text-[hsl(var(--primary))] whitespace-nowrap leading-none">
               {formatPrice(Number(precio))}
             </span>
-            {typeof stock === 'number' && (
-              <span className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-500">
-                {stock === 0 ? 'SIN STOCK' : `${stock} uds`}
-              </span>
-            )}
           </div>
           <button
             onClick={() => onAdd?.(product)}

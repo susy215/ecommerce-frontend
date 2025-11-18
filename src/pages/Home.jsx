@@ -38,27 +38,27 @@ export default function Home() {
           <div className="space-y-5">
             <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-gray-500">
               <Sparkles className="h-3.5 w-3.5" />
-              Colección ligera
+              Colección activa
             </p>
             <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-black leading-tight">
-              Objetos que mejoran tu rutina sin añadir ruido visual.
+              Productos seleccionados para una tienda que se siente física.
             </h1>
             <p className="max-w-xl text-sm sm:text-base text-gray-600 dark:text-gray-400">
-              Nueva edición enfocada en dispositivos esenciales: líneas suaves, acabados mate y compatibilidad total con nuestra app PWA.
+              Renovamos el catálogo con marcas que cuidan acabados, logística ágil y garantías claras. Todo listo para que armes tu carrito sin complicaciones.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
                 to={ROUTES.catalog}
                 className="inline-flex items-center gap-2 rounded-lg border border-transparent bg-[hsl(var(--primary))] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(0,128,255,0.2)] hover:-translate-y-0.5 transition"
               >
-                Explorar ahora
+                Ir a la tienda
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 to={ROUTES.promociones}
                 className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--primary))]/30 px-4 py-2.5 text-sm font-semibold text-[hsl(var(--primary))] hover:bg-white/60 dark:hover:bg-white/10"
               >
-                Ver promociones
+                Promos en vivo
               </Link>
             </div>
             <div className="flex flex-wrap gap-6 text-xs uppercase tracking-[0.25em] text-gray-500">
@@ -77,19 +77,32 @@ export default function Home() {
             </div>
           </div>
           <div className="relative rounded-[24px] border border-white/20 bg-[rgb(var(--card))]/80 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.15)]">
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.4em] text-gray-500">Drop semanal</p>
-                <p className="text-2xl font-bold text-[rgb(var(--fg))]">Studio Layer Kit</p>
+                <p className="text-xs uppercase tracking-[0.35em] text-gray-500">Servicios incluidos</p>
+                <ul className="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                  <li className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
+                    Devoluciones asistidas durante 30 días.
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
+                    Seguimiento de pedidos con alertas en tiempo real.
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
+                    Equipo de soporte disponible por chat y teléfono.
+                  </li>
+                </ul>
               </div>
               <div className="grid gap-3">
-                <div className="flex items-center justify-between rounded-xl border border-[rgb(var(--border-rgb))]/20 px-4 py-3">
-                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-[0.3em]">Base</span>
-                  <span className="text-sm font-semibold">MagGrey</span>
+                <div className="rounded-xl border border-[rgb(var(--border-rgb))]/20 bg-[rgb(var(--surface-hover))] px-4 py-3">
+                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Clientes empresa</p>
+                  <p className="text-sm font-semibold text-[rgb(var(--fg))]">Catálogo con precios netos y facturación automática.</p>
                 </div>
-                <div className="flex items-center justify-between rounded-xl border border-[rgb(var(--border-rgb))]/20 px-4 py-3">
-                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-[0.3em]">Compatibilidad</span>
-                  <span className="text-sm font-semibold text-[hsl(var(--accent))]">iOS + Android</span>
+                <div className="rounded-xl border border-[rgb(var(--border-rgb))]/20 bg-[rgb(var(--surface-hover))] px-4 py-3">
+                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Ventas al detalle</p>
+                  <p className="text-sm font-semibold text-[rgb(var(--fg))]">Promos activas cada fin de semana sin códigos raros.</p>
                 </div>
               </div>
               <InstallPWAButton className="rounded-lg px-4 py-2 text-xs font-semibold" />
@@ -148,7 +161,7 @@ export default function Home() {
             )
           }, {
             title: 'Cobertura segura',
-            copy: 'Pagos verificados y soporte en 3 toques desde la PWA.',
+            copy: 'Pagos verificados y soporte en 3 toques con agentes reales.',
             icon: (
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v6m0 0H6a2 2 0 01-2-2v-7m8 9h6a2 2 0 002-2v-7m-8 3l-3-3m3 3l3-3m-3-6V3m8 6V7a4 4 0 00-8 0v2" />
