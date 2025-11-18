@@ -55,8 +55,8 @@ export default function ProductCard({ product, onAdd }) {
         </Link>
         
         <div className="flex flex-col gap-3">
-          <div className="flex items-start justify-between gap-3">
-            <span className="text-xl sm:text-2xl font-black bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] bg-clip-text text-transparent">
+          <div className="flex items-start justify-between gap-2">
+            <span className="text-2xl font-bold text-[hsl(var(--primary))] whitespace-nowrap leading-none">
               {formatPrice(Number(precio))}
             </span>
             {typeof stock === 'number' && (

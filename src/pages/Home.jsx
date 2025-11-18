@@ -32,76 +32,69 @@ export default function Home() {
 
   return (
     <div className="page-anim">
-      {/* Hero Section editorial */}
-      <section className="container-responsive py-8 sm:py-12 md:py-16">
-        <div className="relative overflow-hidden rounded-3xl border border-[hsl(var(--primary))]/15 bg-[rgb(var(--card))] shadow-[0_30px_80px_rgba(15,23,42,0.12)]">
-          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center p-6 sm:p-10 lg:p-12">
-            <div className="space-y-6">
-              <div className="inline-flex items-center gap-2 rounded-full border border-[hsl(var(--primary))]/40 bg-white/80 dark:bg-[rgb(var(--card))]/80 px-4 py-1.5 text-[hsl(var(--primary))] text-xs font-semibold uppercase tracking-[0.18em]">
-                <Sparkles className="h-4 w-4" />
-                Nueva curaduría 2025
+      {/* Hero Section liviano */}
+      <section className="container-responsive py-6 sm:py-10">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] rounded-[28px] border border-[hsl(var(--primary))]/15 bg-gradient-to-br from-[rgb(var(--card))] to-[hsl(var(--primary))]/3 p-6 sm:p-10">
+          <div className="space-y-5">
+            <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-gray-500">
+              <Sparkles className="h-3.5 w-3.5" />
+              Colección ligera
+            </p>
+            <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-black leading-tight">
+              Objetos que mejoran tu rutina sin añadir ruido visual.
+            </h1>
+            <p className="max-w-xl text-sm sm:text-base text-gray-600 dark:text-gray-400">
+              Nueva edición enfocada en dispositivos esenciales: líneas suaves, acabados mate y compatibilidad total con nuestra app PWA.
+            </p>
+            <div className="flex flex-wrap gap-3">
+              <Link
+                to={ROUTES.catalog}
+                className="inline-flex items-center gap-2 rounded-lg border border-transparent bg-[hsl(var(--primary))] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(0,128,255,0.2)] hover:-translate-y-0.5 transition"
+              >
+                Explorar ahora
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+              <Link
+                to={ROUTES.promociones}
+                className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--primary))]/30 px-4 py-2.5 text-sm font-semibold text-[hsl(var(--primary))] hover:bg-white/60 dark:hover:bg-white/10"
+              >
+                Ver promociones
+              </Link>
+            </div>
+            <div className="flex flex-wrap gap-6 text-xs uppercase tracking-[0.25em] text-gray-500">
+              <div>
+                <p className="text-[rgb(var(--fg))] text-2xl font-black tracking-normal">48h</p>
+                despacho urbano
               </div>
-              <h1 className="text-[clamp(2rem,6vw,3.75rem)] font-black leading-tight text-left">
-                Tecnología fina,{' '}
-                <span className="gradient-text inline-block">menos ruido.</span>
-              </h1>
-              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 max-w-xl leading-relaxed">
-                Inspirado en las vitrinas minimalistas de las concept stores europeas: colecciones cortas, lanzamientos semanales y un servicio que responde como app nativa.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <Link
-                  to={ROUTES.catalog}
-                  className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm sm:text-base font-semibold text-white bg-[hsl(var(--primary))] shadow-[0_10px_24px_rgba(0,128,255,0.25)] hover:-translate-y-0.5 transition-all"
-                >
-                  Ver novedades
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to={ROUTES.promociones}
-                  className="inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm sm:text-base font-semibold border border-[hsl(var(--primary))]/30 text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))]/5"
-                >
-                  Colecciones cápsula
-                </Link>
+              <div>
+                <p className="text-[rgb(var(--fg))] text-2xl font-black tracking-normal">4.9★</p>
+                feedback clientes
               </div>
-              <div className="grid gap-4 sm:grid-cols-3">
-                {[{
-                  label: 'Stock boutique',
-                  value: '120+',
-                }, {
-                  label: 'Pedidos en 24h',
-                  value: '92%',
-                }, {
-                  label: 'Clientes recurrentes',
-                  value: '4.9★',
-                }].map(({ label, value }) => (
-                  <div key={label} className="rounded-2xl border border-[rgb(var(--border-rgb))]/30 bg-[rgb(var(--bg))]/40 p-4">
-                    <p className="text-xs uppercase tracking-[0.2em] text-gray-500 dark:text-gray-400 font-semibold">{label}</p>
-                    <p className="text-2xl font-black mt-2">{value}</p>
-                  </div>
-                ))}
+              <div>
+                <p className="text-[rgb(var(--fg))] text-2xl font-black tracking-normal">+80</p>
+                referencias activas
               </div>
             </div>
-            <div className="relative">
-              <div className="absolute inset-4 rounded-[2.5rem] bg-gradient-to-br from-[hsl(var(--primary))]/25 via-transparent to-[hsl(var(--accent))]/25 blur-3xl" />
-              <div className="relative rounded-[2.5rem] border border-white/30 dark:border-white/10 bg-gradient-to-br from-[rgb(var(--card))] to-[hsl(var(--primary))]/5 p-6 lg:p-8 flex flex-col gap-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
-                <div>
-                  <p className="text-sm uppercase tracking-[0.3em] text-gray-500 dark:text-gray-400">Preview exclusivo</p>
-                  <p className="text-3xl font-black mt-2">Smart Desk Set</p>
-                  <p className="text-sm text-gray-500 dark:text-gray-400">Disponibles 40 unidades</p>
-                </div>
-                <div className="rounded-2xl bg-[rgb(var(--surface-hover))] p-4 flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-gray-500">Versión</span>
-                    <span className="font-bold">Graphite Frost</span>
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-semibold text-gray-500">Entrega</span>
-                    <span className="font-bold text-[hsl(var(--accent))]">48h express</span>
-                  </div>
-                </div>
-                <InstallPWAButton className="rounded-xl px-4 py-2.5 text-sm" />
+          </div>
+          <div className="relative rounded-[24px] border border-white/20 bg-[rgb(var(--card))]/80 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.15)]">
+            <div className="space-y-4">
+              <div>
+                <p className="text-xs uppercase tracking-[0.4em] text-gray-500">Drop semanal</p>
+                <p className="text-2xl font-bold text-[rgb(var(--fg))]">Studio Layer Kit</p>
               </div>
+              <div className="grid gap-3">
+                <div className="flex items-center justify-between rounded-xl border border-[rgb(var(--border-rgb))]/20 px-4 py-3">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-[0.3em]">Base</span>
+                  <span className="text-sm font-semibold">MagGrey</span>
+                </div>
+                <div className="flex items-center justify-between rounded-xl border border-[rgb(var(--border-rgb))]/20 px-4 py-3">
+                  <span className="text-xs font-semibold text-gray-500 uppercase tracking-[0.3em]">Compatibilidad</span>
+                  <span className="text-sm font-semibold text-[hsl(var(--accent))]">iOS + Android</span>
+                </div>
+              </div>
+              <InstallPWAButton className="rounded-lg px-4 py-2 text-xs font-semibold" />
             </div>
+            <div className="pointer-events-none absolute inset-0 rounded-[24px] bg-gradient-to-br from-[hsl(var(--primary))]/10 to-transparent" />
           </div>
         </div>
       </section>
@@ -134,47 +127,42 @@ export default function Home() {
         )}
       </section>
 
-      {/* Features Section - Diseño premium mejorado */}
-      <section className="container-responsive pb-10 sm:pb-14 md:pb-20">
-        <div className="grid gap-4 sm:gap-6 sm:grid-cols-3">
-          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--success))]/10 to-transparent border-2 border-[hsl(var(--success))]/20 p-6 sm:p-8 transition-all duration-300 hover:shadow-[0_12px_32px_rgba(38,183,168,0.25)] hover:-translate-y-1">
-            <div className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-[hsl(var(--success))]/10 blur-2xl" />
-            <div className="relative">
-              <div className="mb-4 inline-flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[hsl(var(--success))] to-[hsl(var(--success))]/70 shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
-                <svg className="h-7 w-7 sm:h-8 sm:w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
+      {/* Features Section - estilo editorial compacto */}
+      <section className="container-responsive pb-10 sm:pb-12">
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[{
+            title: 'Curaduría precisa',
+            copy: 'Surtido limitado con pruebas técnicas y garantía.',
+            icon: (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+              </svg>
+            )
+          }, {
+            title: 'Logística ligera',
+            copy: 'Centros urbanos con rutas nocturnas y seguimiento en vivo.',
+            icon: (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3 10h11l4-4v14H3z" />
+              </svg>
+            )
+          }, {
+            title: 'Cobertura segura',
+            copy: 'Pagos verificados y soporte en 3 toques desde la PWA.',
+            icon: (
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v6m0 0H6a2 2 0 01-2-2v-7m8 9h6a2 2 0 002-2v-7m-8 3l-3-3m3 3l3-3m-3-6V3m8 6V7a4 4 0 00-8 0v2" />
+              </svg>
+            )
+          }].map((item) => (
+            <div key={item.title} className="rounded-2xl border border-[rgb(var(--border-rgb))]/30 bg-[rgb(var(--card))] p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
+              <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-full bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))]">
+                {item.icon}
               </div>
-              <h3 className="mb-2 text-lg sm:text-xl font-black">Calidad Premium</h3>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">Productos cuidadosamente seleccionados y verificados</p>
+              <h3 className="text-lg font-bold mb-1">{item.title}</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{item.copy}</p>
             </div>
-          </div>
-          
-          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))]/10 to-transparent border-2 border-[hsl(var(--primary))]/20 p-6 sm:p-8 transition-all duration-300 hover:shadow-[0_12px_32px_rgba(0,128,255,0.25)] hover:-translate-y-1">
-            <div className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-[hsl(var(--primary))]/10 blur-2xl" />
-            <div className="relative">
-              <div className="mb-4 inline-flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[hsl(var(--primary))] to-[hsl(var(--accent))] shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
-                <svg className="h-7 w-7 sm:h-8 sm:w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              </div>
-              <h3 className="mb-2 text-lg sm:text-xl font-black">Envío Express</h3>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">Entrega ultra rápida en tiempo récord</p>
-            </div>
-          </div>
-          
-          <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))]/10 to-transparent border-2 border-[hsl(var(--accent))]/20 p-6 sm:p-8 transition-all duration-300 hover:shadow-[0_12px_32px_rgba(38,183,168,0.25)] hover:-translate-y-1">
-            <div className="absolute -top-8 -right-8 h-32 w-32 rounded-full bg-[hsl(var(--accent))]/10 blur-2xl" />
-            <div className="relative">
-              <div className="mb-4 inline-flex h-14 w-14 sm:h-16 sm:w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-[hsl(var(--accent))] to-[hsl(var(--accent))]/70 shadow-lg transition-transform group-hover:scale-110 group-hover:rotate-3">
-                <svg className="h-7 w-7 sm:h-8 sm:w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-              </div>
-              <h3 className="mb-2 text-lg sm:text-xl font-black">Pago Seguro</h3>
-              <p className="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">Protección total con tecnología de cifrado</p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
     </div>
