@@ -31,7 +31,7 @@ export default function Cart() {
             <ShoppingCart className="h-10 w-10 sm:h-12 sm:w-12 text-[hsl(var(--primary))]" />
           </div>
           <h2 className="mb-3 text-2xl sm:text-3xl font-black">Tu carrito está vacío</h2>
-          <p className="mb-8 text-base sm:text-lg text-gray-600 dark:text-gray-400 font-medium max-w-md mx-auto">
+          <p className="mb-8 text-base sm:text-lg text-gray-800 dark:text-gray-400 font-medium max-w-md mx-auto">
             Descubre nuestros productos increíbles y comienza a comprar
           </p>
           <Link to={ROUTES.catalog} className="btn-primary inline-flex items-center justify-center rounded-2xl px-8 py-4 text-base font-bold shadow-[0_8px_24px_rgba(0,128,255,0.35)]">
@@ -104,11 +104,11 @@ export default function Cart() {
               <h2 className="mb-6 text-xl sm:text-2xl font-black">Resumen del pedido</h2>
               <div className="space-y-3 pb-6 border-b-2 border-[rgb(var(--border-rgb))]/20">
                 <div className="flex justify-between text-sm sm:text-base">
-                  <span className="text-gray-600 dark:text-gray-400 font-semibold">Productos ({items.length})</span>
+                  <span className="text-gray-800 dark:text-gray-400 font-semibold">Productos ({items.length})</span>
                   <span className="font-bold">{formatPrice(subtotal)}</span>
                 </div>
                 <div className="flex justify-between text-sm sm:text-base">
-                  <span className="text-gray-600 dark:text-gray-400 font-semibold">Envío</span>
+                  <span className="text-gray-800 dark:text-gray-400 font-semibold">Envío</span>
                   <span className="font-bold text-[hsl(var(--success))]">GRATIS</span>
                 </div>
               </div>

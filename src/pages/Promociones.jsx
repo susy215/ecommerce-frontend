@@ -66,7 +66,7 @@ export default function Promociones() {
             <Tag className="h-8 w-8 text-gray-400" />
           </div>
           <h2 className="mb-2 text-xl font-semibold">No hay promociones disponibles</h2>
-          <p className="text-gray-600 dark:text-gray-400">Vuelve pronto para ver nuevas ofertas</p>
+          <p className="text-gray-800 dark:text-gray-400">Vuelve pronto para ver nuevas ofertas</p>
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -108,7 +108,7 @@ export default function Promociones() {
                     <h3 className="text-xl font-bold mb-1">{promo.nombre}</h3>
                     
                     {promo.descripcion && (
-                      <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-2">
+                      <p className="text-sm text-white/90 line-clamp-2">
                         {promo.descripcion}
                       </p>
                     )}
@@ -120,7 +120,7 @@ export default function Promociones() {
                   <div className="flex items-center justify-between rounded-lg border-2 border-dashed border-[hsl(var(--primary))]/30 bg-[hsl(var(--primary))]/5 px-4 py-3">
                     <div className="flex items-center gap-2">
                       <Tag className="h-4 w-4 text-[hsl(var(--primary))]" />
-                      <span className="text-xs font-medium text-gray-600 dark:text-gray-400">Código:</span>
+                      <span className="text-xs font-medium text-gray-800 dark:text-gray-400">Código:</span>
                     </div>
                     <button
                       onClick={() => {
@@ -138,7 +138,7 @@ export default function Promociones() {
                 <div className="px-6 pb-6">
                   <div className="flex flex-wrap items-center gap-2 text-xs">
                     {/* Vigencia - pill compacta */}
-                    <span className="inline-flex items-center gap-1 rounded-full bg-surface-hover px-2 py-1 text-[11px] text-gray-700 dark:text-gray-300">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-surface-hover px-2 py-1 text-[11px] text-gray-900 dark:text-gray-300">
                       <Calendar className="h-3.5 w-3.5" />
                       <span className="font-medium">{formatFecha(promo.fecha_inicio)}</span>
                       <span>→</span>
@@ -155,7 +155,7 @@ export default function Promociones() {
 
                     {/* Tope - pill neutra */}
                     {promo.descuento_maximo && parseFloat(promo.descuento_maximo) > 0 && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-surface-hover px-2 py-1 text-[11px] text-gray-700 dark:text-gray-300">
+                      <span className="inline-flex items-center gap-1 rounded-full bg-surface-hover px-2 py-1 text-[11px] text-gray-900 dark:text-gray-300">
                         <DollarSign className="h-3.5 w-3.5" />
                         Tope {formatPrice(parseFloat(promo.descuento_maximo))}
                       </span>
@@ -167,7 +167,7 @@ export default function Promociones() {
                   {promo.usos_maximos && (
                     <div>
                       <div className="flex items-center justify-between text-xs mb-1.5">
-                        <span className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
+                        <span className="flex items-center gap-1.5 text-gray-800 dark:text-gray-400">
                           <Clock className="h-3.5 w-3.5" />
                           Disponibilidad
                         </span>
@@ -211,7 +211,7 @@ export default function Promociones() {
             </div>
             <div>
               <h3 className="font-semibold mb-2">¿Cómo usar los códigos de promoción?</h3>
-              <ol className="space-y-1.5 text-sm text-gray-600 dark:text-gray-400">
+              <ol className="space-y-1.5 text-sm text-gray-800 dark:text-gray-400">
                 <li className="flex items-start gap-2">
                   <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] text-xs font-bold">1</span>
                   <span>Copia el código de la promoción que deseas usar</span>

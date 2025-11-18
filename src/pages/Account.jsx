@@ -74,7 +74,7 @@ export default function Account() {
                 <div className="space-y-3">
                   <div className="flex items-start justify-between">
                     <div className="space-y-2 text-sm flex-1">
-                      <p><span className="text-gray-500">Usuario:</span> <span className="font-medium">{user.username}</span></p>
+                      <p><span className="text-gray-800 dark:text-gray-500">Usuario:</span> <span className="font-medium">{user.username}</span></p>
                       <p><span className="text-gray-500">Email:</span> <span>{user.email || 'No especificado'}</span></p>
                       <p><span className="text-gray-500">Nombre:</span> <span>{[user.first_name, user.last_name].filter(Boolean).join(' ') || 'No especificado'}</span></p>
                       <p><span className="text-gray-500">Teléfono:</span> <span>{user.telefono || 'No especificado'}</span></p>

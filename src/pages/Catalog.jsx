@@ -117,7 +117,7 @@ export default function Catalog() {
                 </svg>
               </div>
               <h2 className="mb-3 text-2xl sm:text-3xl font-black">No encontramos productos</h2>
-              <p className="text-base sm:text-lg text-gray-600 dark:text-gray-400 mb-8 font-medium max-w-md mx-auto">
+              <p className="text-base sm:text-lg text-gray-800 dark:text-gray-400 mb-8 font-medium max-w-md mx-auto">
                 Intenta ajustar tus filtros o búsqueda para encontrar lo que necesitas
               </p>
               <button

@@ -33,41 +33,41 @@ export default function Home() {
     <div className="page-anim">
       {/* Banner principal limpio y elegante */}
       <section className="container-responsive py-8 sm:py-12">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[hsl(var(--primary))] via-[hsl(var(--primary))]/90 to-[hsl(var(--primary))]/80 p-8 sm:p-12 lg:p-16 text-white border border-[hsl(var(--primary))]/20 dark:border-[hsl(var(--primary))]/40">
+        <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 p-8 sm:p-12 lg:p-16 border border-gray-200 dark:border-gray-800 shadow-lg">
           {/* Patrón de fondo sutil */}
-          <div className="absolute inset-0 opacity-[0.05]">
+          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
             <div className="absolute inset-0" style={{ 
-              backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
+              backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)',
               backgroundSize: '32px 32px'
             }} />
           </div>
           
           <div className="relative max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/10 border border-white/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6 text-gray-700 dark:text-gray-300">
               <Zap className="h-3.5 w-3.5" />
               SmartSales365
             </div>
             
-            <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-black leading-[1.1] mb-6">
+            <h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-black leading-[1.1] mb-6 text-gray-900 dark:text-white">
               Compra inteligente.<br />
               Entrega rápida.
             </h1>
             
-            <p className="text-lg sm:text-xl text-white/90 font-medium mb-8 max-w-2xl leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 font-medium mb-8 max-w-2xl leading-relaxed">
               Miles de productos verificados con envío express y garantía extendida. Tu tienda online que funciona como una física.
             </p>
             
             <div className="flex flex-wrap gap-4 mb-10">
               <Link
                 to={ROUTES.catalog}
-                className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-base font-bold text-[hsl(var(--primary))] hover:bg-white/95 transition-colors"
+                className="inline-flex items-center gap-2 rounded-2xl bg-[hsl(var(--primary))] dark:bg-[hsl(var(--primary))] px-6 py-3.5 text-base font-bold text-white hover:bg-[hsl(var(--primary-hover))] transition-colors shadow-md"
               >
                 Explorar catálogo
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
                 to={ROUTES.promociones}
-                className="inline-flex items-center gap-2 rounded-2xl border-2 border-white/30 bg-white/10 px-6 py-3.5 text-base font-bold hover:bg-white/20 transition-colors"
+                className="inline-flex items-center gap-2 rounded-2xl border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-6 py-3.5 text-base font-bold text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors"
               >
                 Ver ofertas
               </Link>
@@ -80,12 +80,12 @@ export default function Home() {
                 { icon: Zap, label: 'Atención', value: '24/7' }
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 border border-white/20">
-                    <item.icon className="h-5 w-5" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                    <item.icon className="h-5 w-5 text-gray-700 dark:text-gray-300" />
                   </div>
                   <div>
-                    <p className="font-bold text-base">{item.value}</p>
-                    <p className="text-white/80 text-xs">{item.label}</p>
+                    <p className="font-bold text-base text-gray-900 dark:text-white">{item.value}</p>
+                    <p className="text-gray-600 dark:text-gray-400 text-xs">{item.label}</p>
                   </div>
                 </div>
               ))}

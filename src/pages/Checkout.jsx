@@ -153,13 +153,13 @@ export default function Checkout() {
               <span className="text-lg font-bold text-[hsl(var(--primary))]">SS-{String(order.id).padStart(5, '0')}</span>
             </div>
             <p className="text-2xl font-bold text-[hsl(var(--primary))]">{formatPrice(Number(order.total ?? 0))}</p>
-            <p className="text-sm text-gray-600">{order.items?.length || 0} {order.items?.length === 1 ? 'producto' : 'productos'}</p>
+            <p className="text-sm text-gray-800 dark:text-gray-600">{order.items?.length || 0} {order.items?.length === 1 ? 'producto' : 'productos'}</p>
           </div>
           
           {order.pagado_en ? (
             <div className="rounded-xl p-4 text-center callout-success">
               <p className="font-medium text-success-strong">✓ Pago confirmado</p>
-              <p className="text-sm text-[rgb(var(--fg))]/80 dark:text-gray-400">{new Date(order.pagado_en).toLocaleString()}</p>
+              <p className="text-sm text-gray-900 dark:text-gray-400">{new Date(order.pagado_en).toLocaleString()}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -169,7 +169,7 @@ export default function Checkout() {
                   <CreditCard className="h-5 w-5 text-[hsl(var(--primary))] flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <h3 className="mb-1 font-semibold">Pagar con Stripe</h3>
-                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">Método recomendado. Serás redirigido a una pasarela segura y volverás automáticamente al detalle de tu compra.</p>
+                    <p className="text-sm text-gray-800 dark:text-gray-400 mb-3">Método recomendado. Serás redirigido a una pasarela segura y volverás automáticamente al detalle de tu compra.</p>
                     <Button
                       onClick={async () => {
                         try {
@@ -197,7 +197,7 @@ export default function Checkout() {
               {/* Manual Payment Option */}
               <div className="rounded-xl border border-subtle bg-surface-hover p-5">
                 <h3 className="mb-2 font-semibold text-sm">Pago manual (alternativo)</h3>
-                <p className="text-xs text-gray-600 dark:text-gray-400 mb-3">Si ya realizaste el pago por otro medio, ingresa la referencia aquí</p>
+                <p className="text-xs text-gray-800 dark:text-gray-400 mb-3">Si ya realizaste el pago por otro medio, ingresa la referencia aquí</p>
                 <input
                   value={referencia}
                   onChange={(e) => setReferencia(e.target.value)}
@@ -254,7 +254,7 @@ export default function Checkout() {
                 
                 {items.length === 0 ? (
                   <div className="card-surface p-8 text-center">
-                    <p className="text-gray-600">No hay productos en tu carrito</p>
+                    <p className="text-gray-800 dark:text-gray-600">No hay productos en tu carrito</p>
                     <Link to={ROUTES.catalog} className="mt-4 inline-block btn-primary rounded-md px-4 py-2 text-sm font-medium">
                       Ir a la tienda
                     </Link>
@@ -266,7 +266,7 @@ export default function Checkout() {
                         <div key={x.id} className="flex items-center justify-between py-3 px-4 rounded-lg bg-surface-hover border border-subtle">
                           <div className="flex-1">
                             <p className="font-medium text-sm">{x.name}</p>
-                            <p className="text-xs text-gray-500 mt-0.5">Cantidad: {x.qty}</p>
+                            <p className="text-xs text-gray-800 dark:text-gray-500 mt-0.5">Cantidad: {x.qty}</p>
                           </div>
                           <span className="font-semibold text-[hsl(var(--primary))]">{formatPrice(x.price * x.qty)}</span>
                         </div>
@@ -276,7 +276,7 @@ export default function Checkout() {
                     {/* Resumen con promoción */}
                     <div className="mt-6 space-y-3 py-4 border-t border-subtle">
                       <div className="flex items-center justify-between text-sm">
-                        <span className="text-gray-600">Subtotal</span>
+                        <span className="text-gray-800 dark:text-gray-600">Subtotal</span>
                         <span className="font-medium">{formatPrice(subtotal)}</span>
                       </div>
                       
@@ -312,7 +312,7 @@ export default function Checkout() {
                         <Tag className="h-5 w-5 text-[hsl(var(--primary))]" />
                         <h3 className="font-semibold">¿Tienes un código de promoción?</h3>
                       </div>
-                      <div className="text-xs text-gray-500">
+                      <div className="text-xs text-gray-800 dark:text-gray-500">
                         Total: <span className="font-bold text-[hsl(var(--primary))]">{formatPrice(subtotal)}</span>
                       </div>
                     </div>
@@ -423,7 +423,7 @@ export default function Checkout() {
                   <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] text-xs font-bold">?</span>
                   ¿Cómo funciona?
                 </h3>
-                <ol className="space-y-2.5 text-xs text-gray-600 dark:text-gray-400">
+                <ol className="space-y-2.5 text-xs text-gray-800 dark:text-gray-400">
                   <li className="flex gap-2.5">
                     <span className="flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] font-bold text-[10px]">1</span>
                     <span>Crea tu compra con los productos del carrito</span>

@@ -156,7 +156,7 @@ export default function ProductDetail() {
                 </svg>
                 Descripción
               </h2>
-              <p className="text-base sm:text-lg text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+              <p className="text-base sm:text-lg text-gray-900 dark:text-gray-300 leading-relaxed font-medium">
                 {product.descripcion || product.description}
               </p>
             </div>
@@ -170,7 +170,7 @@ export default function ProductDetail() {
                 <div className="flex items-start gap-3">
                   <Tag className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" strokeWidth={2.5} />
                   <div>
-                    <span className="text-xs font-semibold text-gray-500 block uppercase tracking-wider">SKU</span>
+                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-500 block uppercase tracking-wider">SKU</span>
                     <p className="font-bold text-base mt-1">{product.sku}</p>
                   </div>
                 </div>
@@ -181,7 +181,7 @@ export default function ProductDetail() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
                   </svg>
                   <div>
-                    <span className="text-xs font-semibold text-gray-500 block uppercase tracking-wider">Categoría</span>
+                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-500 block uppercase tracking-wider">Categoría</span>
                     <p className="font-bold text-base mt-1">{product.categoria.nombre}</p>
                   </div>
                 </div>
@@ -190,7 +190,7 @@ export default function ProductDetail() {
                 <div className="flex items-start gap-3 col-span-full">
                   <Package className="h-5 w-5 text-[hsl(var(--accent))] mt-0.5 flex-shrink-0" strokeWidth={2.5} />
                   <div>
-                    <span className="text-xs font-semibold text-gray-500 block uppercase tracking-wider">Stock disponible</span>
+                    <span className="text-xs font-semibold text-gray-700 dark:text-gray-500 block uppercase tracking-wider">Stock disponible</span>
                     <p className="font-bold text-base mt-1">
                       <span className={product.stock > 0 ? 'text-[hsl(var(--success))]' : 'text-[hsl(var(--error))]]'}>
                         {product.stock > 0 ? `${product.stock} unidades disponibles` : 'Producto agotado'}
@@ -236,7 +236,7 @@ export default function ProductDetail() {
           <div className="flex items-center gap-4">
             {/* Info compacta premium */}
             <div className="flex flex-col min-w-0 flex-1">
-              <span className="text-xs text-gray-500 dark:text-gray-400 truncate font-semibold uppercase tracking-wider">
+              <span className="text-xs text-gray-700 dark:text-gray-400 truncate font-semibold uppercase tracking-wider">
                 {product?.nombre || product?.name}
               </span>
               <span className="text-2xl font-black bg-gradient-to-r from-[hsl(var(--primary))] to-[hsl(var(--accent))] bg-clip-text text-transparent">
