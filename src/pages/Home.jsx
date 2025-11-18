@@ -33,9 +33,9 @@ export default function Home() {
     <div className="page-anim">
       {/* Banner principal limpio y elegante */}
       <section className="container-responsive py-8 sm:py-12">
-        <div className="relative overflow-hidden rounded-3xl bg-gray-50 dark:bg-gray-900 p-8 sm:p-12 lg:p-16 border border-gray-300 dark:border-gray-800 shadow-lg">
+        <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-gray-900 p-8 sm:p-12 lg:p-16 border border-gray-200 dark:border-gray-800 shadow-lg">
           {/* Patrón de fondo sutil */}
-          <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.05]">
+          <div className="absolute inset-0 opacity-[0.02] dark:opacity-[0.05]">
             <div className="absolute inset-0" style={{ 
               backgroundImage: 'radial-gradient(circle at 2px 2px, currentColor 1px, transparent 0)',
               backgroundSize: '32px 32px'
@@ -43,7 +43,7 @@ export default function Home() {
           </div>
           
           <div className="relative max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6 text-gray-800 dark:text-gray-300">
+            <div className="inline-flex items-center gap-2 rounded-full bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6 text-gray-900 dark:text-gray-300">
               <Zap className="h-3.5 w-3.5" />
               SmartSales365
             </div>
@@ -53,7 +53,7 @@ export default function Home() {
               Entrega rápida.
             </h1>
             
-            <p className="text-lg sm:text-xl text-gray-800 dark:text-gray-300 font-medium mb-8 max-w-2xl leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-700 dark:text-gray-300 font-medium mb-8 max-w-2xl leading-relaxed">
               Miles de productos verificados con envío express y garantía extendida. Tu tienda online que funciona como una física.
             </p>
             
@@ -67,7 +67,7 @@ export default function Home() {
               </Link>
               <Link
                 to={ROUTES.promociones}
-                className="inline-flex items-center gap-2 rounded-2xl border-2 border-gray-400 dark:border-gray-700 bg-white dark:bg-gray-800 px-6 py-3.5 text-base font-bold text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors"
+                className="inline-flex items-center gap-2 rounded-2xl border-2 border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-6 py-3.5 text-base font-bold text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-750 transition-colors"
               >
                 Ver ofertas
               </Link>
@@ -80,8 +80,8 @@ export default function Home() {
                 { icon: Zap, label: 'Atención', value: '24/7' }
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-200 dark:bg-gray-800 border border-gray-300 dark:border-gray-700">
-                    <item.icon className="h-5 w-5 text-gray-800 dark:text-gray-300" />
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
+                    <item.icon className="h-5 w-5 text-gray-900 dark:text-gray-300" />
                   </div>
                   <div>
                     <p className="font-bold text-base text-gray-900 dark:text-white">{item.value}</p>
