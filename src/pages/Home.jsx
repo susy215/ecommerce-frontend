@@ -6,7 +6,6 @@ import { getProducts } from '../services/products'
 import { toArray } from '../utils/data'
 import { ROUTES } from '../constants/routes'
 import { ArrowRight, Sparkles } from 'lucide-react'
-import InstallPWAButton from '../components/common/InstallPWAButton'
 
 export default function Home() {
   const [loading, setLoading] = useState(true)
@@ -32,82 +31,90 @@ export default function Home() {
 
   return (
     <div className="page-anim">
-      {/* Hero Section liviano */}
+      {/* Hero Section minimalista */}
       <section className="container-responsive py-6 sm:py-10">
-        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] rounded-[28px] border border-[hsl(var(--primary))]/15 bg-gradient-to-br from-[rgb(var(--card))] to-[hsl(var(--primary))]/3 p-6 sm:p-10">
-          <div className="space-y-5">
-            <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-gray-500">
-              <Sparkles className="h-3.5 w-3.5" />
-              Colección activa
-            </p>
-            <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-black leading-tight">
-              Productos seleccionados para una tienda que se siente física.
-            </h1>
-            <p className="max-w-xl text-sm sm:text-base text-gray-600 dark:text-gray-400">
-              Renovamos el catálogo con marcas que cuidan acabados, logística ágil y garantías claras. Todo listo para que armes tu carrito sin complicaciones.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Link
-                to={ROUTES.catalog}
-                className="inline-flex items-center gap-2 rounded-lg border border-transparent bg-[hsl(var(--primary))] px-4 py-2.5 text-sm font-semibold text-white shadow-[0_10px_24px_rgba(0,128,255,0.2)] hover:-translate-y-0.5 transition"
-              >
-                Ir a la tienda
-                <ArrowRight className="h-4 w-4" />
-              </Link>
-              <Link
-                to={ROUTES.promociones}
-                className="inline-flex items-center gap-2 rounded-lg border border-[hsl(var(--primary))]/30 px-4 py-2.5 text-sm font-semibold text-[hsl(var(--primary))] hover:bg-white/60 dark:hover:bg-white/10"
-              >
-                Promos en vivo
-              </Link>
+        <div className="relative overflow-hidden rounded-[32px] border border-[hsl(var(--primary))]/20 bg-gradient-to-br from-[rgb(var(--card))] via-[hsl(var(--primary))]/6 to-[rgb(var(--surface))]">
+          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.35),transparent_55%)] dark:bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.08),transparent_55%)]" />
+          <div className="relative grid gap-8 lg:grid-cols-[1.1fr_0.9fr] items-center p-6 sm:p-10">
+            <div className="space-y-6">
+              <p className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.35em] text-gray-500">
+                <Sparkles className="h-3.5 w-3.5" />
+                Edición SS365
+              </p>
+              <h1 className="text-[clamp(2.2rem,5vw,3.7rem)] font-black leading-tight">
+                Tu tienda digital con stock listo para despachar.
+              </h1>
+              <p className="max-w-2xl text-sm sm:text-base text-gray-600 dark:text-gray-400">
+                Integramos proveedores confiables, despachamos desde bodegas urbanas y cuidamos cada entrega con empaques premium. Solo elige las piezas y nosotros nos encargamos del resto.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Link
+                  to={ROUTES.catalog}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-transparent bg-[hsl(var(--primary))] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(0,128,255,0.25)] hover:-translate-y-0.5 transition"
+                >
+                  Empezar a comprar
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link
+                  to={ROUTES.promociones}
+                  className="inline-flex items-center gap-2 rounded-2xl border border-[hsl(var(--primary))]/40 px-5 py-3 text-sm font-semibold text-[hsl(var(--primary))] hover:bg-white/60 dark:hover:bg-white/10"
+                >
+                  Ver promociones
+                </Link>
+              </div>
+              <div className="grid gap-4 sm:grid-cols-3">
+                {[{
+                  value: '48h',
+                  label: 'entregas nacionales'
+                }, {
+                  value: '4.9★',
+                  label: 'rating de clientes'
+                }, {
+                  value: '30 días',
+                  label: 'cambios garantizados'
+                }].map((item) => (
+                  <div key={item.label} className="rounded-2xl border border-white/30 bg-white/70 p-4 text-center shadow-[0_15px_30px_rgba(15,23,42,0.08)] backdrop-blur dark:border-white/10 dark:bg-white/5">
+                    <p className="text-2xl font-black text-[rgb(var(--fg))]">{item.value}</p>
+                    <p className="text-[11px] uppercase tracking-[0.25em] text-gray-500">{item.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="flex flex-wrap gap-6 text-xs uppercase tracking-[0.25em] text-gray-500">
-              <div>
-                <p className="text-[rgb(var(--fg))] text-2xl font-black tracking-normal">48h</p>
-                despacho urbano
-              </div>
-              <div>
-                <p className="text-[rgb(var(--fg))] text-2xl font-black tracking-normal">4.9★</p>
-                feedback clientes
-              </div>
-              <div>
-                <p className="text-[rgb(var(--fg))] text-2xl font-black tracking-normal">+80</p>
-                referencias activas
-              </div>
-            </div>
-          </div>
-          <div className="relative rounded-[24px] border border-white/20 bg-[rgb(var(--card))]/80 p-6 shadow-[0_18px_50px_rgba(0,0,0,0.15)]">
-            <div className="space-y-5">
-              <div>
-                <p className="text-xs uppercase tracking-[0.35em] text-gray-500">Servicios incluidos</p>
-                <ul className="mt-3 space-y-2 text-sm text-gray-700 dark:text-gray-300">
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
-                    Devoluciones asistidas durante 30 días.
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
-                    Seguimiento de pedidos con alertas en tiempo real.
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[hsl(var(--primary))]" />
-                    Equipo de soporte disponible por chat y teléfono.
-                  </li>
-                </ul>
-              </div>
-              <div className="grid gap-3">
-                <div className="rounded-xl border border-[rgb(var(--border-rgb))]/20 bg-[rgb(var(--surface-hover))] px-4 py-3">
-                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Clientes empresa</p>
-                  <p className="text-sm font-semibold text-[rgb(var(--fg))]">Catálogo con precios netos y facturación automática.</p>
+            <div className="relative">
+              <div className="rounded-[28px] border border-white/30 bg-white/85 p-6 shadow-[0_25px_60px_rgba(0,0,0,0.12)] backdrop-blur dark:border-white/10 dark:bg-[rgb(var(--card))]/90">
+                <div className="flex items-center justify-between gap-4">
+                  <div>
+                    <p className="text-xs uppercase tracking-[0.35em] text-gray-500">Colecciones activas</p>
+                    <p className="text-lg font-semibold text-[rgb(var(--fg))]">Lookbook urbano · AW25</p>
+                  </div>
+                  <span className="rounded-full bg-[hsl(var(--primary))]/15 px-3 py-1 text-xs font-semibold text-[hsl(var(--primary))]">Nuevo</span>
                 </div>
-                <div className="rounded-xl border border-[rgb(var(--border-rgb))]/20 bg-[rgb(var(--surface-hover))] px-4 py-3">
-                  <p className="text-xs uppercase tracking-[0.3em] text-gray-500">Ventas al detalle</p>
-                  <p className="text-sm font-semibold text-[rgb(var(--fg))]">Promos activas cada fin de semana sin códigos raros.</p>
+                <div className="mt-6 space-y-4">
+                  {[{
+                    title: 'Living & deco',
+                    copy: 'Textiles, aromas y piezas para vitrina.'
+                  }, {
+                    title: 'Gadgets creativos',
+                    copy: 'Tecnología compacta para showroom y retail.'
+                  }, {
+                    title: 'Accesorios pro',
+                    copy: 'Ediciones limitadas listas para entrega express.'
+                  }].map((item) => (
+                    <div key={item.title} className="rounded-2xl border border-[rgb(var(--border-rgb))]/25 bg-[rgb(var(--surface-hover))] px-5 py-4">
+                      <p className="text-xs uppercase tracking-[0.3em] text-gray-500">{item.title}</p>
+                      <p className="text-sm font-semibold text-[rgb(var(--fg))]">{item.copy}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {['Pagos verificados', 'Soporte en vivo', 'Despacho monitoreado'].map((tag) => (
+                    <span key={tag} className="rounded-full border border-white/40 bg-white/70 px-3 py-1 text-xs font-semibold text-gray-700 backdrop-blur dark:border-white/10 dark:bg-white/10 dark:text-gray-200">
+                      {tag}
+                    </span>
+                  ))}
                 </div>
               </div>
-              <InstallPWAButton className="rounded-lg px-4 py-2 text-xs font-semibold" />
             </div>
-            <div className="pointer-events-none absolute inset-0 rounded-[24px] bg-gradient-to-br from-[hsl(var(--primary))]/10 to-transparent" />
           </div>
         </div>
       </section>
