@@ -33,9 +33,9 @@ export default function Home() {
     <div className="page-anim">
       {/* Banner principal limpio y elegante */}
       <section className="container-responsive py-8 sm:py-12">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[hsl(var(--primary))] via-[hsl(var(--primary))]/95 to-[hsl(var(--accent))] p-8 sm:p-12 lg:p-16 text-white shadow-[0_20px_60px_rgba(0,128,255,0.3)]">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-8 sm:p-12 lg:p-16 text-white border border-white/5">
           {/* Patrón de fondo sutil */}
-          <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0 opacity-[0.03]">
             <div className="absolute inset-0" style={{ 
               backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
               backgroundSize: '32px 32px'
@@ -43,7 +43,7 @@ export default function Home() {
           </div>
           
           <div className="relative max-w-3xl">
-            <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider backdrop-blur-sm mb-6">
+            <div className="inline-flex items-center gap-2 rounded-full bg-white/5 border border-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider mb-6">
               <Zap className="h-3.5 w-3.5" />
               SmartSales365
             </div>
@@ -53,21 +53,21 @@ export default function Home() {
               Entrega rápida.
             </h1>
             
-            <p className="text-lg sm:text-xl text-white/90 font-medium mb-8 max-w-2xl leading-relaxed">
+            <p className="text-lg sm:text-xl text-gray-300 font-medium mb-8 max-w-2xl leading-relaxed">
               Miles de productos verificados con envío express y garantía extendida. Tu tienda online que funciona como una física.
             </p>
             
             <div className="flex flex-wrap gap-4 mb-10">
               <Link
                 to={ROUTES.catalog}
-                className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-base font-bold text-[hsl(var(--primary))] shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl bg-white px-6 py-3.5 text-base font-bold text-gray-900 hover:bg-gray-100 transition-colors"
               >
                 Explorar catálogo
                 <ArrowRight className="h-5 w-5" />
               </Link>
               <Link
                 to={ROUTES.promociones}
-                className="inline-flex items-center gap-2 rounded-2xl border-2 border-white/40 bg-white/10 px-6 py-3.5 text-base font-bold backdrop-blur-sm hover:bg-white/20 transition-all"
+                className="inline-flex items-center gap-2 rounded-2xl border border-white/20 bg-white/5 px-6 py-3.5 text-base font-bold hover:bg-white/10 transition-colors"
               >
                 Ver ofertas
               </Link>
@@ -80,21 +80,17 @@ export default function Home() {
                 { icon: Zap, label: 'Atención', value: '24/7' }
               ].map((item) => (
                 <div key={item.label} className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-white/5 border border-white/10">
                     <item.icon className="h-5 w-5" />
                   </div>
                   <div>
                     <p className="font-bold text-base">{item.value}</p>
-                    <p className="text-white/80 text-xs">{item.label}</p>
+                    <p className="text-gray-400 text-xs">{item.label}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-
-          {/* Elemento decorativo */}
-          <div className="absolute -right-20 -bottom-20 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
-          <div className="absolute -top-20 right-1/4 h-60 w-60 rounded-full bg-[hsl(var(--accent))]/20 blur-3xl" />
         </div>
       </section>
 
@@ -132,7 +128,7 @@ export default function Home() {
 
       {/* Features Section - rediseñada más limpia */}
       <section className="container-responsive pb-12 sm:pb-16">
-        <div className="rounded-3xl border border-[rgb(var(--border-rgb))]/20 bg-gradient-to-br from-[rgb(var(--card))] to-[rgb(var(--surface-hover))] p-8 sm:p-12 shadow-xl">
+        <div className="rounded-3xl border border-[rgb(var(--border-rgb))]/20 bg-[rgb(var(--card))] p-8 sm:p-12">
           <div className="mb-8 text-center">
             <h3 className="text-2xl sm:text-3xl font-black mb-2">¿Por qué elegirnos?</h3>
             <p className="text-gray-600 dark:text-gray-400">Compra con confianza y sin complicaciones</p>
@@ -164,7 +160,7 @@ export default function Home() {
               )
             }].map((item) => (
               <div key={item.title} className="group text-center">
-                <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] transition-all group-hover:scale-110 group-hover:bg-[hsl(var(--primary))] group-hover:text-white group-hover:shadow-lg">
+                <div className="mb-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-[hsl(var(--primary))]/10 text-[hsl(var(--primary))] transition-transform group-hover:scale-105">
                   {item.icon}
                 </div>
                 <h4 className="text-lg font-bold mb-2">{item.title}</h4>
