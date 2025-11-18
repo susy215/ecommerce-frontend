@@ -72,9 +72,35 @@ export function VoiceCommandProvider({ children }) {
 
   const fulfill = async (intent) => {
     switch (intent.type) {
+      // ========== NAVEGACIÓN ==========
+      case 'go_home':
+        navigate(ROUTES.home)
+        toast.success('Volviendo a inicio')
+        haptic('light')
+        return
+      case 'go_catalog':
+        navigate(ROUTES.catalog)
+        toast.success('Abriendo tienda')
+        haptic('light')
+        return
+      case 'go_promos':
+        navigate(ROUTES.promociones)
+        toast.success('Viendo promociones')
+        haptic('light')
+        return
       case 'go_cart':
         navigate(ROUTES.cart)
         toast.success('Abriendo carrito')
+        haptic('light')
+        return
+      case 'go_orders':
+        navigate(ROUTES.orders)
+        toast.success('Viendo tus pedidos')
+        haptic('light')
+        return
+      case 'go_account':
+        navigate(ROUTES.account)
+        toast.success('Abriendo tu cuenta')
         haptic('light')
         return
       case 'go_checkout':
@@ -82,6 +108,8 @@ export function VoiceCommandProvider({ children }) {
         toast.success('Yendo a checkout')
         haptic('light')
         return
+
+      // ========== CARRITO ==========
       case 'clear_cart': {
         if (items.length === 0) {
           toast.info('Tu carrito ya está vacío')
@@ -92,6 +120,8 @@ export function VoiceCommandProvider({ children }) {
         haptic('light')
         return
       }
+
+      // ========== BÚSQUEDA ==========
       case 'search': {
         const q = intent.query
         setCandidates(await searchProducts(q))
@@ -102,6 +132,8 @@ export function VoiceCommandProvider({ children }) {
         }
         return
       }
+
+      // ========== COMPRA ==========
       case 'buy': // comprar N producto -> agrega y navega a checkout
       case 'add_to_cart': {
         const q = intent.query
@@ -138,22 +170,20 @@ export function VoiceCommandProvider({ children }) {
           toast.info(`No encontré "${q}" en tu carrito`)
           return
         }
-        if (found.qty > qty) {
-          // Reducir cantidad
-          // No tenemos método de reducir cantidad directo; reutilizamos updateQty vía addItem negativo no existe
-          // Estrategia: set qty exacto (no hay API aquí), se omite para simplicidad y se remueve si qty alcanza 0
-          // Como no hay updateQty en este scope, preferimos retirar el item cuando coincide (UX simple)
-          removeItem(found.id)
-          toast.success(`Quitado ${found.name || found.nombre}`)
-        } else {
-          removeItem(found.id)
-          toast.success(`Quitado ${found.name || found.nombre}`)
-        }
+        removeItem(found.id)
+        toast.success(`Quitado ${found.name || found.nombre}`)
         haptic('light')
         return
       }
+
+      // ========== AYUDA ==========
+      case 'help':
+        toast.info('Intenta: "ir a la tienda", "agrega 2 coca cola", "ver mis pedidos", "ir a promociones"')
+        haptic('light')
+        return
+
       default:
-        toast.info('No entendí. Prueba: "agrega 2 coca cola al carrito"')
+        toast.info('No entendí. Di "ayuda" para ver ejemplos de comandos.')
     }
   }
 

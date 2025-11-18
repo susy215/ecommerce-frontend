@@ -1,5 +1,5 @@
-// Intérprete sencillo de intents en español para comandos de voz
-// Soporta: agregar al carrito, comprar, ir al carrito/checkout, buscar
+// Intérprete mejorado de intents en español para comandos de voz
+// Soporta: navegación, carrito, compras, búsquedas, promociones, cuenta, pedidos
 
 const NUMBER_WORDS = {
   'uno': 1, 'una': 1, 'un': 1,
@@ -11,7 +11,11 @@ const NUMBER_WORDS = {
   'siete': 7,
   'ocho': 8,
   'nueve': 9,
-  'diez': 10
+  'diez': 10,
+  'once': 11,
+  'doce': 12,
+  'quince': 15,
+  'veinte': 20
 }
 
 function parseQuantity(text) {
@@ -35,7 +39,7 @@ function cleanProductQuery(text) {
     'agrega', 'agregar', 'añade', 'anade', 'añadir', 'sumar', 'pon', 'poner', 'mete',
     'al carrito', 'a carrito', 'carrito',
     'comprar', 'comprar ahora', 'compra', 'pagar', 'checkout',
-    'ir a', 'ir al', 'ver', 'buscar', 'busca', 'muestrame', 'muéstrame'
+    'ir a', 'ir al', 'ver', 'buscar', 'busca', 'muestrame', 'muéstrame', 'enséñame', 'ensename'
   ]
   remove.forEach(w => { q = q.replace(new RegExp(w, 'gi'), ' ') })
   // Remover patrones de cantidad
@@ -50,50 +54,101 @@ export function parseIntent(rawText) {
   const text = (rawText || '').toLowerCase().trim()
   if (!text) return { type: 'unknown' }
 
-  // Navegación simple
-  if (/ver carrito|abrir carrito|ir al carrito/.test(text)) {
+  // ========== NAVEGACIÓN ==========
+  
+  // Inicio / Home
+  if (/^(ir a|abrir|ver|volver a|vuelve a|regresar a|regresa a)?\s*(inicio|home|página principal|principal)$/i.test(text)) {
+    return { type: 'go_home' }
+  }
+
+  // Tienda / Catálogo
+  if (/^(ir a|abrir|ver|mostrar)?\s*(la\s*)?(tienda|catálogo|catalogo|shop|productos|todos los productos)$/i.test(text)) {
+    return { type: 'go_catalog' }
+  }
+
+  // Promociones
+  if (/^(ir a|abrir|ver|mostrar)?\s*(las\s*)?(promociones|promos|ofertas|descuentos)$/i.test(text)) {
+    return { type: 'go_promos' }
+  }
+
+  // Carrito
+  if (/^(ir a|abrir|ver|mostrar|revisar)?\s*(mi\s*)?(carrito|carro|cesta)$/i.test(text)) {
     return { type: 'go_cart' }
   }
-  if (/checkout|pagar|ir al checkout|finalizar compra|comprar ahora|proceder pago|proceder al pago|proceder con el pago|proceder a pagar/.test(text)) {
+
+  // Pedidos / Compras
+  if (/^(ir a|abrir|ver|mostrar|revisar)?\s*(mis\s*)?(pedidos|compras|órdenes|ordenes|historial)$/i.test(text)) {
+    return { type: 'go_orders' }
+  }
+
+  // Cuenta / Perfil
+  if (/^(ir a|abrir|ver|mostrar)?\s*(mi\s*)?(cuenta|perfil|datos|información|info)$/i.test(text)) {
+    return { type: 'go_account' }
+  }
+
+  // Checkout / Pagar
+  if (/^(ir a|abrir)?\s*(checkout|pagar|finalizar compra|proceder al pago|proceder pago|comprar)$/i.test(text)) {
     return { type: 'go_checkout' }
   }
 
-  // Carrito: vaciar
-  if (/vaciar carrito|limpiar carrito|vacía carrito|elimina todo|borrar carrito/.test(text)) {
+  // ========== ACCIONES DE CARRITO ==========
+  
+  // Vaciar carrito
+  if (/vaciar|limpiar|vacía|limpia|elimina todo|borra todo|borrar todo/.test(text) && /carrito|carro|cesta/.test(text)) {
     return { type: 'clear_cart' }
   }
 
-  // Buscar
-  if (/^buscar\b|\bbusca\b|\bmuestrame\b|\bmuéstrame\b|\bver\b/.test(text)) {
-    return { type: 'search', query: cleanProductQuery(text) }
+  // Agregar al carrito
+  if (/agrega|agregar|añade|anade|añadir|mete|meter|pon|poner|suma|sumar/.test(text) && (/carrito|carro|cesta/.test(text) || /al\s*carrito/.test(text))) {
+    const qty = parseQuantity(text)
+    const query = cleanProductQuery(text)
+    return { type: 'add_to_cart', quantity: qty, query }
   }
 
+  // Atajo agregar: "agrega coca cola x2" (sin decir carrito explícitamente)
+  if (/^(agrega|añade|anade|añadir|mete|meter|pon|poner)\b/.test(text) && !/(carrito|carro|cesta)/.test(text)) {
+    const qty = parseQuantity(text)
+    const query = cleanProductQuery(text)
+    if (query.length > 2) { // Solo si hay algo que agregar
+      return { type: 'add_to_cart', quantity: qty, query }
+    }
+  }
+
+  // Remover del carrito
+  if (/(quitar|eliminar|sacar|remover|borrar)/.test(text) && (/carrito|carro|cesta/.test(text) || /del\s*carrito/.test(text))) {
+    const qty = parseQuantity(text)
+    const query = cleanProductQuery(text)
+    return { type: 'remove_from_cart', quantity: qty, query }
+  }
+
+  // ========== BÚSQUEDA ==========
+  
+  // Buscar producto
+  if (/^(buscar|busca|buscar en la tienda|búsqueda|encontrar|encuentra)\b/.test(text)) {
+    const query = cleanProductQuery(text)
+    return { type: 'search', query }
+  }
+
+  // Mostrar / Ver producto
+  if (/^(mostrar|muestra|muestrame|muéstrame|ver|enseñar|enséñame|ensename)\b/.test(text)) {
+    const query = cleanProductQuery(text)
+    return { type: 'search', query }
+  }
+
+  // ========== COMPRA DIRECTA ==========
+  
   // Comprar directo: "comprar [2] [producto]"
-  if (/\bcomprar\b|\bcomprar ahora\b/.test(text)) {
+  if (/^(comprar|compra|adquirir)\b/.test(text)) {
     const qty = parseQuantity(text)
     const query = cleanProductQuery(text)
     return { type: 'buy', quantity: qty, query }
   }
 
-  // Agregar al carrito: "agrega/añade [2] [producto] al carrito"
-  if (/agrega|agregar|añade|anade|añadir|mete|poner|sumar/.test(text) && /carrito/.test(text)) {
-    const qty = parseQuantity(text)
-    const query = cleanProductQuery(text)
-    return { type: 'add_to_cart', quantity: qty, query }
-  }
-
-  // Atajo: "agrega coca cola x2" (sin decir carrito)
-  if (/agrega|añade|anade|añadir/.test(text)) {
-    const qty = parseQuantity(text)
-    const query = cleanProductQuery(text)
-    return { type: 'add_to_cart', quantity: qty, query }
-  }
-
-  // Remover del carrito: "quitar coca cola" / "eliminar 1 coca cola"
-  if (/(quitar|eliminar|sacar|remover)/.test(text)) {
-    const qty = parseQuantity(text)
-    const query = cleanProductQuery(text)
-    return { type: 'remove_from_cart', quantity: qty, query }
+  // ========== AYUDA / INFO ==========
+  
+  // Ayuda
+  if (/^(ayuda|ayúdame|help|qué puedo decir|que puedo decir|comandos)$/i.test(text)) {
+    return { type: 'help' }
   }
 
   return { type: 'unknown' }

@@ -38,13 +38,13 @@ function extractOrderId(payload = {}) {
 
 function buildAppUrl(payload = {}) {
   const base = self.location.origin || ''
-  const orderId = extractOrderId(payload)
-  if (orderId) {
-    return `${base}/orders/${orderId}`
-  }
+  const type = payload.type || payload.notification_type || ''
+  const body = (payload.body || payload.message || '').toLowerCase()
+  const title = (payload.title || '').toLowerCase()
 
+  // URL explícita en el payload
   const rawUrl = payload.url || payload.link || payload.redirect_url
-  if (typeof rawUrl === 'string') {
+  if (typeof rawUrl === 'string' && rawUrl.trim() !== '') {
     try {
       const absolute = new URL(rawUrl, base)
       return absolute.href
@@ -53,13 +53,69 @@ function buildAppUrl(payload = {}) {
     }
   }
 
+  // Detectar tipo y redirigir apropiadamente
+  if (/promo|promocion|oferta|descuento/.test(type + title + body)) {
+    return `${base}/promociones`
+  }
+
+  if (/pago|pagado|payment|paid/.test(type + title + body)) {
+    const orderId = extractOrderId(payload)
+    if (orderId) {
+      return `${base}/orders/${orderId}`
+    }
+    return `${base}/orders`
+  }
+
+  // Para pedidos, intentar extraer ID
+  const orderId = extractOrderId(payload)
+  if (orderId) {
+    return `${base}/orders/${orderId}`
+  }
+
+  // Default: lista de pedidos
   return `${base}/orders`
+}
+
+function getNotificationType(payload) {
+  const data = payload.data || payload
+  const type = data.type || data.notification_type || data.intent || ''
+  const body = (payload.body || payload.message || '').toLowerCase()
+  const title = (payload.title || '').toLowerCase()
+
+  // Detectar tipo por campo explícito
+  if (/promo|promocion|oferta|descuento/.test(type)) return 'promo'
+  if (/order|pedido|compra|purchase/.test(type)) return 'order'
+  if (/pago|payment|paid/.test(type)) return 'payment'
+
+  // Detectar por contenido del mensaje
+  if (/promo|promocion|oferta|descuento/.test(title + body)) return 'promo'
+  if (/pago|pagado|payment|paid|confirmado/.test(title + body)) return 'payment'
+  if (/pedido|compra|order|enviado|entregado/.test(title + body)) return 'order'
+
+  return 'order' // Default
 }
 
 function buildNotificationOptions(payload) {
   const title = payload.title || 'SmartSales365'
   const body = payload.body || payload.message || 'Nueva actualización en tu cuenta'
+  const notifType = getNotificationType(payload)
   const url = buildAppUrl(payload.data || payload)
+
+  // Acciones personalizadas según tipo de notificación
+  const actions = {
+    promo: [
+      { action: 'open', title: 'Ver promociones', icon: '/vite.svg' },
+      { action: 'close', title: 'Cerrar', icon: '/vite.svg' }
+    ],
+    order: [
+      { action: 'open', title: 'Ver pedido', icon: '/vite.svg' },
+      { action: 'close', title: 'Cerrar', icon: '/vite.svg' }
+    ],
+    payment: [
+      { action: 'open', title: 'Ver comprobante', icon: '/vite.svg' },
+      { action: 'close', title: 'Cerrar', icon: '/vite.svg' }
+    ]
+  }
 
   return {
     body,
@@ -71,14 +127,12 @@ function buildNotificationOptions(payload) {
       url,
       orderId: extractOrderId(payload.data || payload),
       intent: payload.data?.intent || payload.intent || 'order-detail',
+      notificationType: notifType,
       dateOfArrival: Date.now(),
       primaryKey: payload.id || Date.now(),
       ...payload.data
     },
-    actions: [
-      { action: 'open', title: 'Ver comprobante', icon: '/vite.svg' },
-      { action: 'close', title: 'Descartar', icon: '/vite.svg' }
-    ],
+    actions: actions[notifType] || actions.order,
     tag: payload.tag || 'smartsales-notification',
     requireInteraction: payload.requireInteraction ?? false,
     renotify: payload.renotify ?? false
